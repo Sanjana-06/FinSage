@@ -25,12 +25,10 @@ const SignUp = () => {
     }
 
     try {
-      const { data } = await axios.post(
+      await axios.post(
         "/api/user/signup",
         { name, email, password },
-        {
-          headers: { "Content-Type": "application/json" },
-        }
+        { headers: { "Content-Type": "application/json" } }
       );
 
       setMessage("Registration Successful!");
@@ -42,6 +40,7 @@ const SignUp = () => {
   return (
     <div
       style={{
+        width: "90%",
         maxWidth: "450px",
         margin: "auto",
         padding: "20px",
@@ -55,6 +54,8 @@ const SignUp = () => {
         Sign Up
       </h2>
       {message && <p style={{ color: "red" }}>{message}</p>}
+
+      {/* Name Input */}
       <div style={{ textAlign: "left", marginBottom: "10px" }}>
         <label>Name</label>
         <input
@@ -67,12 +68,13 @@ const SignUp = () => {
             width: "95%",
             padding: "10px",
             marginTop: "5px",
-            marginBottom: "5px",
             borderRadius: "5px",
             border: "1px solid #ccc",
           }}
         />
       </div>
+
+      {/* Email Input */}
       <div style={{ textAlign: "left", marginBottom: "10px" }}>
         <label>Email</label>
         <input
@@ -85,12 +87,13 @@ const SignUp = () => {
             width: "95%",
             padding: "10px",
             marginTop: "5px",
-            marginBottom: "5px",
             borderRadius: "5px",
             border: "1px solid #ccc",
           }}
         />
       </div>
+
+      {/* Password Input */}
       <div style={{ textAlign: "left", marginBottom: "10px" }}>
         <label>Password</label>
         <div style={{ display: "flex", alignItems: "center" }}>
@@ -102,9 +105,8 @@ const SignUp = () => {
             required
             style={{
               flex: 1,
-              padding: "10px",
               marginTop: "5px",
-              marginBottom: "5px",
+              padding: "10px",
               borderRadius: "5px",
               border: "1px solid #ccc",
             }}
@@ -119,12 +121,15 @@ const SignUp = () => {
               color: "white",
               cursor: "pointer",
               borderRadius: "5px",
+              minWidth: "60px",
             }}
           >
             {show ? "Hide" : "Show"}
           </button>
         </div>
       </div>
+
+      {/* Confirm Password Input */}
       <div style={{ textAlign: "left", marginBottom: "10px" }}>
         <label>Confirm Password</label>
         <div style={{ display: "flex", alignItems: "center" }}>
@@ -136,8 +141,8 @@ const SignUp = () => {
             required
             style={{
               flex: 1,
-              padding: "10px",
               marginTop: "5px",
+              padding: "10px",
               borderRadius: "5px",
               border: "1px solid #ccc",
             }}
@@ -152,12 +157,15 @@ const SignUp = () => {
               color: "white",
               cursor: "pointer",
               borderRadius: "5px",
+              minWidth: "60px",
             }}
           >
             {show ? "Hide" : "Show"}
           </button>
         </div>
       </div>
+
+      {/* Submit Button */}
       <button
         onClick={submitHandler}
         style={{

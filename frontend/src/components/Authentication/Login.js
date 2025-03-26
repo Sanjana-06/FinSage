@@ -18,12 +18,10 @@ const Login = () => {
     }
 
     try {
-      const { data } = await axios.post(
+      await axios.post(
         "/api/user/login",
         { email, password },
-        {
-          headers: { "Content-Type": "application/json" },
-        }
+        { headers: { "Content-Type": "application/json" } }
       );
 
       setMessage("Login Successful");
@@ -35,6 +33,7 @@ const Login = () => {
   return (
     <div
       style={{
+        width: "90%",
         maxWidth: "450px",
         margin: "auto",
         padding: "20px",
@@ -48,6 +47,7 @@ const Login = () => {
         Login
       </h2>
       {message && <p style={{ color: "red" }}>{message}</p>}
+
       <div style={{ textAlign: "left", marginBottom: "10px" }}>
         <label>Email</label>
         <input
@@ -66,6 +66,7 @@ const Login = () => {
           }}
         />
       </div>
+
       <div style={{ textAlign: "left", marginBottom: "10px" }}>
         <label>Password</label>
         <div style={{ display: "flex", alignItems: "center" }}>
@@ -93,12 +94,14 @@ const Login = () => {
               color: "white",
               cursor: "pointer",
               borderRadius: "5px",
+              minWidth: "60px",
             }}
           >
             {show ? "Hide" : "Show"}
           </button>
         </div>
       </div>
+
       <button
         onClick={submitHandler}
         style={{

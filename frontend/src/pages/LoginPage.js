@@ -8,8 +8,11 @@ const LoginPage = () => {
   return (
     <div
       style={{
-        maxWidth: "500px",
-        margin: "auto",
+        position: "absolute",
+        right: "50px",
+        top: "50%",
+        transform: "translateY(-50%)",
+        width: "500px",
         textAlign: "center",
         padding: "20px",
         fontFamily: "Arial, sans-serif",
@@ -17,22 +20,8 @@ const LoginPage = () => {
     >
       <div
         style={{
-          padding: "15px",
-          background: "#f8f9fa",
-          borderRadius: "20px",
-          marginBottom: "20px",
-          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-        }}
-      >
-        <h1 style={{ fontSize: "32px", fontWeight: "bold", color: "#333" }}>
-          Investment Recommendation System
-        </h1>
-      </div>
-
-      <div
-        style={{
           padding: "20px",
-          background: "#ffffff",
+          background: "rgba(255, 255, 255, 0.3)",
           borderRadius: "20px",
           boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
         }}
@@ -49,8 +38,7 @@ const LoginPage = () => {
             style={{
               padding: "10px",
               width: "50%",
-              background: activeTab === "login" ? "#28a745" : "#ddd",
-              color: "white",
+              background: activeTab === "login" ? "#28a745" : "#f8f9fa",
               border: "none",
               cursor: "pointer",
               fontSize: "16px",
@@ -65,8 +53,7 @@ const LoginPage = () => {
             style={{
               padding: "10px",
               width: "50%",
-              background: activeTab === "signup" ? "#28a745" : "#ddd",
-              color: "white",
+              background: activeTab === "signup" ? "#28a745" : "#f8f9fa",
               border: "none",
               cursor: "pointer",
               fontSize: "16px",
