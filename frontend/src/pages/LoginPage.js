@@ -79,7 +79,7 @@ const LoginPage = () => {
         </div>
 
         <div style={{ padding: "20px" }}>
-          {activeTab === "login" ? <Login /> : <Signup />}
+          {activeTab === "login" ? <Login /> : <SignUp />}
         </div>
       </div>
     </div>
