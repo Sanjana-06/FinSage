@@ -3,7 +3,7 @@ import React from 'react';
 const MutualFundPage = () => {
     
   return (
-    <div style={{backgroundColor: 'white', padding: '20px', height: '100vh', paddingLeft: '45px', paddingRight: '45px' }}>
+    <div style={{backgroundColor: 'white', padding: '20px', minHeight: '100vh', paddingLeft: '45px', paddingRight: '45px'}}>
       <h1 style={{ textAlign: 'left', fontFamily: "Arial, sans-serif", fontSize: '62px', marginBottom: '0px', marginTop: '0px'}}>
         Mutual Fund
       </h1>
