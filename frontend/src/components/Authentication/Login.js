@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { Eye, EyeOff } from "lucide-react";
 
 const Login = () => {
   const [show, setShow] = useState(false);
@@ -7,7 +8,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
 
-  const handleClick = () => {
+  const togglePasswordVisibility = () => {
     setShow(!show);
   };
 
@@ -69,7 +70,7 @@ const Login = () => {
 
       <div style={{ textAlign: "left", marginBottom: "10px" }}>
         <label>Password</label>
-        <div style={{ display: "flex", alignItems: "center" }}>
+        <div style={{ display: "flex", alignItems: "center", position: "relative" }}>
           <input
             type={show ? "text" : "password"}
             placeholder="Enter your password"
@@ -82,23 +83,21 @@ const Login = () => {
               padding: "10px",
               borderRadius: "5px",
               border: "1px solid #ccc",
+              paddingRight: "40px",
             }}
           />
-          <button
-            onClick={handleClick}
+          <span
+            onClick={togglePasswordVisibility}
             style={{
-              marginLeft: "5px",
-              padding: "8px",
-              border: "none",
-              background: "#28a745",
-              color: "white",
+              position: "absolute",
+              right: "10px",
               cursor: "pointer",
-              borderRadius: "5px",
-              minWidth: "60px",
+              color: "black",
+              marginTop: "6px"
             }}
           >
-            {show ? "Hide" : "Show"}
-          </button>
+            {show ? <EyeOff size={20} /> : <Eye size={20} />}
+          </span>
         </div>
       </div>
 

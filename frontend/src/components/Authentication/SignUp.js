@@ -1,17 +1,15 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { Eye, EyeOff } from "lucide-react";
 
 const SignUp = () => {
-  const [show, setShow] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState("");
-
-  const handleClick = () => {
-    setShow(!show);
-  };
 
   const submitHandler = async () => {
     if (!name || !email || !password || !confirmPassword) {
@@ -98,7 +96,7 @@ const SignUp = () => {
         <label>Password</label>
         <div style={{ display: "flex", alignItems: "center" }}>
           <input
-            type={show ? "text" : "password"}
+            type={showPassword ? "text" : "password"}
             placeholder="Enter a password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
@@ -112,19 +110,16 @@ const SignUp = () => {
             }}
           />
           <button
-            onClick={handleClick}
+            onClick={() => setShowPassword(!showPassword)}
             style={{
               marginLeft: "5px",
               padding: "8px",
               border: "none",
-              background: "#28a745",
-              color: "white",
+              background: "transparent",
               cursor: "pointer",
-              borderRadius: "5px",
-              minWidth: "60px",
             }}
           >
-            {show ? "Hide" : "Show"}
+            {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
           </button>
         </div>
       </div>
@@ -134,7 +129,7 @@ const SignUp = () => {
         <label>Confirm Password</label>
         <div style={{ display: "flex", alignItems: "center" }}>
           <input
-            type={show ? "text" : "password"}
+            type={showConfirmPassword ? "text" : "password"}
             placeholder="Confirm password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
@@ -148,19 +143,17 @@ const SignUp = () => {
             }}
           />
           <button
-            onClick={handleClick}
+            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
             style={{
               marginLeft: "5px",
               padding: "8px",
               border: "none",
-              background: "#28a745",
-              color: "white",
+              background: "transparent",
               cursor: "pointer",
-              borderRadius: "5px",
-              minWidth: "60px",
+              color: 'black'
             }}
           >
-            {show ? "Hide" : "Show"}
+            {showConfirmPassword ? <EyeOff size={20} /> : <Eye size={20} />}
           </button>
         </div>
       </div>
@@ -188,3 +181,4 @@ const SignUp = () => {
 };
 
 export default SignUp;
+
