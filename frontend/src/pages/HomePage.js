@@ -3,7 +3,7 @@ import React, { useState } from "react";
 const HomePage = () => {
   const [formData, setFormData] = useState({
     income: "",
-    riskLevel: "low",
+    riskLevel: "Select risk level",
     returnPeriod: "",
   });
 
@@ -103,6 +103,7 @@ const HomePage = () => {
                   borderRadius: "5px",
                 }}
               >
+                <option value="Select risk level">---Select---</option>
                 <option value="low">Low</option>
                 <option value="medium">Medium</option>
                 <option value="high">High</option>
@@ -143,7 +144,7 @@ const HomePage = () => {
               type="submit"
               style={{
                 padding: "10px",
-                background: "#28a745",
+                background: "#3AE059",
                 color: "white",
                 border: "none",
                 cursor: "pointer",
