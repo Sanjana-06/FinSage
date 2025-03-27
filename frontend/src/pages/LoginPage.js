@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import Login from "../components/Authentication/Login";
-import SignUp from "../components/Authentication/SignUp";
+import Login from "../Components/Authentication/Login";
+import SignUp from "../Components/Authentication/SignUp";
 
 const LoginPage = () => {
   const [activeTab, setActiveTab] = useState("login");

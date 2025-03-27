@@ -7,3 +7,15 @@
   /* background-color: #28a745; */
   background-position: center;
 }
+
+@media (max-width: 768px) {
+  .App {
+    background-size: contain;
+  }
+}
+
+@media (max-width: 480px) {
+  .App {
+    background-position: top;
+  }
+}

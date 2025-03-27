@@ -1,17 +1,17 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { Eye, EyeOff } from "lucide-react";
 
 const SignUp = () => {
-  const [show, setShow] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState("");
-
-  const handleClick = () => {
-    setShow(!show);
-  };
+  const navigate = useNavigate();
 
   const submitHandler = async () => {
     if (!name || !email || !password || !confirmPassword) {
@@ -25,13 +25,14 @@ const SignUp = () => {
     }
 
     try {
-      await axios.post(
+      const { data } = await axios.post(
         "/api/user/signup",
         { name, email, password },
         { headers: { "Content-Type": "application/json" } }
       );
 
-      setMessage("Registration Successful!");
+      localStorage.setItem("token", data.token);
+      navigate("/home");
     } catch (error) {
       setMessage("Error occurred!");
     }
@@ -96,10 +97,16 @@ const SignUp = () => {
       {/* Password Input */}
       <div style={{ textAlign: "left", marginBottom: "10px" }}>
         <label>Password</label>
-        <div style={{ display: "flex", alignItems: "center" }}>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            position: "relative",
+          }}
+        >
           <input
-            type={show ? "text" : "password"}
-            placeholder="Enter a password"
+            type={showPassword ? "text" : "password"}
+            placeholder="Enter your password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
@@ -109,35 +116,39 @@ const SignUp = () => {
               padding: "10px",
               borderRadius: "5px",
               border: "1px solid #ccc",
+              paddingRight: "40px",
             }}
           />
-          <button
-            onClick={handleClick}
+          <span
+            onClick={() => setShowPassword(!showPassword)}
             style={{
-              marginLeft: "5px",
-              padding: "8px",
-              border: "none",
-              background: "#28a745",
-              color: "white",
+              position: "absolute",
+              right: "10px",
               cursor: "pointer",
-              borderRadius: "5px",
-              minWidth: "60px",
+              color: "black",
+              marginTop: "6px",
             }}
           >
-            {show ? "Hide" : "Show"}
-          </button>
+            {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+          </span>
         </div>
       </div>
 
       {/* Confirm Password Input */}
       <div style={{ textAlign: "left", marginBottom: "10px" }}>
         <label>Confirm Password</label>
-        <div style={{ display: "flex", alignItems: "center" }}>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            position: "relative",
+          }}
+        >
           <input
-            type={show ? "text" : "password"}
+            type={showPassword ? "text" : "password"}
             placeholder="Confirm password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             required
             style={{
               flex: 1,
@@ -145,23 +156,21 @@ const SignUp = () => {
               padding: "10px",
               borderRadius: "5px",
               border: "1px solid #ccc",
+              paddingRight: "40px",
             }}
           />
-          <button
-            onClick={handleClick}
+          <span
+            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
             style={{
-              marginLeft: "5px",
-              padding: "8px",
-              border: "none",
-              background: "#28a745",
-              color: "white",
+              position: "absolute",
+              right: "10px",
               cursor: "pointer",
-              borderRadius: "5px",
-              minWidth: "60px",
+              color: "black",
+              marginTop: "6px",
             }}
           >
-            {show ? "Hide" : "Show"}
-          </button>
+            {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+          </span>
         </div>
       </div>
 
