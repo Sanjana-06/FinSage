@@ -148,7 +148,7 @@ const SignUp = () => {
             type={showPassword ? "text" : "password"}
             placeholder="Confirm password"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => setConfirmPassword(e.target.value)}
             required
             style={{
               flex: 1,
