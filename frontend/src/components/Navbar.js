@@ -103,11 +103,12 @@ const Navbar = () => {
 const styles = {
   navbar: {
     backgroundColor: "#00cc00",
-    paddingTop: "2px",
+    paddingTop: "5px",
     paddingBottom: "8px",
     display: "flex",
     justifyContent: "right",
     boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)",
+    height: "5vh",
   },
   navContainer: {
     display: "flex",

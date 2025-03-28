@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React,{useState} from "react";
 
-const HomePage = () => {
+const Recommend = () => {
   const [formData, setFormData] = useState({
     income: "",
     riskLevel: "Select risk level",
@@ -19,7 +19,9 @@ const HomePage = () => {
     setShowOptions(true);
   };
 
+  
   return (
+
     <div
       style={{
         margin: "auto",
@@ -30,6 +32,7 @@ const HomePage = () => {
         height: "100vh",
       }}
     >
+      <h1 style={{ textAlign: "left" }}>MutualFund Recommendation</h1>
       {/* Form Container */}
       <div
         style={{
@@ -161,30 +164,19 @@ const HomePage = () => {
 
       {/* New Div Below Form - Split into Two Sections */}
       {showOptions && (
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            marginTop: "30px",
-            width: "80%",
-            marginLeft: "auto",
-            marginRight: "auto",
-            gap: "20px", // Added space between left and right sections
-          }}
-        >
-          {/* Left Side - Options */}
           <div
             style={{
-              width: "48%",
+              marginTop: "20px",
               padding: "20px",
+              justifyContent: "center",
               background: "#f9f9f9",
               borderRadius: "10px",
               boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
             }}
           >
-            <h3>Investment Recommendation</h3>
+            <h3>Recommendations</h3>
             <ul style={{ listStyleType: "none", padding: "0" }}>
-              {["Option 1", "Option 2", "Option 3", "Option 4"].map(
+              {["Option 1", "Option 2", "Option 3", "Option 4","Option 5"].map(
                 (option, index) => (
                   <li
                     key={index}
@@ -212,27 +204,9 @@ const HomePage = () => {
               )}
             </ul>
           </div>
-
-          {/* Right Side - Blank Box */}
-          <div
-            style={{
-              width: "48%",
-              padding: "20px",
-              background: "",
-              borderRadius: "10px",
-              boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.3)",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              minHeight: "200px",
-            }}
-          >
-            {/* Empty Box */}
-          </div>
-        </div>
       )}
     </div>
   );
 };
 
-export default HomePage;
+export default Recommend;

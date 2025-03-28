@@ -4,16 +4,20 @@ import HomePage from "../Pages/HomePage";
 import MutualFundPage from "../Components/MutualFund/Home";
 import Layout from "../Components/Layout";
 import ProtectedRoute from "../Components/ProtectedRoute";
+import Recommend from "../Components/MutualFund/Recommendation";
+import AboutFund from "../Components/MutualFund/AboutFund";
 
 const AppRoutes = () => {
   return (
     <Routes>
       <Route path="/" element={<LoginPage />} />
       <Route element={<Layout />}>
-        <Route element={<ProtectedRoute />}>
+        {/* <Route element={<ProtectedRoute />}> */}
           <Route path="/home" element={<HomePage />} />
           <Route path="/mutualfund" element={<MutualFundPage />} />
-        </Route>
+          <Route path="/mutualfund/recommendation" element={<Recommend />} />
+          <Route path="/mutualfund/aboutfund" element={<AboutFund/>}/>
+        {/* </Route> */}
       </Route>
     </Routes>
   );
