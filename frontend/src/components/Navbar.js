@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Menu,
   User,
@@ -14,6 +14,13 @@ const Navbar = () => {
   const [isInvestmentOpen, setIsInvestmentOpen] = useState(false);
   const [isNewsOpen, setIsNewsOpen] = useState(false);
   const [isUserOpen, setIsUserOpen] = useState(false);
+
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/");
+  };
 
   return (
     <nav style={styles.navbar}>
@@ -95,9 +102,18 @@ const Navbar = () => {
                 <Link to="/account" style={styles.dropdownItem}>
                   Account
                 </Link>
-                <Link to="/logout" style={styles.dropdownItem}>
+                <button
+                  onClick={handleLogout}
+                  style={{
+                    ...styles.dropdownItem,
+                    background: "rgba(10, 25, 50)",
+                    border: "none",
+                    cursor: "pointer",
+                    textAlign: "left",
+                  }}
+                >
                   Logout
-                </Link>
+                </button>
               </div>
             )}
           </div>
