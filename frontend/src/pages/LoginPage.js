@@ -46,12 +46,12 @@ const LoginPage = () => {
           textTransform: "uppercase",
         }}
       >
-      <span style={{ color: "#FFD700", fontWeight: "bold" }}>
+      {/* <span style={{ color: "#FFD700", fontWeight: "bold" }}>
         <span style={{ fontSize: "50px" }}>F</span>
         <span style={{ fontSize: "40px", textTransform: "lowercase" }}>in</span>
         <span style={{ fontSize: "50px" }}>G</span>
         <span style={{ fontSize: "40px", textTransform: "lowercase" }}>rowth</span>
-      </span>
+      </span> */}
 
       </h1>
             <div

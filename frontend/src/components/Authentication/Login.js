@@ -37,9 +37,9 @@ const Login = ({ setIsLogin }) => {
   return (
     <div
       style={{
-        position: "absolute", // Add this to enable positioning
-        top: "17%", // Decrease value to move it UP
-        left: "1%", // Decrease value to move it LEFT
+        position: "absolute",
+        top: "17%",
+        left: "1%",
         width: "90%",
         maxWidth: "380px",
         margin: "auto",
@@ -50,14 +50,10 @@ const Login = ({ setIsLogin }) => {
         textAlign: "center",
       }}
     >
-      <h2 style={{ fontSize: "28px", fontWeight: "bold", color: "white" }}>
-        Login
-      </h2>
+      <h2 style={{ fontSize: "28px", fontWeight: "bold", color: "white" }}>Login</h2>
       {message && <p style={{ color: "red" }}>{message}</p>}
 
-      <div
-        style={{ textAlign: "left", marginBottom: "10px", color: "#D3D3D3" }}
-      >
+      <div style={{ textAlign: "left", marginBottom: "10px", color: "#D3D3D3" }}>
         <label>Email</label>
         <input
           type="email"
@@ -76,25 +72,37 @@ const Login = ({ setIsLogin }) => {
         />
       </div>
 
-      <div
-        style={{ textAlign: "left", marginBottom: "10px", color: "#D3D3D3" }}
-      >
+      <div style={{ textAlign: "left", marginBottom: "10px", color: "#D3D3D3", position: "relative" }}>
         <label>Password</label>
-        <input
-          type={"password"}
-          placeholder="Enter your password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-          style={{
-            width: "95%",
-            padding: "10px",
-            marginTop: "5px",
-            marginBottom: "5px",
-            borderRadius: "5px",
-            border: "1px solid #ccc",
-          }}
-        />
+        <div style={{ position: "relative" }}>
+          <input
+            type={show ? "text" : "password"}
+            placeholder="Enter your password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+            style={{
+              width: "95%",
+              padding: "10px",
+              marginTop: "5px",
+              marginBottom: "5px",
+              borderRadius: "5px",
+              border: "1px solid #ccc",
+            }}
+          />
+          <span
+            onClick={togglePasswordVisibility}
+            style={{
+              position: "absolute",
+              right: "10px",
+              top: "50%",
+              transform: "translateY(-50%)",
+              cursor: "pointer",
+            }}
+          >
+            {show ? <EyeOff color="black" /> : <Eye color="black" />}
+          </span>
+        </div>
       </div>
 
       <button

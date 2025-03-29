@@ -254,7 +254,6 @@ const GoldPage = () => {
               fontSize: "20px",
               lineHeight: "1.6",
               width: "60%",
-              textIndent: "2em",
             }}
           >
             Gold has been a valuable asset for centuries, serving as a medium of
@@ -299,7 +298,6 @@ const GoldPage = () => {
             textAlign: "justify",
             fontSize: "20px",
             lineHeight: "1.6",
-            textIndent: "2em",
           }}
         >
           One of the key advantages of gold investment is its ability to
@@ -320,7 +318,6 @@ const GoldPage = () => {
             textAlign: "justify",
             fontSize: "20px",
             lineHeight: "1.6",
-            textIndent: "2em",
           }}
         >
           Despite its benefits, gold investment also has some challenges. Unlike

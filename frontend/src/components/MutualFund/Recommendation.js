@@ -171,31 +171,63 @@ const Recommend = () => {
 
       {/* New Div Below Form - Split into Two Sections */}
       {showOptions && (
-          <div
+        <div
           style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
+            width: "80%",
+            maxWidth: "1000px",
+            margin: "auto",
+            padding: "20px",
+            backgroundColor: "rgba(255, 255, 255, 0.3)",
+            borderRadius: "10px",
+            backdropFilter: "blur(10px)",
+            boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.3)",
             marginTop: "30px",
-            width: "100%",
-            marginBottom: "50px",
+            textAlign: "center",
           }}
         >
+          <h2 style={{ marginBottom: "20px" }}>Recommendation</h2>
           <div
             style={{
-              width: "70%",
-              padding: "20px",
-              backgroundColor: "rgba(255, 255, 255, 0.3)",
-              borderRadius: "10px",
-              boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.3)",
               display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              minHeight: "200px",
+              flexDirection: "column",
+              gap: "15px",
             }}
-          ></div>
+          >
+            {[
+              { name: "Option 1", link: "https://example.com/option1" },
+              { name: "Option 2", link: "https://example.com/option2" },
+              { name: "Option 3", link: "https://example.com/option3" },
+              { name: "Option 4", link: "https://example.com/option4" },
+            ].map((option, index) => (
+              <div
+                key={index}
+                style={{
+                  backgroundColor: "white",
+                  color: "black",
+                  padding: "15px",
+                  borderRadius: "8px",
+                  textAlign: "center",
+                  fontWeight: "bold",
+                  boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
+                  width: "60%",
+                  margin: "auto",
+                }}
+              >
+                <a
+                  href={option.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    textDecoration: "none",
+                    color: "inherit",
+                  }}
+                >
+                  {option.name}
+                </a>
+              </div>
+            ))}
+          </div>
         </div>
-            
       )}
     </div>
   );

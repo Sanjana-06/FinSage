@@ -4,7 +4,8 @@ import { Eye, EyeOff } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const SignUp = ({ setIsLogin }) => {
-  const [show, setShow] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -12,9 +13,8 @@ const SignUp = ({ setIsLogin }) => {
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
 
-  const togglePasswordVisibility = () => {
-    setShow(!show);
-  };
+  const togglePasswordVisibility = () => setShowPassword(!showPassword);
+  const toggleConfirmPasswordVisibility = () => setShowConfirmPassword(!showConfirmPassword);
 
   const submitHandler = async () => {
     if (!name || !email || !password || !confirmPassword) {
@@ -47,10 +47,9 @@ const SignUp = ({ setIsLogin }) => {
       style={{
         position: "absolute",
         paddingTop: "10px",
-        top: "0.5%", // Moves the card UP
+        top: "0.5%",
         left: "-2%",
         width: "80%",
-        //height: "99%", // Increases height below
         maxWidth: "450px",
         margin: "auto",
         paddingLeft: "20px",
@@ -61,14 +60,10 @@ const SignUp = ({ setIsLogin }) => {
         textAlign: "center",
       }}
     >
-      <h2 style={{ fontSize: "28px", fontWeight: "bold", color: "white" }}>
-        Sign Up
-      </h2>
+      <h2 style={{ fontSize: "28px", fontWeight: "bold", color: "white" }}>Sign Up</h2>
       {message && <p style={{ color: "red" }}>{message}</p>}
 
-      <div
-        style={{ textAlign: "left", marginBottom: "10px", color: "#D3D3D3" }}
-      >
+      <div style={{ textAlign: "left", marginBottom: "10px", color: "#D3D3D3" }}>
         <label>Name</label>
         <input
           type="text"
@@ -76,20 +71,11 @@ const SignUp = ({ setIsLogin }) => {
           value={name}
           onChange={(e) => setName(e.target.value)}
           required
-          style={{
-            width: "95%",
-            padding: "10px",
-            marginTop: "5px",
-            marginBottom: "5px",
-            borderRadius: "5px",
-            border: "1px solid #ccc",
-          }}
+          style={{ width: "95%", padding: "10px", marginTop: "5px", marginBottom: "5px", borderRadius: "5px", border: "1px solid #ccc" }}
         />
       </div>
 
-      <div
-        style={{ textAlign: "left", marginBottom: "10px", color: "#D3D3D3" }}
-      >
+      <div style={{ textAlign: "left", marginBottom: "10px", color: "#D3D3D3" }}>
         <label>Email</label>
         <input
           type="email"
@@ -97,58 +83,44 @@ const SignUp = ({ setIsLogin }) => {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
-          style={{
-            width: "95%",
-            padding: "10px",
-            marginTop: "5px",
-            marginBottom: "5px",
-            borderRadius: "5px",
-            border: "1px solid #ccc",
-          }}
+          style={{ width: "95%", padding: "10px", marginTop: "5px", marginBottom: "5px", borderRadius: "5px", border: "1px solid #ccc" }}
         />
       </div>
 
-      <div
-        style={{ textAlign: "left", marginBottom: "10px", color: "#D3D3D3" }}
-      >
-        <label>Password</label>
-        <input
-          type={"password"}
-          placeholder="Enter your password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-          style={{
-            width: "95%",
-            padding: "10px",
-            marginTop: "5px",
-            marginBottom: "5px",
-            borderRadius: "5px",
-            border: "1px solid #ccc",
-          }}
-        />
-      </div>
-
-      <div
-        style={{ textAlign: "left", marginBottom: "10px", color: "#D3D3D3" }}
-      >
-        <label>Confirm Password</label>
-        <input
-          type="password"
-          placeholder="Confirm your password"
-          value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
-          required
-          style={{
-            width: "95%",
-            padding: "10px",
-            marginTop: "5px",
-            marginBottom: "5px",
-            borderRadius: "5px",
-            border: "1px solid #ccc",
-          }}
-        />
-      </div>
+      {[{ label: "Password", value: password, setValue: setPassword, show: showPassword, toggle: togglePasswordVisibility },
+        { label: "Confirm Password", value: confirmPassword, setValue: setConfirmPassword, show: showConfirmPassword, toggle: toggleConfirmPasswordVisibility }].map((field, index) => (
+        <div key={index} style={{ textAlign: "left", marginBottom: "10px", color: "#D3D3D3", position: "relative" }}>
+          <label>{field.label}</label>
+          <input
+            type={field.show ? "text" : "password"}
+            placeholder={`Enter your ${field.label.toLowerCase()}`}
+            value={field.value}
+            onChange={(e) => field.setValue(e.target.value)}
+            required
+            style={{
+              width: "95%",
+              padding: "10px",
+              marginTop: "1px",
+              marginBottom: "5px",
+              borderRadius: "5px",
+              border: "1px solid #ccc",
+            }}
+          />
+          {field.show ? (
+            <EyeOff
+              size={20}
+              style={{ position: "absolute", right: "10px", top: "60%", transform: "translateY(-50%)", cursor: "pointer", color: "black" }}
+              onClick={field.toggle}
+            />
+          ) : (
+            <Eye
+              size={20}
+              style={{ position: "absolute", right: "10px", top: "60%", transform: "translateY(-50%)", cursor: "pointer", color: "black" }}
+              onClick={field.toggle}
+            />
+          )}
+        </div>
+      ))}
 
       <button
         onClick={submitHandler}
@@ -169,15 +141,10 @@ const SignUp = ({ setIsLogin }) => {
       </button>
 
       <p style={{ marginTop: "15px", fontSize: "14px", color: "#D3D3D3" }}>
-        Already have an account?{" "}
+        Already have an account? {" "}
         <span
-          onClick={() => setIsLogin(true)} // Switch to login card
-          style={{
-            color: "#007bff",
-            cursor: "pointer",
-            textDecoration: "underline",
-            fontWeight: "bold",
-          }}
+          onClick={() => setIsLogin(true)}
+          style={{ color: "#007bff", cursor: "pointer", textDecoration: "underline", fontWeight: "bold" }}
         >
           Login here
         </span>
