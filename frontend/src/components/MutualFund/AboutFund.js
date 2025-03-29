@@ -9,12 +9,12 @@ const AboutFund = () => {
   };
 
   return (
-    <div style={{ backgroundColor: 'white', padding: '20px', minHeight: '100vh', paddingLeft: '45px', paddingRight: '45px' }}>
-      <h1 style={{ textAlign: 'left', fontFamily: "Arial, sans-serif", fontSize: '62px', marginBottom: '20px', marginTop: '0px' }}>
+    <div style={{ backgroundColor: "rgba(10, 25, 50)", padding: '20px', minHeight: '100vh', paddingLeft: '45px', paddingRight: '45px' }}>
+      <h1 style={{ paddingLeft:"9%",color:"white",textAlign: 'left', fontFamily: "Arial, sans-serif", marginBottom: '20px', marginTop: '10px' }}>
         About Fund
       </h1>
       
-      <div style={{ display: 'flex', alignItems: 'center', marginBottom: '20px' }}>
+      <div style={{ display: 'flex', alignItems: 'center', marginBottom: '20px',paddingLeft:"9%" }}>
         <div style={{ position: 'relative', width: '300px' }}>
           <Search style={{ position: 'absolute', left: '10px', top: '50%', transform: 'translateY(-50%)', color: '#ccc' }} />
           <input

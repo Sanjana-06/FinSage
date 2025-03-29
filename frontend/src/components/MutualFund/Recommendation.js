@@ -28,18 +28,25 @@ const Recommend = () => {
         textAlign: "center",
         paddingTop: "20px",
         fontFamily: "Arial, sans-serif",
-        backgroundColor: "#ffffff",
+        backgroundColor: "rgba(10, 25, 50)",
         height: "100vh",
+        color:"white",
+        
       }}
     >
-      <h1 style={{ textAlign: "left" }}>MutualFund Recommendation</h1>
+      <h1 style={{ textAlign: "left",paddingLeft:"9%",paddingBottom:"10px", }}>Mutual Fund Recommendation</h1>
       {/* Form Container */}
       <div
         style={{
           padding: "20px",
-          background: "#ffffff",
+          backgroundColor: "rgba(255, 255, 255, 0.3)",
           borderRadius: "20px",
           boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+          width: "80%",
+          margin: "auto",
+          maxWidth: "1000px",
+          backdropFilter: "blur(10px)",
+          marginBottom:"15px",
         }}
       >
         <form onSubmit={handleSubmit}>
@@ -146,8 +153,8 @@ const Recommend = () => {
               type="submit"
               style={{
                 padding: "10px",
-                background: "#00cc00",
-                color: "white",
+                background: "#4bcd3e",
+                color:"rgba(10, 25, 50)",
                 border: "none",
                 cursor: "pointer",
                 fontSize: "16px",
@@ -165,45 +172,30 @@ const Recommend = () => {
       {/* New Div Below Form - Split into Two Sections */}
       {showOptions && (
           <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            marginTop: "30px",
+            width: "100%",
+            marginBottom: "50px",
+          }}
+        >
+          <div
             style={{
-              marginTop: "20px",
+              width: "70%",
               padding: "20px",
-              justifyContent: "center",
-              background: "#f9f9f9",
+              backgroundColor: "rgba(255, 255, 255, 0.3)",
               borderRadius: "10px",
-              boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
+              boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.3)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              minHeight: "200px",
             }}
-          >
-            <h3>Recommendations</h3>
-            <ul style={{ listStyleType: "none", padding: "0" }}>
-              {["Option 1", "Option 2", "Option 3", "Option 4","Option 5"].map(
-                (option, index) => (
-                  <li
-                    key={index}
-                    style={{
-                      marginBottom: "10px",
-                      padding: "15px",
-                      background: "#ffffff",
-                      borderRadius: "8px",
-                      boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
-                      textAlign: "center",
-                    }}
-                  >
-                    <a
-                      href="#"
-                      style={{
-                        textDecoration: "none",
-                        color: "#007BFF",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      {option}
-                    </a>
-                  </li>
-                )
-              )}
-            </ul>
-          </div>
+          ></div>
+        </div>
+            
       )}
     </div>
   );

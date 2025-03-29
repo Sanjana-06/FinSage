@@ -1,63 +1,66 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Eye, EyeOff } from "lucide-react";
 
-const SignUp = () => {
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+const SignUp = ({ setIsLogin }) => {
+  const [show, setShow] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState("");
-  const navigate = useNavigate();
+
+  const togglePasswordVisibility = () => {
+    setShow(!show);
+  };
 
   const submitHandler = async () => {
     if (!name || !email || !password || !confirmPassword) {
-      setMessage("Please fill all the fields!");
+      setMessage("Please fill in all fields.");
       return;
     }
 
     if (password !== confirmPassword) {
-      setMessage("Passwords do not match!");
+      setMessage("Passwords do not match.");
       return;
     }
 
     try {
-      const { data } = await axios.post(
+      await axios.post(
         "/api/user/signup",
         { name, email, password },
         { headers: { "Content-Type": "application/json" } }
       );
 
-      localStorage.setItem("token", data.token);
-      navigate("/home");
+      setIsLogin(true); // Switch to login card after successful signup
     } catch (error) {
-      setMessage("Error occurred!");
+      setMessage("Signup failed. Try again.");
     }
   };
 
   return (
     <div
-      style={{
-        width: "90%",
-        maxWidth: "450px",
-        margin: "auto",
-        padding: "20px",
-        borderRadius: "15px",
-        background: "#f8f9fa",
-        boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-        textAlign: "center",
-      }}
-    >
-      <h2 style={{ fontSize: "28px", fontWeight: "bold", color: "#333" }}>
-        Sign Up
-      </h2>
+  style={{
+    position: "absolute",
+    paddingTop: "10px",
+    top: "0.5%", // Moves the card UP
+    left: "-2%",
+    width: "80%",
+    //height: "99%", // Increases height below
+    maxWidth: "450px",
+    margin: "auto",
+    paddingLeft: "20px",
+    paddingRight: "20px",
+    borderRadius: "15px",
+    background: "rgba(10, 25, 50)",
+    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+    textAlign: "center",
+  }}
+>
+      <h2 style={{ fontSize: "28px", fontWeight: "bold", color: "white" }}>Sign Up</h2>
       {message && <p style={{ color: "red" }}>{message}</p>}
 
-      {/* Name Input */}
-      <div style={{ textAlign: "left", marginBottom: "10px" }}>
+      <div style={{ textAlign: "left", marginBottom: "10px", color: "#D3D3D3" }}>
         <label>Name</label>
         <input
           type="text"
@@ -69,14 +72,14 @@ const SignUp = () => {
             width: "95%",
             padding: "10px",
             marginTop: "5px",
+            marginBottom: "5px",
             borderRadius: "5px",
             border: "1px solid #ccc",
           }}
         />
       </div>
 
-      {/* Email Input */}
-      <div style={{ textAlign: "left", marginBottom: "10px" }}>
+      <div style={{ textAlign: "left", marginBottom: "10px", color: "#D3D3D3" }}>
         <label>Email</label>
         <input
           type="email"
@@ -88,100 +91,59 @@ const SignUp = () => {
             width: "95%",
             padding: "10px",
             marginTop: "5px",
+            marginBottom: "5px",
             borderRadius: "5px",
             border: "1px solid #ccc",
           }}
         />
       </div>
 
-      {/* Password Input */}
-      <div style={{ textAlign: "left", marginBottom: "10px" }}>
+      <div style={{ textAlign: "left", marginBottom: "10px", color: "#D3D3D3" }}>
         <label>Password</label>
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            position: "relative",
-          }}
-        >
           <input
-            type={showPassword ? "text" : "password"}
+            type={"password"}
             placeholder="Enter your password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
             style={{
-              flex: 1,
-              marginTop: "5px",
+              width: "95%",
               padding: "10px",
+              marginTop: "5px",
+              marginBottom: "5px",
               borderRadius: "5px",
               border: "1px solid #ccc",
-              paddingRight: "40px",
             }}
           />
-          <span
-            onClick={() => setShowPassword(!showPassword)}
-            style={{
-              position: "absolute",
-              right: "10px",
-              cursor: "pointer",
-              color: "black",
-              marginTop: "6px",
-            }}
-          >
-            {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
-          </span>
-        </div>
+
       </div>
 
-      {/* Confirm Password Input */}
-      <div style={{ textAlign: "left", marginBottom: "10px" }}>
+      <div style={{ textAlign: "left", marginBottom: "10px", color: "#D3D3D3" }}>
         <label>Confirm Password</label>
-        <div
+        <input
+          type="password"
+          placeholder="Confirm your password"
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+          required
           style={{
-            display: "flex",
-            alignItems: "center",
-            position: "relative",
+            width: "95%",
+            padding: "10px",
+            marginTop: "5px",
+            marginBottom: "5px",
+            borderRadius: "5px",
+            border: "1px solid #ccc",
           }}
-        >
-          <input
-            type={showPassword ? "text" : "password"}
-            placeholder="Confirm password"
-            value={password}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            required
-            style={{
-              flex: 1,
-              marginTop: "5px",
-              padding: "10px",
-              borderRadius: "5px",
-              border: "1px solid #ccc",
-              paddingRight: "40px",
-            }}
-          />
-          <span
-            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-            style={{
-              position: "absolute",
-              right: "10px",
-              cursor: "pointer",
-              color: "black",
-              marginTop: "6px",
-            }}
-          >
-            {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
-          </span>
-        </div>
+        />
       </div>
 
-      {/* Submit Button */}
       <button
         onClick={submitHandler}
         style={{
           width: "100%",
           padding: "12px",
           marginTop: "15px",
-          background: "#28a745",
+          background: "#009900",
           color: "white",
           border: "none",
           cursor: "pointer",
@@ -192,6 +154,21 @@ const SignUp = () => {
       >
         Sign Up
       </button>
+
+      <p style={{ marginTop: "15px", fontSize: "14px", color: "#D3D3D3" }}>
+        Already have an account?{" "}
+        <span
+          onClick={() => setIsLogin(true)} // Switch to login card
+          style={{
+            color: "#007bff",
+            cursor: "pointer",
+            textDecoration: "underline",
+            fontWeight: "bold",
+          }}
+        >
+          Login here
+        </span>
+      </p>
     </div>
   );
 };

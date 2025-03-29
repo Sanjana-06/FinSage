@@ -3,7 +3,7 @@ import axios from "axios";
 import { Eye, EyeOff } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
-const Login = () => {
+const Login = ({ setIsLogin }) => {
   const [show, setShow] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -27,7 +27,7 @@ const Login = () => {
         { headers: { "Content-Type": "application/json" } }
       );
 
-      localStorage.setItem("token", data.token); // Store token
+      localStorage.setItem("token", data.token);
       navigate("/home");
     } catch (error) {
       setMessage("Invalid Credentials!");
@@ -37,22 +37,23 @@ const Login = () => {
   return (
     <div
       style={{
+        position: "absolute", // Add this to enable positioning
+        top:  "17%",           // Decrease value to move it UP
+        left: "1%",          // Decrease value to move it LEFT
         width: "90%",
-        maxWidth: "450px",
+        maxWidth: "380px",
         margin: "auto",
         padding: "20px",
         borderRadius: "15px",
-        background: "#f8f9fa",
+        background: "rgba(10, 25, 50)",
         boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
         textAlign: "center",
       }}
-    >
-      <h2 style={{ fontSize: "28px", fontWeight: "bold", color: "#333" }}>
-        Login
-      </h2>
+  >
+      <h2 style={{ fontSize: "28px", fontWeight: "bold", color: "white" }}>Login</h2>
       {message && <p style={{ color: "red" }}>{message}</p>}
 
-      <div style={{ textAlign: "left", marginBottom: "10px" }}>
+      <div style={{ textAlign: "left", marginBottom: "10px", color: "#D3D3D3" }}>
         <label>Email</label>
         <input
           type="email"
@@ -71,43 +72,24 @@ const Login = () => {
         />
       </div>
 
-      <div style={{ textAlign: "left", marginBottom: "10px" }}>
+      <div style={{ textAlign: "left", marginBottom: "10px", color: "#D3D3D3" }}>
         <label>Password</label>
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            position: "relative",
-          }}
-        >
           <input
-            type={show ? "text" : "password"}
+            type={"password"}
             placeholder="Enter your password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
             style={{
-              flex: 1,
-              marginTop: "5px",
+              width: "95%",
               padding: "10px",
+              marginTop: "5px",
+              marginBottom: "5px",
               borderRadius: "5px",
               border: "1px solid #ccc",
-              paddingRight: "40px",
             }}
           />
-          <span
-            onClick={togglePasswordVisibility}
-            style={{
-              position: "absolute",
-              right: "10px",
-              cursor: "pointer",
-              color: "black",
-              marginTop: "6px",
-            }}
-          >
-            {show ? <EyeOff size={20} /> : <Eye size={20} />}
-          </span>
-        </div>
+
       </div>
 
       <button
@@ -116,7 +98,7 @@ const Login = () => {
           width: "100%",
           padding: "12px",
           marginTop: "15px",
-          background: "#28a745",
+          background: "#009900",
           color: "white",
           border: "none",
           cursor: "pointer",
@@ -127,6 +109,21 @@ const Login = () => {
       >
         Login
       </button>
+
+      <p style={{ marginTop: "15px", fontSize: "14px", color: "#D3D3D3" }}>
+        Not registered?{" "}
+        <span
+          onClick={() => setIsLogin(false)}
+          style={{
+            color: "#007bff",
+            cursor: "pointer",
+            textDecoration: "underline",
+            fontWeight: "bold",
+          }}
+        >
+          Sign up here
+        </span>
+      </p>
     </div>
   );
 };

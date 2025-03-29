@@ -3,70 +3,72 @@ import Login from "../Components/Authentication/Login";
 import SignUp from "../Components/Authentication/SignUp";
 
 const LoginPage = () => {
-  const [activeTab, setActiveTab] = useState("login");
+  const [isLogin, setIsLogin] = useState(true);
 
   return (
     <div
       style={{
-        position: "absolute",
-        right: "50px",
-        top: "50%",
-        transform: "translateY(-50%)",
-        width: "500px",
-        textAlign: "center",
-        padding: "20px",
-        fontFamily: "Arial, sans-serif",
+        position: "relative",
+        width: "100vw",
+        height: "100vh",
+        background: "rgba(255, 255, 255, 0.1)",
       }}
     >
-      <div
+      <video
+        autoPlay
+        loop
+        muted
         style={{
-          padding: "20px",
-          background: "rgba(255, 255, 255, 0.3)",
-          borderRadius: "20px",
-          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+          objectFit: "cover",
+          zIndex: -1,
         }}
       >
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-around",
-            marginBottom: "10px",
-          }}
-        >
-          <button
-            onClick={() => setActiveTab("login")}
-            style={{
-              padding: "10px",
-              width: "50%",
-              background: activeTab === "login" ? "#28a745" : "#f8f9fa",
-              border: "none",
-              cursor: "pointer",
-              fontSize: "16px",
-              fontWeight: "bold",
-              borderRadius: "10px",
-            }}
-          >
-            Login
-          </button>
-          <button
-            onClick={() => setActiveTab("signup")}
-            style={{
-              padding: "10px",
-              width: "50%",
-              background: activeTab === "signup" ? "#28a745" : "#f8f9fa",
-              border: "none",
-              cursor: "pointer",
-              fontSize: "16px",
-              fontWeight: "bold",
-              borderRadius: "10px",
-            }}
-          >
-            Sign Up
-          </button>
-        </div>
+        <source src="/BackgroundVideo.mp4" type="video/mp4" />
+      </video>
 
+      <h1
+        style={{
+          position: "absolute",
+          top: "50px",
+          left: "50%",
+          transform: "translateX(-50%)",
+          fontSize: "42px",
+          fontWeight: "bold",
+          fontFamily: "'Orbitron', sans-serif",
+          color: "#FFA500", 
+          textShadow: "0px 0px 10px rgba(255, 165, 0, 0.8), 0px 0px 20px rgba(255, 165, 0, 0.5)", // Strong glow effect
+          letterSpacing: "3px",
+          textTransform: "uppercase",
+        }}
+      >
+      <span style={{ color: "#FFD700", fontWeight: "bold" }}>
+        <span style={{ fontSize: "50px" }}>F</span>
+        <span style={{ fontSize: "40px", textTransform: "lowercase" }}>in</span>
+        <span style={{ fontSize: "50px" }}>G</span>
+        <span style={{ fontSize: "40px", textTransform: "lowercase" }}>rowth</span>
+      </span>
+
+      </h1>
+            <div
+              style={{
+                position: "absolute",
+                right: "350px",
+                top: "55%",
+                transform: "translateY(-50%)",
+                width: "450px",
+                height: "450px",
+                textAlign: "center",
+                padding: "20px",
+                fontFamily: "Arial, sans-serif",
+              }}
+        >
         <div style={{ padding: "20px" }}>
-          {activeTab === "login" ? <Login /> : <SignUp />}
+          {isLogin ? <Login setIsLogin={setIsLogin} /> : <SignUp setIsLogin={setIsLogin} />}
         </div>
       </div>
     </div>

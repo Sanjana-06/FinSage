@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { Menu, User, ChevronDown, BarChart3, Newspaper } from "lucide-react";
+import { Menu, User, ChevronDown, BarChart3, Newspaper,Bot,TrendingUp } from "lucide-react";
+
 
 const Navbar = () => {
   const [isInvestmentOpen, setIsInvestmentOpen] = useState(false);
@@ -11,17 +12,21 @@ const Navbar = () => {
     <nav style={styles.navbar}>
       <div style={styles.navContainer}>
         <div style={styles.navLinks}>
+            <Link to="/chatbot" style={styles.navItem}>
+              <Bot size={25} /> ChatBot
+            </Link>
           <div
             style={styles.navItem}
             onMouseEnter={() => setIsInvestmentOpen(true)}
             onMouseLeave={() => setIsInvestmentOpen(false)}
           >
+            
             <button style={styles.navBtn}>
-              Investment Plan <ChevronDown size={16} />
+            <TrendingUp size={18} /> Investment Plan <ChevronDown size={16} />
             </button>
             {isInvestmentOpen && (
               <div style={styles.dropdown}>
-                <Link to="/mutual-fund" style={styles.dropdownItem}>
+                <Link to="/mutualfund" style={styles.dropdownItem}>
                   Mutual Fund
                 </Link>
                 <Link to="/fixed-deposit" style={styles.dropdownItem}>
@@ -102,12 +107,12 @@ const Navbar = () => {
 
 const styles = {
   navbar: {
-    backgroundColor: "#00cc00",
+    backgroundColor: "#4bcd3e",
     paddingTop: "5px",
     paddingBottom: "8px",
     display: "flex",
     justifyContent: "right",
-    boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)",
+    boxShadow: "0px 4px 12px rgba(0, 0, 255, 0.6)",
     height: "5vh",
   },
   navContainer: {
@@ -124,7 +129,7 @@ const styles = {
   },
   navItem: {
     position: "relative",
-    color: "white",
+    color: "rgba(10, 25, 50)",
     textDecoration: "none",
     fontSize: "16px",
     cursor: "pointer",
@@ -135,7 +140,7 @@ const styles = {
   navBtn: {
     background: "none",
     border: "none",
-    color: "white",
+    color: "rgba(10, 25, 50)",
     fontSize: "16px",
     display: "flex",
     alignItems: "center",
@@ -146,7 +151,7 @@ const styles = {
     position: "absolute",
     top: "100%",
     right: "0", // Change this to align the profile dropdown to the left
-    background: "white",
+    background: "rgba(10, 25, 50)",
     display: "flex",
     flexDirection: "column",
     borderRadius: "5px",
@@ -156,7 +161,7 @@ const styles = {
     width: "120px",
   },
   dropdownItem: {
-    color: "black",
+    color: "white",
     padding: "4px 2px",
     textDecoration: "none",
     fontSize: "14px",
@@ -165,7 +170,7 @@ const styles = {
     position: "absolute",
     top: "100%",
     right: "0",
-    background: "white",
+    background: "rgba(10, 25, 50)",
     display: "flex",
     flexDirection: "column",
     borderRadius: "5px",
@@ -173,6 +178,7 @@ const styles = {
     boxShadow: "0px 2px 8px rgba(0, 0, 0, 0.3)",
     zIndex: "10",
     width: "90px",
+    color:"white",
   },
   menuBtn: {
     display: "none",

@@ -3,7 +3,7 @@ import React from 'react';
 const MutualFundPage = () => {
     
   return (
-    <div style={{backgroundColor: 'white', padding: '20px', minHeight: '100vh', paddingLeft: '45px', paddingRight: '45px'}}>
+    <div style={{color:"white",backgroundColor: "rgba(10, 25, 50)", padding: '20px', minHeight: '100vh', paddingLeft: '45px', paddingRight: '45px'}}>
       <h1 style={{ textAlign: 'left', fontFamily: "Arial, sans-serif", fontSize: '62px', marginBottom: '0px', marginTop: '0px'}}>
         Mutual Fund
       </h1>
@@ -24,10 +24,10 @@ const MutualFundPage = () => {
       </div>
 
       <div style={{ textAlign: 'center', marginLeft: '-50px' }}>
-        <button style={{ backgroundColor: '#3AE059', color: 'black', border: 'none', padding: '12px 25px', margin: '10px', cursor: 'pointer', borderRadius: '5px', fontWeight: 'bold', fontSize: '17px' }}>
+        <button style={{ backgroundColor: '#4bcd3e', color: 'black', border: 'none', padding: '12px 25px', margin: '10px', cursor: 'pointer', borderRadius: '5px', fontWeight: 'bold', fontSize: '17px' }}>
           Recommendation
         </button>
-        <button style={{ backgroundColor: '#3AE059', color: 'black', border: 'none', padding: '12px 25px', margin: '10px', cursor: 'pointer', borderRadius: '5px', fontWeight: 'bold', fontSize: '17px' }}>
+        <button style={{ backgroundColor: '#4bcd3e', color: 'black', border: 'none', padding: '12px 25px', margin: '10px', cursor: 'pointer', borderRadius: '5px', fontWeight: 'bold', fontSize: '17px' }}>
           About Fund
         </button>
       </div>
