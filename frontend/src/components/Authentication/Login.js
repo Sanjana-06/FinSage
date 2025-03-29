@@ -38,8 +38,8 @@ const Login = ({ setIsLogin }) => {
     <div
       style={{
         position: "absolute", // Add this to enable positioning
-        top:  "17%",           // Decrease value to move it UP
-        left: "1%",          // Decrease value to move it LEFT
+        top: "17%", // Decrease value to move it UP
+        left: "1%", // Decrease value to move it LEFT
         width: "90%",
         maxWidth: "380px",
         margin: "auto",
@@ -49,11 +49,15 @@ const Login = ({ setIsLogin }) => {
         boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
         textAlign: "center",
       }}
-  >
-      <h2 style={{ fontSize: "28px", fontWeight: "bold", color: "white" }}>Login</h2>
+    >
+      <h2 style={{ fontSize: "28px", fontWeight: "bold", color: "white" }}>
+        Login
+      </h2>
       {message && <p style={{ color: "red" }}>{message}</p>}
 
-      <div style={{ textAlign: "left", marginBottom: "10px", color: "#D3D3D3" }}>
+      <div
+        style={{ textAlign: "left", marginBottom: "10px", color: "#D3D3D3" }}
+      >
         <label>Email</label>
         <input
           type="email"
@@ -72,24 +76,25 @@ const Login = ({ setIsLogin }) => {
         />
       </div>
 
-      <div style={{ textAlign: "left", marginBottom: "10px", color: "#D3D3D3" }}>
+      <div
+        style={{ textAlign: "left", marginBottom: "10px", color: "#D3D3D3" }}
+      >
         <label>Password</label>
-          <input
-            type={"password"}
-            placeholder="Enter your password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            style={{
-              width: "95%",
-              padding: "10px",
-              marginTop: "5px",
-              marginBottom: "5px",
-              borderRadius: "5px",
-              border: "1px solid #ccc",
-            }}
-          />
-
+        <input
+          type={"password"}
+          placeholder="Enter your password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+          style={{
+            width: "95%",
+            padding: "10px",
+            marginTop: "5px",
+            marginBottom: "5px",
+            borderRadius: "5px",
+            border: "1px solid #ccc",
+          }}
+        />
       </div>
 
       <button

@@ -1,66 +1,71 @@
 import os
+from sqlalchemy import Column, Integer, String, create_engine
+from sqlalchemy.orm import declarative_base, sessionmaker
 from flask import Flask, request, jsonify
-from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
 from flask_cors import CORS
-from flask_migrate import Migrate
 from dotenv import load_dotenv
 
 # Load environment variables
 load_dotenv()
 
 app = Flask(__name__)
-
-# Database Configuration
-app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL")
-app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-app.config["JWT_SECRET_KEY"] = os.getenv("JWT_SECRET_KEY")
-
-db = SQLAlchemy(app)
-bcrypt = Bcrypt(app)
-jwt = JWTManager(app)
 CORS(app)
-migrate = Migrate(app, db)
+bcrypt = Bcrypt(app)
+app.config["JWT_SECRET_KEY"] = "Innovate48"
+jwt = JWTManager(app)
+
+CLOUD_DB_PATH = "sqlitecloud://cao9eoaohk.g1.sqlite.cloud:8860/Users?apikey=iGf9Q3gAgTLSIYtyquhJjvWssRdKijAZkwlSFibFsp0"
+
+# Create the database engine
+engine = create_engine(CLOUD_DB_PATH)
+SessionLocal = sessionmaker(bind=engine)
+Base = declarative_base()
 
 # User Model
-class User(db.Model):
+class User(Base):
     __tablename__ = "users"
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100), nullable=False)
-    email = db.Column(db.String(100), unique=True, nullable=False)
-    password = db.Column(db.String(200), nullable=False)
+    id = Column(Integer, primary_key=True)
+    name = Column(String(100), nullable=False)
+    email = Column(String(100), unique=True, nullable=False)
+    password = Column(String(200), nullable=False)
 
-# User Signup
+# Create Tables
+Base.metadata.create_all(bind=engine)
+
+# User Signup Route
 @app.route("/api/user/signup", methods=["POST"])
 def signup():
+    session = SessionLocal()
     data = request.json
-    name = data.get("name")
-    email = data.get("email")
-    password = data.get("password")
+    name, email, password = data.get("name"), data.get("email"), data.get("password")
 
     if not name or not email or not password:
         return jsonify({"message": "All fields are required"}), 400
 
-    existing_user = User.query.filter_by(email=email).first()
+    existing_user = session.query(User).filter_by(email=email).first()
     if existing_user:
         return jsonify({"message": "User already exists"}), 400
 
     hashed_password = bcrypt.generate_password_hash(password).decode("utf-8")
     new_user = User(name=name, email=email, password=hashed_password)
-    db.session.add(new_user)
-    db.session.commit()
+    
+    session.add(new_user)
+    session.commit()
+    session.close()
 
     return jsonify({"message": "User registered successfully", "redirect": "http://localhost:3000/home"}), 201
 
-# User Login
+# User Login Route
 @app.route("/api/user/login", methods=["POST"])
 def login():
+    session = SessionLocal()
     data = request.json
-    email = data.get("email")
-    password = data.get("password")
+    email, password = data.get("email"), data.get("password")
 
-    user = User.query.filter_by(email=email).first()
+    user = session.query(User).filter_by(email=email).first()
+    session.close()
 
     if user and bcrypt.check_password_hash(user.password, password):
         access_token = create_access_token(identity=user.id)
@@ -72,8 +77,11 @@ def login():
 @app.route("/api/user/profile", methods=["GET"])
 @jwt_required()
 def profile():
+    session = SessionLocal()
     user_id = get_jwt_identity()
-    user = User.query.get(user_id)
+    user = session.query(User).get(user_id)
+    session.close()
+
     if not user:
         return jsonify({"message": "User not found"}), 404
 

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Eye, EyeOff } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const SignUp = ({ setIsLogin }) => {
   const [show, setShow] = useState(false);
@@ -9,6 +10,7 @@ const SignUp = ({ setIsLogin }) => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState("");
+  const navigate = useNavigate();
 
   const togglePasswordVisibility = () => {
     setShow(!show);
@@ -26,13 +28,15 @@ const SignUp = ({ setIsLogin }) => {
     }
 
     try {
-      await axios.post(
+      const { data } = await axios.post(
         "/api/user/signup",
         { name, email, password },
         { headers: { "Content-Type": "application/json" } }
       );
 
-      setIsLogin(true); // Switch to login card after successful signup
+      setIsLogin(true);
+      localStorage.setItem("token", data.token);
+      navigate("/home");
     } catch (error) {
       setMessage("Signup failed. Try again.");
     }
@@ -40,27 +44,31 @@ const SignUp = ({ setIsLogin }) => {
 
   return (
     <div
-  style={{
-    position: "absolute",
-    paddingTop: "10px",
-    top: "0.5%", // Moves the card UP
-    left: "-2%",
-    width: "80%",
-    //height: "99%", // Increases height below
-    maxWidth: "450px",
-    margin: "auto",
-    paddingLeft: "20px",
-    paddingRight: "20px",
-    borderRadius: "15px",
-    background: "rgba(10, 25, 50)",
-    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-    textAlign: "center",
-  }}
->
-      <h2 style={{ fontSize: "28px", fontWeight: "bold", color: "white" }}>Sign Up</h2>
+      style={{
+        position: "absolute",
+        paddingTop: "10px",
+        top: "0.5%", // Moves the card UP
+        left: "-2%",
+        width: "80%",
+        //height: "99%", // Increases height below
+        maxWidth: "450px",
+        margin: "auto",
+        paddingLeft: "20px",
+        paddingRight: "20px",
+        borderRadius: "15px",
+        background: "rgba(10, 25, 50)",
+        boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+        textAlign: "center",
+      }}
+    >
+      <h2 style={{ fontSize: "28px", fontWeight: "bold", color: "white" }}>
+        Sign Up
+      </h2>
       {message && <p style={{ color: "red" }}>{message}</p>}
 
-      <div style={{ textAlign: "left", marginBottom: "10px", color: "#D3D3D3" }}>
+      <div
+        style={{ textAlign: "left", marginBottom: "10px", color: "#D3D3D3" }}
+      >
         <label>Name</label>
         <input
           type="text"
@@ -79,7 +87,9 @@ const SignUp = ({ setIsLogin }) => {
         />
       </div>
 
-      <div style={{ textAlign: "left", marginBottom: "10px", color: "#D3D3D3" }}>
+      <div
+        style={{ textAlign: "left", marginBottom: "10px", color: "#D3D3D3" }}
+      >
         <label>Email</label>
         <input
           type="email"
@@ -98,27 +108,30 @@ const SignUp = ({ setIsLogin }) => {
         />
       </div>
 
-      <div style={{ textAlign: "left", marginBottom: "10px", color: "#D3D3D3" }}>
+      <div
+        style={{ textAlign: "left", marginBottom: "10px", color: "#D3D3D3" }}
+      >
         <label>Password</label>
-          <input
-            type={"password"}
-            placeholder="Enter your password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            style={{
-              width: "95%",
-              padding: "10px",
-              marginTop: "5px",
-              marginBottom: "5px",
-              borderRadius: "5px",
-              border: "1px solid #ccc",
-            }}
-          />
-
+        <input
+          type={"password"}
+          placeholder="Enter your password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+          style={{
+            width: "95%",
+            padding: "10px",
+            marginTop: "5px",
+            marginBottom: "5px",
+            borderRadius: "5px",
+            border: "1px solid #ccc",
+          }}
+        />
       </div>
 
-      <div style={{ textAlign: "left", marginBottom: "10px", color: "#D3D3D3" }}>
+      <div
+        style={{ textAlign: "left", marginBottom: "10px", color: "#D3D3D3" }}
+      >
         <label>Confirm Password</label>
         <input
           type="password"

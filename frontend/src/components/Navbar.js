@@ -1,7 +1,14 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { Menu, User, ChevronDown, BarChart3, Newspaper,Bot,TrendingUp } from "lucide-react";
-
+import {
+  Menu,
+  User,
+  ChevronDown,
+  BarChart3,
+  Newspaper,
+  Bot,
+  TrendingUp,
+} from "lucide-react";
 
 const Navbar = () => {
   const [isInvestmentOpen, setIsInvestmentOpen] = useState(false);
@@ -12,17 +19,16 @@ const Navbar = () => {
     <nav style={styles.navbar}>
       <div style={styles.navContainer}>
         <div style={styles.navLinks}>
-            <Link to="/chatbot" style={styles.navItem}>
-              <Bot size={25} /> ChatBot
-            </Link>
+          <Link to="/chatbot" style={styles.navItem}>
+            <Bot size={25} /> ChatBot
+          </Link>
           <div
             style={styles.navItem}
             onMouseEnter={() => setIsInvestmentOpen(true)}
             onMouseLeave={() => setIsInvestmentOpen(false)}
           >
-            
             <button style={styles.navBtn}>
-            <TrendingUp size={18} /> Investment Plan <ChevronDown size={16} />
+              <TrendingUp size={18} /> Investment Plan <ChevronDown size={16} />
             </button>
             {isInvestmentOpen && (
               <div style={styles.dropdown}>
@@ -178,7 +184,7 @@ const styles = {
     boxShadow: "0px 2px 8px rgba(0, 0, 0, 0.3)",
     zIndex: "10",
     width: "90px",
-    color:"white",
+    color: "white",
   },
   menuBtn: {
     display: "none",
