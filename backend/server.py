@@ -1,13 +1,13 @@
 import os
+from flask import Flask, request, jsonify
 from sqlalchemy import Column, Integer, String, create_engine
 from sqlalchemy.orm import declarative_base, sessionmaker
-from flask import Flask, request, jsonify
 from flask_bcrypt import Bcrypt
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
 from flask_cors import CORS
 from dotenv import load_dotenv
-
-#pip install flask flask-bcrypt flask-jwt-extended flask-cors python-dotenv sqlitecloud sqlalchemy-sqlitecloud
+import fdanalysis
+import rdanalysis
 
 # Load environment variables
 load_dotenv()
@@ -88,6 +88,42 @@ def profile():
         return jsonify({"message": "User not found"}), 404
 
     return jsonify({"name": user.name, "email": user.email})
+
+# FD Analysis Route
+@app.route("/api/fd-analysis", methods=["POST"])
+def fd_analysis():
+    data = request.json
+    amount = data.get("amount")
+    term = data.get("term")
+
+    if not amount or not term:
+        return jsonify({"error": "Both Amount and Term are required"}), 400
+
+    try:
+        amount = float(amount)
+        term = int(term)
+    except ValueError:
+        return jsonify({"error": "Invalid input format"}), 400
+
+    file_path = "top_20_banks_fd_rates.csv"
+    result = fdanalysis.get_top_5_banks(file_path, amount, term)
+
+    return jsonify(result)
+
+# RD Analysis Route
+@app.route("/api/rd-analysis", methods=["POST"])
+def rd_analysis():
+    data = request.json
+    amount = data.get("amount")
+    term = data.get("term")
+
+    if not amount or not term:
+        return jsonify({"error": "Both amount and term are required"}), 400
+
+    rd_data_path = "rd_interest_rates.csv"
+    result = rdanalysis.get_top_5_banks(amount, term, rd_data_path)
+
+    return jsonify(result)
 
 if __name__ == "__main__":
     app.run(debug=True)
