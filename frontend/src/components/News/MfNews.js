@@ -1,5 +1,5 @@
 import React from "react";
-import { PieChart } from "lucide-react";
+import { Banknote } from "lucide-react";
 
 const MfNews = () => {
   return (
@@ -15,7 +15,7 @@ const MfNews = () => {
       }}
     >
       <h1 style={{ color: "white", fontSize: "32px", display: "flex", alignItems: "center", gap: "10px",paddingLeft:"9%" }}>
-        MutualFund <PieChart size={32} color="blue" />
+        MutualFund <Banknote size={32} color="green" />
       </h1>
       
       <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", gap: "10px", padding: "20px",paddingLeft:"9%"}}>
