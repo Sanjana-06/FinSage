@@ -42,10 +42,10 @@ const Navbar = () => {
                 <Link to="/mutualfund" style={styles.dropdownItem}>
                   Mutual Fund
                 </Link>
-                <Link to="/fixed-deposit" style={styles.dropdownItem}>
+                <Link to="/fixedDeposit" style={styles.dropdownItem}>
                   Fixed Deposit
                 </Link>
-                <Link to="/recurring-deposit" style={styles.dropdownItem}>
+                <Link to="/recurringDeposit" style={styles.dropdownItem}>
                   Recurring Deposit
                 </Link>
                 <Link to="/gold" style={styles.dropdownItem}>
@@ -71,7 +71,7 @@ const Navbar = () => {
             </button>
             {isNewsOpen && (
               <div style={styles.dropdown}>
-                <Link to="/news/general" style={styles.dropdownItem}>
+                <Link to="/news/trending" style={styles.dropdownItem}>
                   Trending
                 </Link>
                 <Link to="/news/gold" style={styles.dropdownItem}>
@@ -80,7 +80,7 @@ const Navbar = () => {
                 <Link to="/news/stocks" style={styles.dropdownItem}>
                   Stock
                 </Link>
-                <Link to="/news/mutual-fund" style={styles.dropdownItem}>
+                <Link to="/news/mutualfund" style={styles.dropdownItem}>
                   MutualFund
                 </Link>
               </div>

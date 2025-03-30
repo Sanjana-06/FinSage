@@ -22,7 +22,7 @@ const MutualFundPage = () => {
         color: "white",
         backgroundColor: "rgba(10, 25, 50)",
         padding: "20px",
-        height: "auto",
+        height: "100vh",
         paddingLeft: "45px",
         paddingRight: "70px",
       }}
