@@ -219,7 +219,10 @@ const FDPage = () => {
           <input
             type="text"
             value={filterText}
-            onChange={(e) => setFilterText(e.target.value)}
+            onChange={(e) => {
+              setFilterText(e.target.value);
+              setCurrentPage(1); 
+            }}
             placeholder="Search by Bank Name..."
             style={{
               display: "block",
@@ -358,19 +361,24 @@ const FDPage = () => {
           What is Fixed Deposit?
         </h1>
 
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            width: "100%",
+          }}
+        >
+
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.4 }}
           style={{
             textAlign: "justify",
-            fontSize: "20px",
-            lineHeight: "1.6",
-            width: "100%", // Increased width
-            maxWidth: "1000px", // Prevents overflow
-            margin: "0 auto 0 1%", // Centers the paragraph
-            padding: "10px", // Adds some space around
-            color: "white", // Ensures visibility
+              fontSize: "20px",
+              lineHeight: "1.6",
+              width: "100%", // Ensures visibility
           }}
         >
           A Fixed Deposit (FD) is a financial instrument offered by banks and
@@ -408,7 +416,8 @@ const FDPage = () => {
           nomination facilities, ensuring the smooth transfer of funds to
           beneficiaries in unforeseen circumstances. These features make FDs
           versatile and efficient savings instruments for a variety of needs
-        </motion.p>
+        </motion.p>            
+        </div>
       </div>
     </div>
   );

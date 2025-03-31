@@ -218,7 +218,10 @@ const RDPage = () => {
           <input
             type="text"
             value={filterText}
-            onChange={(e) => setFilterText(e.target.value)}
+            onChange={(e) => {
+              setFilterText(e.target.value);
+              setCurrentPage(1); 
+            }}
             placeholder="Search by Bank Name..."
             style={{
               display: "block",
@@ -356,20 +359,23 @@ const RDPage = () => {
         <h1 style={{ color: "#4bcd3e", fontSize: "42px", textAlign: "center" }}>
           What is Recurring Deposit?
         </h1>
-
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            width: "100%",
+          }}
+        >
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.4 }}
           style={{
             textAlign: "justify",
-            fontSize: "20px",
-            lineHeight: "1.6",
-            width: "100%", // Increased width
-            maxWidth: "1000px", // Prevents overflow
-            margin: "0 auto 0 1%", // Centers the paragraph
-            padding: "10px", // Adds some space around
-            color: "white", // Ensures visibility
+              fontSize: "20px",
+              lineHeight: "1.6",
+              width: "100%", // Ensures visibility
           }}
         >
           A Recurring Deposit (RD) is a type of term deposit offered by banks
@@ -398,6 +404,7 @@ const RDPage = () => {
           safe and convenient way to build savings over time while earning a
           fixed return on investment.
         </motion.p>
+        </div>
       </div>
     </div>
   );
