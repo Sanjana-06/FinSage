@@ -1,6 +1,6 @@
 import pandas as pd
 
-def get_top_5_banks(file_path, amount, return_years):
+def get_top_banks(file_path, amount, return_years):
     # Load the CSV file
     df_fd_rates = pd.read_csv(file_path)
 
@@ -32,13 +32,13 @@ def get_top_5_banks(file_path, amount, return_years):
     df_selected["Maturity Amount"] = round(amount * (1 + df_selected["Interest Rate (%)"])**return_years, 2)
 
     # Sort by highest maturity amount and select top 5 banks
-    top_5_banks = df_selected.nlargest(5, "Maturity Amount")[["Bank", rate_col, "Maturity Amount"]]
+    top_banks = df_selected.sort_values(by="Maturity Amount", ascending=False)[["Bank", rate_col, "Maturity Amount"]]
 
     # Rename columns for better readability
-    top_5_banks = top_5_banks.rename(columns={rate_col: "Interest Rate (%)"})
+    top_banks = top_banks.rename(columns={rate_col: "Interest Rate (%)"})
 
     # Reset index to remove serial numbers
-    top_5_banks = top_5_banks.reset_index(drop=True)
+    top_banks = top_banks.reset_index(drop=True)
 
     # Convert DataFrame to JSON and return
-    return top_5_banks.to_dict(orient="records")
+    return top_banks.to_dict(orient="records")

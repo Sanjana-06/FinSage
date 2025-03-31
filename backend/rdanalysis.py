@@ -22,7 +22,7 @@ def calculate_rd_maturity(monthly_deposit, rate, years):
 
     return round(maturity_amount, 2)
 
-def get_top_5_banks(amount, term, rd_data_file):
+def get_top_banks(amount, term, rd_data_file):
     df = pd.read_csv(rd_data_file)
 
     term_map = {
@@ -41,8 +41,8 @@ def get_top_5_banks(amount, term, rd_data_file):
 
     df["Maturity Amount"] = df.apply(lambda row: calculate_rd_maturity(amount, row[rate_column], term), axis=1)
 
-    top_5_banks = df.nlargest(5, "Maturity Amount")[["Bank Name", rate_column, "Maturity Amount"]]
+    top_banks = df.sort_values(by="Maturity Amount", ascending=False)[["Bank Name", rate_column, "Maturity Amount"]]
 
-    top_5_banks = top_5_banks.rename(columns={rate_column: "Interest Rate (%)"})
+    top_banks = top_banks.rename(columns={rate_column: "Interest Rate (%)"})
 
-    return top_5_banks.to_dict(orient="records")
+    return top_banks.to_dict(orient="records")

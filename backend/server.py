@@ -108,7 +108,7 @@ def fd_analysis():
         return jsonify({"error": "Invalid input format"}), 400
 
     file_path = "top_20_banks_fd_rates.csv"
-    result = fdanalysis.get_top_5_banks(file_path, amount, term)
+    result = fdanalysis.get_top_banks(file_path, amount, term)
 
     return jsonify(result)
 
@@ -123,7 +123,7 @@ def rd_analysis():
         return jsonify({"error": "Both amount and term are required"}), 400
 
     rd_data_path = "rd_interest_rates.csv"
-    result = rdanalysis.get_top_5_banks(amount, term, rd_data_path)
+    result = rdanalysis.get_top_banks(amount, term, rd_data_path)
 
     return jsonify(result)
 
