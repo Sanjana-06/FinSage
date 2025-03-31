@@ -9,7 +9,34 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
+import {
+  LineChart,
+  Line,
+} from "recharts";
+
 const GoldPage = () => {
+  const historicalData = {
+    "1Y": [
+      { month: "Jan", historical: 1800, predicted: 1850 },
+      { month: "Feb", historical: 1820, predicted: 1865 },
+      { month: "Mar", historical: 1840, predicted: 1880 },
+    ],
+    "3Y": [
+      { month: "2022", historical: 1700, predicted: 1800 },
+      { month: "2023", historical: 1750, predicted: 1850 },
+      { month: "2024", historical: 1800, predicted: 1900 },
+    ],
+    "5Y": [
+      { month: "2019", historical: 1500, predicted: 1600 },
+      { month: "2020", historical: 1600, predicted: 1700 },
+      { month: "2021", historical: 1650, predicted: 1750 },
+      { month: "2022", historical: 1700, predicted: 1800 },
+      { month: "2023", historical: 1750, predicted: 1850 },
+    ],
+  };
+  const [showGraph, setShowGraph] = useState(true);
+  const [selectedPeriod, setSelectedPeriod] = useState("1Y");
+
   const data = [
     { karat: "24K", purity: 99.9 },
     { karat: "22K", purity: 91.6 },
@@ -190,6 +217,25 @@ const GoldPage = () => {
             </button>
           </div>
         </form>
+        {showGraph && (
+        <div style={{ backgroundColor: "rgba(255, 255, 255, 0.3)", padding: "20px", borderRadius: "10px" }}>
+          <h2>Gold Price Trends ({selectedPeriod})</h2>
+          <ResponsiveContainer width="90%" height={300}>
+            <LineChart data={historicalData[selectedPeriod]}>
+              <XAxis dataKey="month" />
+              <YAxis />
+              <Tooltip />
+              <Line type="monotone" dataKey="historical" stroke="blue" strokeWidth={2} name="Historical" />
+              <Line type="monotone" dataKey="predicted" stroke="red" strokeWidth={2} name="Predicted" />
+            </LineChart>
+          </ResponsiveContainer>
+          <div style={{ marginTop: "20px" }}>
+            <button onClick={() => setSelectedPeriod("1Y")} style={{ margin: "5px" }}>1Y</button>
+            <button onClick={() => setSelectedPeriod("3Y")} style={{ margin: "5px" }}>3Y</button>
+            <button onClick={() => setSelectedPeriod("5Y")} style={{ margin: "5px" }}>5Y</button>
+          </div>
+        </div>
+      )}
       </div>
 
       {showOptions && (
