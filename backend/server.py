@@ -10,8 +10,6 @@ import fd_analysis
 import rd_analysis
 import investment_recommendation
 
-#pip install flask flask-bcrypt flask-jwt-extended flask-cors python-dotenv sqlitecloud sqlalchemy-sqlitecloud pandas pulp
-
 # Load environment variables
 load_dotenv()
 
@@ -21,10 +19,11 @@ bcrypt = Bcrypt(app)
 app.config["JWT_SECRET_KEY"] = "Innovate48"
 jwt = JWTManager(app)
 
-CLOUD_DB_PATH = "sqlitecloud://cao9eoaohk.g1.sqlite.cloud:8860/Users?apikey=iGf9Q3gAgTLSIYtyquhJjvWssRdKijAZkwlSFibFsp0"
+# Use a local SQLite database
+LOCAL_DB_PATH = "sqlite:///innovate.db"
 
 # Create the database engine
-engine = create_engine(CLOUD_DB_PATH)
+engine = create_engine(LOCAL_DB_PATH, connect_args={"check_same_thread": False})
 SessionLocal = sessionmaker(bind=engine)
 Base = declarative_base()
 
