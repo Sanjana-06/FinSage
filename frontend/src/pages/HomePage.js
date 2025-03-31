@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { Lightbulb,RotateCcw  } from "lucide-react";
-
+import { Lightbulb, RotateCcw } from "lucide-react";
 
 const HomePage = () => {
   const text = "Hello Sanjana ...";
@@ -11,23 +10,37 @@ const HomePage = () => {
     returnPeriod: "",
   });
 
-  const [showOptions, setShowOptions] = useState(false);
+  const [investmentResult, setInvestmentResult] = useState(null);
+  const [showAI, setShowAI] = useState(false);
+  const [showTooltip, setShowTooltip] = useState(false);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    setShowOptions(true);
-  };
-
-  const [showAI, setShowAI] = useState(false);
-  const [showTooltip, setShowTooltip] = useState(false);
-
   const handleAIRecommendation = () => {
     setShowAI(!showAI);
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      const response = await fetch(
+        "http://localhost:5000/api/investment-recommendation",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      );
+      const data = await response.json();
+      setInvestmentResult(data);
+    } catch (error) {
+      console.error("Error fetching investment recommendation:", error);
+    }
   };
 
   return (
@@ -48,8 +61,8 @@ const HomePage = () => {
           justifyContent: "left",
           alignItems: "left",
           fontSize: "2rem",
-          color:"white",
-          paddingLeft:"20px",
+          color: "white",
+          paddingLeft: "20px",
         }}
       >
         {text.split("").map((char, index) => (
@@ -64,14 +77,14 @@ const HomePage = () => {
           </motion.span>
         ))}
       </h1>
-     <div
+      <div
         style={{
           padding: "20px",
           backgroundColor: "rgba(255, 255, 255, 0.3)", // White with 30% opacity
           borderRadius: "20px",
           boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-          width: "80%", 
-          margin: "auto", 
+          width: "80%",
+          margin: "auto",
           maxWidth: "1000px",
           backdropFilter: "blur(10px)", // Glass effect for better readability
         }}
@@ -84,7 +97,7 @@ const HomePage = () => {
               gap: "15px",
               justifyContent: "space-between",
               marginBottom: "15px",
-              color:"white",
+              color: "white",
             }}
           >
             {/* Income Input */}
@@ -198,110 +211,121 @@ const HomePage = () => {
       </div>
 
       {/* New Div Below Form - Split into Two Sections */}
-      {showOptions && (
+      {investmentResult && (
         <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          marginTop: "30px",
-          width: "80%",
-          marginLeft: "auto",
-          marginRight: "auto",
-          gap: "20px",
-          marginBottom: "50px",  // Add this line to create space between the cards and the footer
-        }}
-      >
-          {/* Left Side - Options */}
-          <div
           style={{
-            width: "48%",
-            padding: "20px",
-            backgroundColor: "rgba(255, 255, 255, 0.3)",
-            borderRadius: "10px",
-            boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
-            position: "relative",
+            display: "flex",
+            justifyContent: "space-between",
+            marginTop: "30px",
+            width: "80%",
+            marginLeft: "auto",
+            marginRight: "auto",
+            gap: "20px",
+            marginBottom: "50px", // Add this line to create space between the cards and the footer
           }}
         >
-      {/* Heading Changes Dynamically */}
-      <h3 style={{color:"white"}}>{showAI ? "Investment Recommendation with AI" : "Investment Recommendation"}</h3>
-
-      {/* Icon for AI or Reset */}
-      <div
-        style={{
-          position: "absolute",
-          top: "10px",
-          right: "10px",
-          cursor: "pointer",
-        }}
-        onClick={handleAIRecommendation}
-        onMouseEnter={() => setShowTooltip(true)}
-        onMouseLeave={() => setShowTooltip(false)}
-      >
-        {showAI ? (
-          <RotateCcw size={26} color="black" /> // Reset Symbol in Red
-        ) : (
-          <Lightbulb size={26} color="#FFA500" /> // Bulb in Orange
-        )}
-
-        {/* Tooltip Appears Above */}
-        {showTooltip && (
+          {/* Left Side - Options */}
           <div
             style={{
-              position: "absolute",
-              bottom: "35px",
-              right: "-10px",
-              backgroundColor: "#222",
-              color: "#fff",
-              padding: "8px 12px",
-              borderRadius: "8px",
-              fontSize: "12px",
-              fontWeight: "bold",
-              whiteSpace: "nowrap",
-              boxShadow: "0px 3px 8px rgba(0, 0, 0, 0.2)",
-              transition: "opacity 0.3s ease-in-out",
-              opacity: showTooltip ? 1 : 0,
-              pointerEvents: "none",
+              width: "48%",
+              padding: "20px",
+              backgroundColor: "rgba(255, 255, 255, 0.3)",
+              borderRadius: "10px",
+              boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
+              position: "relative",
             }}
           >
-            {showAI ? "🔄 Reset to Normal" : "⚡ AI Recommendation"}
-          </div>
-        )}
-      </div>
+            {/* Heading Changes Dynamically */}
+            <h3 style={{ color: "white" }}>
+              {showAI
+                ? "Investment Recommendation with AI"
+                : "Investment Recommendation"}
+            </h3>
 
-      {/* Options List - Toggle AI/Normal */}
-      <ul style={{ listStyleType: "none", padding: "0" }}>
-        {[
-          showAI ? "Option 1 - 50% of Income" : "Option 1",
-          showAI ? "Option 2 - 20% of Income" : "Option 2",
-          showAI ? "Option 3 - 20% of Income" : "Option 3",
-          showAI ? "Option 4 - 10% of Income" : "Option 4",
-        ].map((option, index) => (
-          <li
-            key={index}
-            style={{
-              marginBottom: "10px",
-              padding: "15px",
-              background: "#ffffff",
-              borderRadius: "8px",
-              boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
-              textAlign: "center",
-              transition: "all 0.3s ease-in-out",
-            }}
-          >
-            <a
-              href="#"
+            {/* Icon for AI or Reset */}
+            <div
               style={{
-                textDecoration: "none",
-                color: "#007BFF",
-                fontWeight: "bold",
+                position: "absolute",
+                top: "10px",
+                right: "10px",
+                cursor: "pointer",
               }}
+              onClick={handleAIRecommendation}
+              onMouseEnter={() => setShowTooltip(true)}
+              onMouseLeave={() => setShowTooltip(false)}
             >
-              {option}
-            </a>
-          </li>
-        ))}
-      </ul>
-    </div>
+              {showAI ? (
+                <RotateCcw size={26} color="black" /> // Reset Symbol in Red
+              ) : (
+                <Lightbulb size={26} color="#FFA500" /> // Bulb in Orange
+              )}
+
+              {/* Tooltip Appears Above */}
+              {showTooltip && (
+                <div
+                  style={{
+                    position: "absolute",
+                    bottom: "35px",
+                    right: "-10px",
+                    backgroundColor: "#222",
+                    color: "#fff",
+                    padding: "8px 12px",
+                    borderRadius: "8px",
+                    fontSize: "12px",
+                    fontWeight: "bold",
+                    whiteSpace: "nowrap",
+                    boxShadow: "0px 3px 8px rgba(0, 0, 0, 0.2)",
+                    transition: "opacity 0.3s ease-in-out",
+                    opacity: showTooltip ? 1 : 0,
+                    pointerEvents: "none",
+                  }}
+                >
+                  {showAI ? "🔄 Reset to Normal" : "⚡ AI Recommendation"}
+                </div>
+              )}
+            </div>
+
+            {/* Options List - Toggle AI/Normal */}
+            <ul>
+              {Object.entries(investmentResult).map(([asset, percent]) => (
+                <li key={asset}>
+                  {asset}: {percent * 100}%
+                </li>
+              ))}
+            </ul>
+            <ul style={{ listStyleType: "none", padding: "0" }}>
+              {[
+                showAI ? "Option 1 - 50% of Income" : "Option 1",
+                showAI ? "Option 2 - 20% of Income" : "Option 2",
+                showAI ? "Option 3 - 20% of Income" : "Option 3",
+                showAI ? "Option 4 - 10% of Income" : "Option 4",
+              ].map((option, index) => (
+                <li
+                  key={index}
+                  style={{
+                    marginBottom: "10px",
+                    padding: "15px",
+                    background: "#ffffff",
+                    borderRadius: "8px",
+                    boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
+                    textAlign: "center",
+                    transition: "all 0.3s ease-in-out",
+                  }}
+                >
+                  <a
+                    href="#"
+                    style={{
+                      textDecoration: "none",
+                      color: "#007BFF",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    {option}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
 
           {/* Right Side - Blank Box */}
           <div

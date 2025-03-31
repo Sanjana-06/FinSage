@@ -6,8 +6,9 @@ from flask_bcrypt import Bcrypt
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
 from flask_cors import CORS
 from dotenv import load_dotenv
-import fdanalysis
-import rdanalysis
+import fd_analysis
+import rd_analysis
+import investment_recommendation
 
 #pip install flask flask-bcrypt flask-jwt-extended flask-cors python-dotenv sqlitecloud sqlalchemy-sqlitecloud pandas pulp
 
@@ -91,9 +92,31 @@ def profile():
 
     return jsonify({"name": user.name, "email": user.email})
 
+# Investment Recommendation Route
+@app.route("/api/investment-recommendation", methods=["POST"])
+def investment_recommendation_route():
+    data = request.json
+    income = data.get("income")
+    risk_level = data.get("riskLevel")
+    return_period = data.get("returnPeriod")
+
+    if not income or not risk_level or not return_period:
+        return jsonify({"error": "Missing required parameters"}), 400
+
+    try:
+        income = float(income)
+        return_period = int(return_period)
+    except ValueError:
+        return jsonify({"error": "Invalid data format"}), 400
+
+    # Get investment allocation
+    result = investment_recommendation.investment_allocation(income, risk_level, return_period)
+    
+    return jsonify(result)
+
 # FD Analysis Route
 @app.route("/api/fd-analysis", methods=["POST"])
-def fd_analysis():
+def fd_analysis_route():
     data = request.json
     amount = data.get("amount")
     term = data.get("term")
@@ -108,13 +131,13 @@ def fd_analysis():
         return jsonify({"error": "Invalid input format"}), 400
 
     file_path = "top_20_banks_fd_rates.csv"
-    result = fdanalysis.get_top_banks(file_path, amount, term)
+    result = fd_analysis.get_top_banks(file_path, amount, term)
 
     return jsonify(result)
 
 # RD Analysis Route
 @app.route("/api/rd-analysis", methods=["POST"])
-def rd_analysis():
+def rd_analysis_route():
     data = request.json
     amount = data.get("amount")
     term = data.get("term")
@@ -123,7 +146,7 @@ def rd_analysis():
         return jsonify({"error": "Both amount and term are required"}), 400
 
     rd_data_path = "rd_interest_rates.csv"
-    result = rdanalysis.get_top_banks(amount, term, rd_data_path)
+    result = rd_analysis.get_top_banks(amount, term, rd_data_path)
 
     return jsonify(result)
 
