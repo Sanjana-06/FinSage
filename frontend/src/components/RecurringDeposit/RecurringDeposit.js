@@ -5,12 +5,18 @@ const RDPage = () => {
   const [rdResults, setRdResults] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
+  const [filterText, setFilterText] = useState(""); // State for dynamic filter
 
   // Pagination logic
   const totalPages = Math.ceil(rdResults.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const currentData = rdResults.slice(startIndex, endIndex);
+
+  // Apply filtering before pagination
+  const filteredResults = rdResults.filter((plan) =>
+    plan.Bank.toLowerCase().includes(filterText.toLowerCase())
+  );
+  const currentData = filteredResults.slice(startIndex, endIndex);
 
   const [formData, setFormData] = useState({
     amount: "",
@@ -208,6 +214,24 @@ const RDPage = () => {
             textAlign: "center",
           }}
         >
+          {/* Dynamic Filter */}
+          <input
+            type="text"
+            value={filterText}
+            onChange={(e) => setFilterText(e.target.value)}
+            placeholder="Search by Bank Name..."
+            style={{
+              display: "block",
+              padding: "10px",
+              marginBottom: "15px",
+              borderRadius: "5px",
+              border: "1px solid #ccc",
+              width: "30%",
+              fontSize: "16px",
+              fontWeight: "bold",
+            }}
+          />
+
           {/* Fixed Header Card */}
           <div
             style={{
@@ -243,7 +267,7 @@ const RDPage = () => {
                 marginBottom: "10px",
               }}
             >
-              <p style={{ flex: 1, textAlign: "left" }}>{plan["Bank Name"]}</p>
+              <p style={{ flex: 1, textAlign: "left" }}>{plan["Bank"]}</p>
               <p style={{ flex: 1, textAlign: "center" }}>
                 {plan["Interest Rate (%)"]}%
               </p>

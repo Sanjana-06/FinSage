@@ -1,16 +1,23 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
+import { Search } from "lucide-react";
 
 const FDPage = () => {
   const [fdResults, setFdResults] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
+  const [filterText, setFilterText] = useState(""); // State for dynamic filter
 
   // Pagination logic
   const totalPages = Math.ceil(fdResults.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const currentData = fdResults.slice(startIndex, endIndex);
+
+  // Apply filtering before pagination
+  const filteredResults = fdResults.filter((plan) =>
+    plan.Bank.toLowerCase().includes(filterText.toLowerCase())
+  );
+  const currentData = filteredResults.slice(startIndex, endIndex);
 
   const [formData, setFormData] = useState({
     amount: "",
@@ -54,7 +61,7 @@ const FDPage = () => {
       const data = await response.json();
       console.log("Received Data:", data);
 
-      setFdResults(data); // Store only the first 5 results
+      setFdResults(data);
       setShowOptions(data.length > 0); // Show options only if there are results
     } catch (error) {
       console.error("Error:", error);
@@ -161,8 +168,8 @@ const FDPage = () => {
                   padding: "10px",
                   border: "1px solid #ccc",
                   borderRadius: "5px",
-                  backgroundColor: "white", // Light gray background
-                  color: "#333", // Dark text for better contrast
+                  backgroundColor: "white",
+                  color: "#333",
                   cursor: "pointer",
                   appearance: "none",
                 }}
@@ -208,6 +215,24 @@ const FDPage = () => {
             textAlign: "center",
           }}
         >
+          {/* Dynamic Filter */}
+          <input
+            type="text"
+            value={filterText}
+            onChange={(e) => setFilterText(e.target.value)}
+            placeholder="Search by Bank Name..."
+            style={{
+              display: "block",
+              padding: "10px",
+              marginBottom: "15px",
+              borderRadius: "5px",
+              border: "1px solid #ccc",
+              width: "30%",
+              fontSize: "16px",
+              fontWeight: "bold",
+            }}
+          />
+
           {/* Fixed Header Card */}
           <div
             style={{
@@ -353,17 +378,36 @@ const FDPage = () => {
           of money for a predetermined period at a fixed interest rate. Unlike
           regular savings accounts, FDs provide higher interest rates, making
           them a popular choice for risk-averse investors looking for stable and
-          guaranteed returns.
+          guaranteed returns. These deposits are straightforward to open and
+          come with minimal administrative requirements, which appeals to a
+          broad range of investors. Many banks offer schemes that cater to
+          specific demographics, such as senior citizens, providing them with
+          even better returns. FDs are also insulated from market volatility,
+          ensuring a safe and predictable growth of savings.
           <br /> <br />
           The key advantage of a Fixed Deposit is the guaranteed return on
           investment, as the interest rate remains fixed for the entire duration
           of the deposit. This makes it an ideal option for individuals who
-          prioritize security over high-risk investments. Many banks also offer
-          flexible tenure options ranging from a few months to several years.
+          prioritize security over high-risk investments. The fixed rate shields
+          investors from fluctuations in interest rates, providing them peace of
+          mind throughout the deposit tenure. Many banks also offer flexible
+          tenure options ranging from a few months to several years, allowing
+          customers to tailor their deposits to their financial goals.
+          Additionally, the predictable nature of returns makes FDs an excellent
+          tool for planning future expenses, such as education, travel, or home
+          renovations.
           <br /> <br />
           Additionally, some banks allow premature withdrawals, though they may
-          come with penalty charges. Fixed Deposits can also be used as
-          collateral for loans, offering financial flexibility to investors.
+          come with penalty charges. While penalties may slightly reduce
+          returns, the ability to access funds during emergencies adds a layer
+          of liquidity to the investment. Fixed Deposits can also be used as
+          collateral for loans, offering financial flexibility to investors
+          without having to break their deposits. By using FDs as security,
+          borrowers can avail of loans at lower interest rates compared to
+          unsecured personal loans. Furthermore, certain banks provide
+          nomination facilities, ensuring the smooth transfer of funds to
+          beneficiaries in unforeseen circumstances. These features make FDs
+          versatile and efficient savings instruments for a variety of needs
         </motion.p>
       </div>
     </div>

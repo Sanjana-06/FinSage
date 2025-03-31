@@ -9,7 +9,7 @@ from dotenv import load_dotenv
 import fdanalysis
 import rdanalysis
 
-#pip install flask flask-bcrypt flask-jwt-extended flask-cors python-dotenv sqlitecloud sqlalchemy-sqlitecloud pandas
+#pip install flask flask-bcrypt flask-jwt-extended flask-cors python-dotenv sqlitecloud sqlalchemy-sqlitecloud pandas pulp
 
 # Load environment variables
 load_dotenv()
