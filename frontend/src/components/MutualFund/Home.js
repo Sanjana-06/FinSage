@@ -22,7 +22,6 @@ const MutualFundPage = () => {
         color: "white",
         backgroundColor: "rgba(10, 25, 50)",
         padding: "20px",
-        height: "100vh",
         paddingLeft: "45px",
         paddingRight: "70px",
       }}
@@ -34,7 +33,7 @@ const MutualFundPage = () => {
           fontSize: "62px",
           marginBottom: "0px",
           marginTop: "0px",
-          paddingLeft:"4%"
+          paddingLeft: "4%",
         }}
       >
         Mutual Fund
@@ -47,8 +46,7 @@ const MutualFundPage = () => {
           fontWeight: "normal",
           marginTop: "0px",
           marginBottom: "20px",
-          paddingLeft:"4%",
-          
+          paddingLeft: "4%",
         }}
       >
         Mutual fund investments are subject to market risks. Please read the
@@ -71,16 +69,16 @@ const MutualFundPage = () => {
               fontSize: "18px",
               textAlign: "justify",
               lineHeight: "1.6",
-              paddingLeft:"5%",
-              paddingRight:"2%"
+              paddingLeft: "5%",
+              paddingRight: "2%",
             }}
           >
             Mutual funds pool money from multiple investors to buy a diversified
             portfolio of stocks, bonds, or other securities. Managed by
             professional fund managers, they aim for capital appreciation or
             income generation. They offer benefits like diversification,
-            liquidity, and professional management, making them popular for
-            both individual and institutional investors.
+            liquidity, and professional management, making them popular for both
+            individual and institutional investors.
           </motion.p>
 
           <motion.p
@@ -95,15 +93,15 @@ const MutualFundPage = () => {
               fontSize: "18px",
               textAlign: "justify",
               lineHeight: "1.6",
-              paddingLeft:"5%",
-              paddingRight:"2%"
+              paddingLeft: "5%",
+              paddingRight: "2%",
             }}
           >
             By spreading investments across various assets, mutual funds help
             mitigate risk and enhance potential returns. Investors can choose
             from equity, bond, or balanced funds based on their risk tolerance
-            and goals. It's crucial to research and select funds that align
-            with your financial strategy and objectives.
+            and goals. It's crucial to research and select funds that align with
+            your financial strategy and objectives.
           </motion.p>
         </div>
 
@@ -120,28 +118,42 @@ const MutualFundPage = () => {
             flexDirection: "column",
             alignItems: "center",
             justifyContent: "center",
-            
           }}
         >
-          <div style={{ color: "white", fontSize: "18px", fontWeight: "bold", marginBottom: "10px" }}>
+          <div
+            style={{
+              color: "white",
+              fontSize: "18px",
+              fontWeight: "bold",
+              marginBottom: "10px",
+            }}
+          >
             Asset Allocation
           </div>
 
           <PieChart width={290} height={290}>
-            <Pie 
-              data={data} 
-              cx="50%" 
-              cy="50%" 
-              outerRadius={100} 
-              fill="#8884d8" 
-              dataKey="value" 
+            <Pie
+              data={data}
+              cx="50%"
+              cy="50%"
+              outerRadius={100}
+              fill="#8884d8"
+              dataKey="value"
               label
             >
               {data.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                <Cell
+                  key={`cell-${index}`}
+                  fill={COLORS[index % COLORS.length]}
+                />
               ))}
             </Pie>
-            <Tooltip contentStyle={{ backgroundColor: "rgba(20, 40, 70, 0.9)", color: "white" }} />
+            <Tooltip
+              contentStyle={{
+                backgroundColor: "rgba(20, 40, 70, 0.9)",
+                color: "white",
+              }}
+            />
             <Legend wrapperStyle={{ color: "white" }} />
           </PieChart>
         </div>

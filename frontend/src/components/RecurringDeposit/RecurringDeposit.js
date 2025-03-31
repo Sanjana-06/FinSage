@@ -2,22 +2,21 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 
 const RDPage = () => {
-    const [rdResults, setRdResults] = useState([]);
-    const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 5;
-  
-    // Pagination logic
-    const totalPages = Math.ceil(rdResults.length / itemsPerPage);
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    const endIndex = startIndex + itemsPerPage;
-    const currentData = rdResults.slice(startIndex, endIndex);
+  const [rdResults, setRdResults] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
+
+  // Pagination logic
+  const totalPages = Math.ceil(rdResults.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentData = rdResults.slice(startIndex, endIndex);
 
   const [formData, setFormData] = useState({
     amount: "",
     term: "",
   });
 
-  
   const [showOptions, setShowOptions] = useState(false);
 
   const handleInputChange = (event) => {
@@ -56,7 +55,7 @@ const RDPage = () => {
       console.log("Received Data:", data);
 
       setRdResults(data);
-      setShowOptions(data.length > 0); 
+      setShowOptions(data.length > 0);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -141,17 +140,17 @@ const RDPage = () => {
 
             {/* Return Period Input */}
             <div style={{ textAlign: "left", flex: "1" }}>
-            <label
+              <label
                 style={{
-                display: "block",
-                marginBottom: "5px",
-                fontWeight: "bold",
+                  display: "block",
+                  marginBottom: "5px",
+                  fontWeight: "bold",
                 }}
                 htmlFor="term"
-            >
+              >
                 Return Period
-            </label>
-            <select
+              </label>
+              <select
                 id="term"
                 name="term"
                 value={formData.term}
@@ -167,12 +166,12 @@ const RDPage = () => {
                   cursor: "pointer",
                   appearance: "none",
                 }}
-            >
+              >
                 <option value="">---Select a term---</option>
                 <option value="1">1 Year</option>
                 <option value="3">3 Years</option>
                 <option value="5">5 Years</option>
-            </select>
+              </select>
             </div>
             {/* Submit Button */}
             <button
@@ -197,104 +196,124 @@ const RDPage = () => {
 
       {showOptions && (
         <div
-      style={{
-        width: "90%",
-        maxWidth: "900px",
-        margin: "30px auto",
-        padding: "15px",
-        backgroundColor: "rgba(255, 255, 255, 0.1)",
-        borderRadius: "15px",
-        boxShadow: "0 4px 12px rgba(0, 0, 0, 0.2)",
-        backdropFilter: "blur(15px)",
-        textAlign: "center",
-      }}
-    >
-      {/* Fixed Header Card */}
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          padding: "15px",
-          borderRadius: "10px",
-          backgroundColor: " #90A4AE",
-          fontWeight: "bold",
-          fontSize: "18px",
-          color: "black",
-          marginBottom: "10px",
-        }}
-      >
-        <p style={{ flex: 1, textAlign: "left" }}>Bank</p>
-        <p style={{ flex: 1, textAlign: "center" }}>Interest Rate (%)</p>
-        <p style={{ flex: 1, textAlign: "right" }}>Maturity Amount</p>
-      </div>
-
-      {/* Dynamic Data in Cards */}
-      {currentData.map((plan, index) => (
-        <div
-          key={index}
           style={{
-          display: "flex",
-          justifyContent: "space-between",
-          padding: "10px",
-          borderRadius: "10px",
-          backgroundColor: "white",
-          fontWeight: "bold",
-          fontSize: "16px",
-          color: "black",
-          marginBottom: "10px",
+            width: "90%",
+            maxWidth: "900px",
+            margin: "30px auto",
+            padding: "15px",
+            backgroundColor: "rgba(255, 255, 255, 0.1)",
+            borderRadius: "15px",
+            boxShadow: "0 4px 12px rgba(0, 0, 0, 0.2)",
+            backdropFilter: "blur(15px)",
+            textAlign: "center",
           }}
         >
-          <p style={{ flex: 1, textAlign: "left" }}>{plan["Bank Name"]}</p>
-          <p style={{ flex: 1, textAlign: "center" }}>{plan["Interest Rate (%)"]}%</p>
-          <p style={{ flex: 1, textAlign: "right" }}>₹{plan["Maturity Amount"]}</p>
-        </div>
-      ))}
-
-      {/* Pagination Controls */}
-        {totalPages > 1 && rdResults.length > itemsPerPage && (
-        <div style={{ marginTop: "15px", display: "flex", justifyContent: "center", gap: "10px" }}>
-          <button
-            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-            disabled={currentPage === 1}
+          {/* Fixed Header Card */}
+          <div
             style={{
-              textAlign: "center",
-              padding: "10px 15px",
-              borderRadius: "5px",
-              border: "none",
-              background: "#007bff",
-              color: "white",
-              cursor: "pointer",
-              fontSize: "16px",
+              display: "flex",
+              justifyContent: "space-between",
+              padding: "15px",
+              borderRadius: "10px",
+              backgroundColor: " #4bcd3e",
               fontWeight: "bold",
-            }}
-          >
-            Prev
-          </button>
-
-          <span style={{ fontSize: "18px", fontWeight: "bold", color: "white" }}>
-            Page {currentPage} of {totalPages}
-          </span>
-
-          <button
-            onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
-            disabled={currentPage === totalPages}
-            style={{
-              padding: "10px 15px",
-              borderRadius: "5px",
-              border: "none",
-              background: "yellow", 
+              fontSize: "18px",
               color: "black",
-              cursor: "pointer",
-              fontSize: "16px",
-              fontWeight: "bold",
+              marginBottom: "10px",
             }}
           >
-            Next
-          </button>
+            <p style={{ flex: 1, textAlign: "left" }}>Bank Name</p>
+            <p style={{ flex: 1, textAlign: "center" }}>Interest Rate (%)</p>
+            <p style={{ flex: 1, textAlign: "right" }}>Maturity Amount</p>
+          </div>
+
+          {/* Dynamic Data in Cards */}
+          {currentData.map((plan, index) => (
+            <div
+              key={index}
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                padding: "10px",
+                borderRadius: "10px",
+                backgroundColor: "white",
+                fontWeight: "bold",
+                fontSize: "16px",
+                color: "black",
+                marginBottom: "10px",
+              }}
+            >
+              <p style={{ flex: 1, textAlign: "left" }}>{plan["Bank Name"]}</p>
+              <p style={{ flex: 1, textAlign: "center" }}>
+                {plan["Interest Rate (%)"]}%
+              </p>
+              <p style={{ flex: 1, textAlign: "right" }}>
+                ₹{plan["Maturity Amount"]}
+              </p>
+            </div>
+          ))}
+
+          {/* Pagination Controls */}
+          {totalPages > 1 && rdResults.length > itemsPerPage && (
+            <div
+              style={{
+                marginTop: "15px",
+                display: "flex",
+                justifyContent: "center",
+                gap: "10px",
+              }}
+            >
+              <button
+                onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                disabled={currentPage === 1}
+                style={{
+                  textAlign: "center",
+                  padding: "10px 15px",
+                  borderRadius: "5px",
+                  border: "none",
+                  background: "#4bcd3e",
+                  color: "black",
+                  cursor: "pointer",
+                  fontSize: "16px",
+                  fontWeight: "bold",
+                }}
+              >
+                Prev
+              </button>
+
+              <span
+                style={{
+                  fontSize: "18px",
+                  fontWeight: "bold",
+                  color: "white",
+                  paddingTop: "7px",
+                }}
+              >
+                Page {currentPage} of {totalPages}
+              </span>
+
+              <button
+                onClick={() =>
+                  setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+                }
+                disabled={currentPage === totalPages}
+                style={{
+                  padding: "10px 15px",
+                  borderRadius: "5px",
+                  border: "none",
+                  background: "#4bcd3e",
+                  color: "black",
+                  cursor: "pointer",
+                  fontSize: "16px",
+                  fontWeight: "bold",
+                }}
+              >
+                Next
+              </button>
+            </div>
+          )}
         </div>
       )}
-    </div>
-        )}
 
       {/* Fixed Deposit Description */}
       <div
@@ -310,50 +329,52 @@ const RDPage = () => {
           alignItems: "center",
         }}
       >
-        <h1 style={{ color: "#FFD700", fontSize: "42px", textAlign: "center" }}>
+        <h1 style={{ color: "#4bcd3e", fontSize: "42px", textAlign: "center" }}>
           What is Recurring Deposit?
         </h1>
 
         <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.4 }}
-            style={{
-                textAlign: "justify",
-                fontSize: "20px",
-                lineHeight: "1.6",
-                width: "100%", // Increased width
-                maxWidth: "1000px", // Prevents overflow
-                margin: "0 auto 0 1%", // Centers the paragraph
-                padding: "10px", // Adds some space around
-                color: "white", // Ensures visibility
-            }}
-            >
-            A Recurring Deposit (RD) is a type of term deposit offered by banks and
-            financial institutions, designed to encourage regular savings among individuals. 
-            Unlike Fixed Deposits (FDs), where a lump sum is deposited at once, an RD allows 
-            individuals to deposit a fixed amount every month for a predetermined tenure. At the 
-            end of the term, the investor receives the total savings along with accumulated interest. 
-            This makes RDs a great option for salaried individuals or those who prefer disciplined saving habits.
-
-            <br /> <br />
-
-            One of the major benefits of a Recurring Deposit is that it provides stable and assured returns 
-            with minimal risk. The interest rate is fixed at the time of opening the RD account and remains 
-            the same throughout the tenure. Additionally, RDs offer flexibility in tenure, ranging from as 
-            short as six months to as long as ten years, allowing investors to choose a plan that suits their 
-            financial goals. Unlike market-linked investments, RDs are not affected by economic fluctuations, 
-            making them ideal for conservative investors.
-
-            <br /> <br />
-
-            Many banks also offer additional features such as premature withdrawal options, though a penalty 
-            may apply. Some banks even allow RDs to be used as collateral for loans, providing liquidity when 
-            needed. Since interest earned on RDs is taxable, individuals should consider their tax liability 
-            before investing. Overall, Recurring Deposits serve as a safe and convenient way to build savings 
-            over time while earning a fixed return on investment.
-            </motion.p>
-        </div>
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.4 }}
+          style={{
+            textAlign: "justify",
+            fontSize: "20px",
+            lineHeight: "1.6",
+            width: "100%", // Increased width
+            maxWidth: "1000px", // Prevents overflow
+            margin: "0 auto 0 1%", // Centers the paragraph
+            padding: "10px", // Adds some space around
+            color: "white", // Ensures visibility
+          }}
+        >
+          A Recurring Deposit (RD) is a type of term deposit offered by banks
+          and financial institutions, designed to encourage regular savings
+          among individuals. Unlike Fixed Deposits (FDs), where a lump sum is
+          deposited at once, an RD allows individuals to deposit a fixed amount
+          every month for a predetermined tenure. At the end of the term, the
+          investor receives the total savings along with accumulated interest.
+          This makes RDs a great option for salaried individuals or those who
+          prefer disciplined saving habits.
+          <br /> <br />
+          One of the major benefits of a Recurring Deposit is that it provides
+          stable and assured returns with minimal risk. The interest rate is
+          fixed at the time of opening the RD account and remains the same
+          throughout the tenure. Additionally, RDs offer flexibility in tenure,
+          ranging from as short as six months to as long as ten years, allowing
+          investors to choose a plan that suits their financial goals. Unlike
+          market-linked investments, RDs are not affected by economic
+          fluctuations, making them ideal for conservative investors.
+          <br /> <br />
+          Many banks also offer additional features such as premature withdrawal
+          options, though a penalty may apply. Some banks even allow RDs to be
+          used as collateral for loans, providing liquidity when needed. Since
+          interest earned on RDs is taxable, individuals should consider their
+          tax liability before investing. Overall, Recurring Deposits serve as a
+          safe and convenient way to build savings over time while earning a
+          fixed return on investment.
+        </motion.p>
+      </div>
     </div>
   );
 };
