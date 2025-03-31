@@ -41,7 +41,7 @@ def get_top_banks(amount, term, rd_data_file):
 
     df["Maturity Amount"] = df.apply(lambda row: calculate_rd_maturity(amount, row[rate_column], term), axis=1)
 
-    top_banks = df.sort_values(by="Maturity Amount", ascending=False)[["Bank Name", rate_column, "Maturity Amount"]]
+    top_banks = df.sort_values(by="Maturity Amount", ascending=False)[["Bank", rate_column, "Maturity Amount"]]
 
     top_banks = top_banks.rename(columns={rate_column: "Interest Rate (%)"})
 

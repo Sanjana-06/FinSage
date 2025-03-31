@@ -24,6 +24,7 @@ const MutualFundPage = () => {
         padding: "20px",
         paddingLeft: "45px",
         paddingRight: "70px",
+        height: "100vh",
       }}
     >
       <h1
@@ -34,6 +35,7 @@ const MutualFundPage = () => {
           marginBottom: "0px",
           marginTop: "0px",
           paddingLeft: "4%",
+          paddingBottom: "10px",
         }}
       >
         Mutual Fund
