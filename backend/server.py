@@ -54,12 +54,13 @@ def signup():
 
     hashed_password = bcrypt.generate_password_hash(password).decode("utf-8")
     new_user = User(name=name, email=email, password=hashed_password)
-    
+    access_token = create_access_token(identity=email)
+
     session.add(new_user)
     session.commit()
     session.close()
 
-    return jsonify({"message": "User registered successfully", "redirect": "http://localhost:3000/home"}), 201
+    return jsonify({"message": "User registered successfully", "token": access_token, "redirect": "http://localhost:3000/home"}), 201
 
 # User Login Route
 @app.route("/api/user/login", methods=["POST"])
@@ -72,7 +73,7 @@ def login():
     session.close()
 
     if user and bcrypt.check_password_hash(user.password, password):
-        access_token = create_access_token(identity=user.id)
+        access_token = create_access_token(identity=user.email)
         return jsonify({"message": "Login successful", "token": access_token, "redirect": "http://localhost:3000/home"})
 
     return jsonify({"message": "Invalid email or password"}), 401
@@ -82,8 +83,8 @@ def login():
 @jwt_required()
 def profile():
     session = SessionLocal()
-    user_id = get_jwt_identity()
-    user = session.query(User).get(user_id)
+    user_email = get_jwt_identity()
+    user = session.query(User).filter_by(email=user_email).first()
     session.close()
 
     if not user:

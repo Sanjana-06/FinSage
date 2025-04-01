@@ -1,44 +1,45 @@
-import React, { useState,useEffect  } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { motion } from "framer-motion";
 import { Lightbulb, RotateCcw } from "lucide-react";
 
 const HomePage = () => {
-  const [text, setText] = useState("Hello ...");
-  useEffect(() => {
-    const fetchUserProfile = async () => {
-      try {
-        const token = localStorage.getItem("token"); 
-        
-        if (!token) {
-          console.error("No token found");
-          return;
-      }
-
-        const response = await axios.get("http://localhost:5000/api/user/profile", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        const { name } = response.data;
-        setText(`Hello ${name} ...`);
-      } catch (error) {
-        console.error("Error fetching user profile:", error.response ? error.response.data : error.message);
-        
-        console.error("Full error object:", error);
-
-      }
-    };
-
-    fetchUserProfile();
-  }, []);
-
-
+  const [userName, setUserName] = useState("...");
   const [formData, setFormData] = useState({
     income: "",
     riskLevel: "Select risk level",
     returnPeriod: "",
   });
+
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          console.error("No token found");
+          return;
+        }
+
+        const response = await axios.get(
+          "http://localhost:5000/api/user/profile",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        setUserName(response.data.name);
+      } catch (error) {
+        console.error(
+          "Error fetching user profile:",
+          error.response ? error.response.data : error.message
+        );
+      }
+    };
+
+    fetchUserProfile();
+  }, []);
 
   const [investmentResult, setInvestmentResult] = useState(null);
   const [showAI, setShowAI] = useState(false);
@@ -95,13 +96,13 @@ const HomePage = () => {
           paddingLeft: "9%",
         }}
       >
-        {text.split("").map((char, index) => (
+        {`Hello ${userName} ...`.split("").map((char, index) => (
           <motion.span
             key={index}
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.1, duration: 0.3 }}
-            style={{ display: "inline-block", whiteSpace: "pre" }} // Fix spacing issue
+            style={{ display: "inline-block", whiteSpace: "pre" }}
           >
             {char}
           </motion.span>
