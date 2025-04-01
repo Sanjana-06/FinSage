@@ -1,44 +1,50 @@
-import pandas as pd
+import sqlite3
 
-def get_top_banks(file_path, amount, return_years):
-    # Load the CSV file
-    df_fd_rates = pd.read_csv(file_path)
+def get_top_banks(db_path, amount, return_years):
+    # Connect to SQLite database
+    conn = sqlite3.connect(db_path)  # Path to the SQLite database (e.g., innovate.db)
+    cursor = conn.cursor()  # Create a cursor to execute SQL commands
 
-    # Select the correct column based on return years
+    # Define the column for the selected return years
     rate_columns = {
-        1: "1-year FD Rate (% p.a.)",
-        3: "3-year FD Rate (% p.a.)",
-        5: "5-year FD Rate (% p.a.)"
+        1: "Year_1",
+        3: "Year_3",
+        5: "Year_5"
     }
-
-    if return_years not in rate_columns:
-        return {"error": "Invalid return period. Choose 1, 3, or 5 years."}
 
     rate_col = rate_columns[return_years]
 
-    # Extract necessary columns
-    df_selected = df_fd_rates[["Bank", rate_col]].copy()
+    # Query data from the SQLite database
+    query = f"SELECT Bank, {rate_col} FROM fd"
+    cursor.execute(query)
 
-    # Ensure numeric conversion
-    df_selected[rate_col] = pd.to_numeric(df_selected[rate_col], errors='coerce')
+    # Fetch all rows from the result
+    results = cursor.fetchall()
 
-    # Drop NaN values
-    df_selected = df_selected.dropna()
+    # Process the rows to compute maturity amounts
+    response_data = []
+    for row in results:
+        bank = row[0]
+        interest_rate = row[1]
 
-    # Convert rate to decimal for calculation
-    df_selected["Interest Rate (%)"] = df_selected[rate_col] / 100
+        # Convert interest rate from percentage to decimal
+        interest_rate_decimal = interest_rate / 100
 
-    # Compute maturity amount using compound interest formula A = P(1 + r)^t
-    df_selected["Maturity Amount"] = round(amount * (1 + df_selected["Interest Rate (%)"])**return_years, 2)
+        # Calculate maturity amount using compound interest formula: A = P(1 + r)^t
+        maturity_amount = round(amount * (1 + interest_rate_decimal)**return_years, 2)
 
-    # Sort by highest maturity amount and select top 5 banks
-    top_banks = df_selected.sort_values(by="Maturity Amount", ascending=False)[["Bank", rate_col, "Maturity Amount"]]
+        # Append the processed data
+        response_data.append({
+            "Bank": bank,
+            "Interest Rate (%)": interest_rate,
+            "Maturity Amount": maturity_amount
+        })
 
-    # Rename columns for better readability
-    top_banks = top_banks.rename(columns={rate_col: "Interest Rate (%)"})
+    # Sort data by Maturity Amount in descending order
+    response_data = sorted(response_data, key=lambda x: x["Maturity Amount"], reverse=True)
 
-    # Reset index to remove serial numbers
-    top_banks = top_banks.reset_index(drop=True)
+    # Close the database connection
+    conn.close()
 
-    # Convert DataFrame to JSON and return
-    return top_banks.to_dict(orient="records")
+    # Return the data as JSON
+    return response_data 

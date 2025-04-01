@@ -129,8 +129,8 @@ def fd_analysis_route():
     except ValueError:
         return jsonify({"error": "Invalid input format"}), 400
 
-    file_path = "top_20_banks_fd_rates.csv"
-    result = fd_analysis.get_top_banks(file_path, amount, term)
+    db_path = "innovate.db"  # Path to the SQLite database
+    result = fd_analysis.get_top_banks(db_path, amount, term)
 
     return jsonify(result)
 
@@ -144,8 +144,8 @@ def rd_analysis_route():
     if not amount or not term:
         return jsonify({"error": "Both amount and term are required"}), 400
 
-    rd_data_path = "rd_interest_rates.csv"
-    result = rd_analysis.get_top_banks(amount, term, rd_data_path)
+    db_path = "innovate.db"  # Path to the SQLite database
+    result = rd_analysis.get_top_banks(amount, term, db_path)
 
     return jsonify(result)
 
