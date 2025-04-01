@@ -46,14 +46,10 @@ const SignUp = ({ setIsLogin }) => {
     <div
       style={{
         position: "absolute",
-        paddingTop: "10px",
-        top: "0.5%",
-        left: "-2%",
-        width: "80%",
-        maxWidth: "450px",
+        padding: "20px",
+        width: "90%",
+        maxWidth: "400px",
         margin: "auto",
-        paddingLeft: "20px",
-        paddingRight: "20px",
         borderRadius: "15px",
         background: "rgba(10, 25, 50)",
         boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",

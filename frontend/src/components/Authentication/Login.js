@@ -38,10 +38,8 @@ const Login = ({ setIsLogin }) => {
     <div
       style={{
         position: "absolute",
-        top: "17%",
-        left: "1%",
         width: "90%",
-        maxWidth: "380px",
+        maxWidth: "400px",
         margin: "auto",
         padding: "20px",
         borderRadius: "15px",
