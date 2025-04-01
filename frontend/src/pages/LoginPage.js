@@ -40,35 +40,38 @@ const LoginPage = () => {
           fontSize: "42px",
           fontWeight: "bold",
           fontFamily: "'Orbitron', sans-serif",
-          color: "#FFA500", 
-          textShadow: "0px 0px 10px rgba(255, 165, 0, 0.8), 0px 0px 20px rgba(255, 165, 0, 0.5)", // Strong glow effect
+          color: "#FFA500",
           letterSpacing: "3px",
           textTransform: "uppercase",
         }}
       >
-      {/* <span style={{ color: "#FFD700", fontWeight: "bold" }}>
-        <span style={{ fontSize: "50px" }}>F</span>
-        <span style={{ fontSize: "40px", textTransform: "lowercase" }}>in</span>
-        <span style={{ fontSize: "50px" }}>G</span>
-        <span style={{ fontSize: "40px", textTransform: "lowercase" }}>rowth</span>
-      </span> */}
-
+        {/* <span style={{ color: "#FFD700", fontWeight: "bold" }}>
+      <span style={{ fontSize: "50px" }}>F</span>
+      <span style={{ fontSize: "40px", textTransform: "lowercase" }}>in</span>
+      <span style={{ fontSize: "50px" }}>G</span>
+      <span style={{ fontSize: "40px", textTransform: "lowercase" }}>rowth</span>
+    </span> */}
       </h1>
-            <div
-              style={{
-                position: "absolute",
-                right: "350px",
-                top: "55%",
-                transform: "translateY(-50%)",
-                width: "450px",
-                height: "450px",
-                textAlign: "center",
-                padding: "20px",
-                fontFamily: "Arial, sans-serif",
-              }}
-        >
+
+      <div
+        style={{
+          position: "absolute",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)", // Centers the card vertically and horizontally
+          width: "400px",
+          height: "450px",
+          textAlign: "center",
+          padding: "20px",
+          fontFamily: "Arial, sans-serif",
+        }}
+      >
         <div style={{ padding: "20px" }}>
-          {isLogin ? <Login setIsLogin={setIsLogin} /> : <SignUp setIsLogin={setIsLogin} />}
+          {isLogin ? (
+            <Login setIsLogin={setIsLogin} />
+          ) : (
+            <SignUp setIsLogin={setIsLogin} />
+          )}
         </div>
       </div>
     </div>
