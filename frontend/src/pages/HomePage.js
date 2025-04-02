@@ -2,14 +2,23 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { motion } from "framer-motion";
 import { Lightbulb, RotateCcw } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const HomePage = () => {
+  const [userIncome, setUserIncome] = useState(null);
+  const navigate = useNavigate();
   const [userName, setUserName] = useState("...");
   const [formData, setFormData] = useState({
     income: "",
     riskLevel: "Select risk level",
     returnPeriod: "",
   });
+  useEffect(() => {
+    fetch("https://localhost:5000/api/investment-recommendation") // Replace with actual API URL
+      .then((response) => response.json())
+      .then((data) => setUserIncome(data.income)) // Assuming API response is { income: 5000 }
+      .catch((error) => console.error("Error fetching income:", error));
+  }, []);
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -292,6 +301,7 @@ const HomePage = () => {
               )}
 
               {/* Tooltip Appears Above */}
+              
               {showTooltip && (
                 <div
                   style={{
@@ -317,45 +327,44 @@ const HomePage = () => {
             </div>
 
             {/* Options List - Toggle AI/Normal */}
-            <ul>
-              {Object.entries(investmentResult).map(([asset, percent]) => (
-                <li key={asset}>
-                  {asset}: {percent * 100}%
-                </li>
-              ))}
-            </ul>
+            {showAI ? (
             <ul style={{ listStyleType: "none", padding: "0" }}>
-              {[
-                showAI ? "Option 1 - 50% of Income" : "Option 1",
-                showAI ? "Option 2 - 20% of Income" : "Option 2",
-                showAI ? "Option 3 - 20% of Income" : "Option 3",
-                showAI ? "Option 4 - 10% of Income" : "Option 4",
-              ].map((option, index) => (
-                <li
-                  key={index}
-                  style={{
-                    marginBottom: "10px",
-                    padding: "15px",
-                    background: "#ffffff",
-                    borderRadius: "8px",
-                    boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
-                    textAlign: "center",
-                    transition: "all 0.3s ease-in-out",
-                  }}
-                >
-                  <a
-                    href="#"
-                    style={{
-                      textDecoration: "none",
-                      color: "#007BFF",
-                      fontWeight: "bold",
-                    }}
-                  >
-                    {option}
-                  </a>
-                </li>
-              ))}
+              {investmentResult &&
+                Object.entries(investmentResult)
+                  .sort(([, a], [, b]) => b - a)
+                  .map(([asset, percent], index) => {
+                    // const amount = (userIncome * percent).toFixed(2);
+                    <li
+                      key={index}
+                      style={{
+                        marginBottom: "10px",
+                        padding: "15px",
+                        background: "#ffffff",
+                        borderRadius: "8px",
+                        boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
+                        textAlign: "center",
+                        transition: "all 0.3s ease-in-out",
+                        cursor: "pointer",
+                      }}
+                      onClick={() => navigate(`/${asset.toLowerCase()}`)} // Navigate on click
+                    >
+                      <span
+                        style={{
+                          textDecoration: "none",
+                          color: "#007BFF",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        {/* {asset} - {percent * 100}% of income = ${amount} */}
+                      </span>
+                    </li>
+              })}
             </ul>
+            ) : (
+              <p style={{ color: "white", textAlign: "center" }}>
+                Enable AI to see investment recommendations.
+              </p>
+            )}
           </div>
 
           {/* Right Side - Blank Box */}
