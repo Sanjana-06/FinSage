@@ -68,7 +68,8 @@ const GoldPage = () => {
         textAlign: "center",
         paddingTop: "20px",
         fontFamily: "Arial, sans-serif",
-        height: "100%",
+        height: "auto",
+        overflow: "hidden",
         backgroundColor: "rgba(10, 25, 50)",
       }}
     >
@@ -356,6 +357,48 @@ const GoldPage = () => {
           wealth-preserving qualities.
         </motion.p>
       </div>
+      <h2 style={{ fontSize: "34px", color: "#4bcd3e" }}>Related Links</h2>
+          <ul 
+            style={{ 
+              paddingLeft: "20px",  // Keep indentation for bullets
+              marginLeft: 0, 
+              display: "flex", 
+              gap: "30px",
+              textAlign:"center",
+              justifyContent:"center"  // Adds space between items
+            }}
+          >
+            <li>
+              <a 
+                href="https://groww.in/p/gold-investment" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                style={{ fontSize: "22px", color: "white", textDecoration: "none",textAlign:"center" }}
+              >
+                Groww.com
+              </a>
+            </li>
+            <li>
+              <a 
+                href="https://www.bankbazaar.com/gold-rate/gold-schemes-by-jewellers-and-banks.html" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                style={{ fontSize: "22px", color: "white", textDecoration: "none" }}
+              >
+                BankBazaar.com
+              </a>
+            </li>
+            <li>
+              <a 
+                href="https://cleartax.in/s/gold-investment" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                style={{ fontSize: "22px", color: "white", textDecoration: "none" }}
+              >
+                ClearTax.com
+              </a>
+            </li>
+          </ul>
     </div>
   );
 };

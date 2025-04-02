@@ -416,6 +416,46 @@ const FDPage = () => {
             versatile and efficient savings instruments for a variety of needs
           </motion.p>
         </div>
+        <h2 style={{ fontSize: "34px", color: "#4bcd3e" }}>Related Links</h2>
+          <ul 
+            style={{ 
+              paddingLeft: "20px",  // Keep indentation for bullets
+              marginLeft: 0, 
+              display: "flex", 
+              gap: "30px"  // Adds space between items
+            }}
+          >
+            <li>
+              <a 
+                href="https://groww.in/fixed-deposit" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                style={{ fontSize: "22px", color: "white", textDecoration: "none" }}
+              >
+                Groww.com
+              </a>
+            </li>
+            <li>
+              <a 
+                href="https://www.bankbazaar.com/fixed-deposit.html" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                style={{ fontSize: "22px", color: "white", textDecoration: "none" }}
+              >
+                BankBazaar.com
+              </a>
+            </li>
+            <li>
+              <a 
+                href="https://cleartax.in/s/fd-fixed-deposits" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                style={{ fontSize: "22px", color: "white", textDecoration: "none" }}
+              >
+                ClearTax.com
+              </a>
+            </li>
+          </ul>
       </div>
     </div>
   );

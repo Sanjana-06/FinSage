@@ -22,7 +22,7 @@ const MutualFundPage = () => {
         color: "white",
         backgroundColor: "rgba(10, 25, 50)",
         padding: "20px 45px 20px 70px",
-        height: "100vh",
+        height: "auto",
       }}
     >
       <h1
@@ -192,6 +192,48 @@ const MutualFundPage = () => {
           About Fund
         </button>
       </div>
+      <h2 style={{ fontSize: "34px", color: "#4bcd3e",textAlign:"center" }}>Related Links</h2>
+          <ul 
+            style={{ 
+              paddingLeft: "20px",  // Keep indentation for bullets
+              marginLeft: 0, 
+              display: "flex", 
+              gap: "30px",
+              justifyContent:"center",
+              textAlign:"center" // Adds space between items
+            }}
+          >
+            <li>
+              <a 
+                href="https://groww.in/p/beginners-guide-mutual-funds" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                style={{ fontSize: "22px", color: "white", textDecoration: "none" }}
+              >
+                Groww.com
+              </a>
+            </li>
+            <li>
+              <a 
+                href="https://www.bankbazaar.com/mutual-fund.html" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                style={{ fontSize: "22px", color: "white", textDecoration: "none" }}
+              >
+                BankBazaar.com
+              </a>
+            </li>
+            <li>
+              <a 
+                href="https://cleartax.in/glossary/mutual-funds" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                style={{ fontSize: "22px", color: "white", textDecoration: "none" }}
+              >
+                ClearTax.com
+              </a>
+            </li>
+          </ul>
     </div>
   );
 };

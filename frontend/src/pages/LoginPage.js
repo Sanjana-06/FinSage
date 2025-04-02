@@ -57,7 +57,7 @@ const LoginPage = () => {
         style={{
           position: "absolute",
           top: "50%",
-          left: "50%",
+          left: "48%",
           transform: "translate(-50%, -50%)", // Centers the card vertically and horizontally
           width: "400px",
           height: "450px",

@@ -52,9 +52,9 @@ const Navbar = () => {
                 <Link to="/gold" style={styles.dropdownItem}>
                   Gold
                 </Link>
-                <Link to="/stocks" style={styles.dropdownItem}>
+                {/* <Link to="/stocks" style={styles.dropdownItem}>
                   Stocks
-                </Link>
+                </Link> */}
               </div>
             )}
           </div>
@@ -78,9 +78,9 @@ const Navbar = () => {
                 <Link to="/news/gold" style={styles.dropdownItem}>
                   Gold{" "}
                 </Link>
-                <Link to="/news/stocks" style={styles.dropdownItem}>
+                {/* <Link to="/news/stocks" style={styles.dropdownItem}>
                   Stock
-                </Link>
+                </Link> */}
                 <Link to="/news/mutualfund" style={styles.dropdownItem}>
                   MutualFund
                 </Link>
