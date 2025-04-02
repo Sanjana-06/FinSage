@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { Search } from "lucide-react";
 
 const FDPage = () => {
   const [fdResults, setFdResults] = useState([]);
@@ -86,7 +85,7 @@ const FDPage = () => {
           justifyContent: "left",
           fontSize: "2.5rem",
           color: "white",
-          paddingLeft: "9%",
+          paddingLeft: "10%",
           paddingBottom: "10px",
         }}
       >
@@ -221,7 +220,7 @@ const FDPage = () => {
             value={filterText}
             onChange={(e) => {
               setFilterText(e.target.value);
-              setCurrentPage(1); 
+              setCurrentPage(1);
             }}
             placeholder="Search by Bank Name..."
             style={{
@@ -369,54 +368,53 @@ const FDPage = () => {
             width: "100%",
           }}
         >
-
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.4 }}
-          style={{
-            textAlign: "justify",
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 0.4 }}
+            style={{
+              textAlign: "justify",
               fontSize: "20px",
               lineHeight: "1.6",
               width: "100%", // Ensures visibility
-          }}
-        >
-          A Fixed Deposit (FD) is a financial instrument offered by banks and
-          financial institutions that allows individuals to deposit a lump sum
-          of money for a predetermined period at a fixed interest rate. Unlike
-          regular savings accounts, FDs provide higher interest rates, making
-          them a popular choice for risk-averse investors looking for stable and
-          guaranteed returns. These deposits are straightforward to open and
-          come with minimal administrative requirements, which appeals to a
-          broad range of investors. Many banks offer schemes that cater to
-          specific demographics, such as senior citizens, providing them with
-          even better returns. FDs are also insulated from market volatility,
-          ensuring a safe and predictable growth of savings.
-          <br /> <br />
-          The key advantage of a Fixed Deposit is the guaranteed return on
-          investment, as the interest rate remains fixed for the entire duration
-          of the deposit. This makes it an ideal option for individuals who
-          prioritize security over high-risk investments. The fixed rate shields
-          investors from fluctuations in interest rates, providing them peace of
-          mind throughout the deposit tenure. Many banks also offer flexible
-          tenure options ranging from a few months to several years, allowing
-          customers to tailor their deposits to their financial goals.
-          Additionally, the predictable nature of returns makes FDs an excellent
-          tool for planning future expenses, such as education, travel, or home
-          renovations.
-          <br /> <br />
-          Additionally, some banks allow premature withdrawals, though they may
-          come with penalty charges. While penalties may slightly reduce
-          returns, the ability to access funds during emergencies adds a layer
-          of liquidity to the investment. Fixed Deposits can also be used as
-          collateral for loans, offering financial flexibility to investors
-          without having to break their deposits. By using FDs as security,
-          borrowers can avail of loans at lower interest rates compared to
-          unsecured personal loans. Furthermore, certain banks provide
-          nomination facilities, ensuring the smooth transfer of funds to
-          beneficiaries in unforeseen circumstances. These features make FDs
-          versatile and efficient savings instruments for a variety of needs
-        </motion.p>            
+            }}
+          >
+            A Fixed Deposit (FD) is a financial instrument offered by banks and
+            financial institutions that allows individuals to deposit a lump sum
+            of money for a predetermined period at a fixed interest rate. Unlike
+            regular savings accounts, FDs provide higher interest rates, making
+            them a popular choice for risk-averse investors looking for stable
+            and guaranteed returns. These deposits are straightforward to open
+            and come with minimal administrative requirements, which appeals to
+            a broad range of investors. Many banks offer schemes that cater to
+            specific demographics, such as senior citizens, providing them with
+            even better returns. FDs are also insulated from market volatility,
+            ensuring a safe and predictable growth of savings.
+            <br /> <br />
+            The key advantage of a Fixed Deposit is the guaranteed return on
+            investment, as the interest rate remains fixed for the entire
+            duration of the deposit. This makes it an ideal option for
+            individuals who prioritize security over high-risk investments. The
+            fixed rate shields investors from fluctuations in interest rates,
+            providing them peace of mind throughout the deposit tenure. Many
+            banks also offer flexible tenure options ranging from a few months
+            to several years, allowing customers to tailor their deposits to
+            their financial goals. Additionally, the predictable nature of
+            returns makes FDs an excellent tool for planning future expenses,
+            such as education, travel, or home renovations.
+            <br /> <br />
+            Additionally, some banks allow premature withdrawals, though they
+            may come with penalty charges. While penalties may slightly reduce
+            returns, the ability to access funds during emergencies adds a layer
+            of liquidity to the investment. Fixed Deposits can also be used as
+            collateral for loans, offering financial flexibility to investors
+            without having to break their deposits. By using FDs as security,
+            borrowers can avail of loans at lower interest rates compared to
+            unsecured personal loans. Furthermore, certain banks provide
+            nomination facilities, ensuring the smooth transfer of funds to
+            beneficiaries in unforeseen circumstances. These features make FDs
+            versatile and efficient savings instruments for a variety of needs
+          </motion.p>
         </div>
       </div>
     </div>

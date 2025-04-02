@@ -85,7 +85,7 @@ const RDPage = () => {
           justifyContent: "left",
           fontSize: "2.5rem",
           color: "white",
-          paddingLeft: "9%",
+          paddingLeft: "10%",
           paddingBottom: "10px",
         }}
       >
@@ -220,7 +220,7 @@ const RDPage = () => {
             value={filterText}
             onChange={(e) => {
               setFilterText(e.target.value);
-              setCurrentPage(1); 
+              setCurrentPage(1);
             }}
             placeholder="Search by Bank Name..."
             style={{
@@ -367,43 +367,43 @@ const RDPage = () => {
             width: "100%",
           }}
         >
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.4 }}
-          style={{
-            textAlign: "justify",
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 0.4 }}
+            style={{
+              textAlign: "justify",
               fontSize: "20px",
               lineHeight: "1.6",
               width: "100%", // Ensures visibility
-          }}
-        >
-          A Recurring Deposit (RD) is a type of term deposit offered by banks
-          and financial institutions, designed to encourage regular savings
-          among individuals. Unlike Fixed Deposits (FDs), where a lump sum is
-          deposited at once, an RD allows individuals to deposit a fixed amount
-          every month for a predetermined tenure. At the end of the term, the
-          investor receives the total savings along with accumulated interest.
-          This makes RDs a great option for salaried individuals or those who
-          prefer disciplined saving habits.
-          <br /> <br />
-          One of the major benefits of a Recurring Deposit is that it provides
-          stable and assured returns with minimal risk. The interest rate is
-          fixed at the time of opening the RD account and remains the same
-          throughout the tenure. Additionally, RDs offer flexibility in tenure,
-          ranging from as short as six months to as long as ten years, allowing
-          investors to choose a plan that suits their financial goals. Unlike
-          market-linked investments, RDs are not affected by economic
-          fluctuations, making them ideal for conservative investors.
-          <br /> <br />
-          Many banks also offer additional features such as premature withdrawal
-          options, though a penalty may apply. Some banks even allow RDs to be
-          used as collateral for loans, providing liquidity when needed. Since
-          interest earned on RDs is taxable, individuals should consider their
-          tax liability before investing. Overall, Recurring Deposits serve as a
-          safe and convenient way to build savings over time while earning a
-          fixed return on investment.
-        </motion.p>
+            }}
+          >
+            A Recurring Deposit (RD) is a type of term deposit offered by banks
+            and financial institutions, designed to encourage regular savings
+            among individuals. Unlike Fixed Deposits (FDs), where a lump sum is
+            deposited at once, an RD allows individuals to deposit a fixed
+            amount every month for a predetermined tenure. At the end of the
+            term, the investor receives the total savings along with accumulated
+            interest. This makes RDs a great option for salaried individuals or
+            those who prefer disciplined saving habits.
+            <br /> <br />
+            One of the major benefits of a Recurring Deposit is that it provides
+            stable and assured returns with minimal risk. The interest rate is
+            fixed at the time of opening the RD account and remains the same
+            throughout the tenure. Additionally, RDs offer flexibility in
+            tenure, ranging from as short as six months to as long as ten years,
+            allowing investors to choose a plan that suits their financial
+            goals. Unlike market-linked investments, RDs are not affected by
+            economic fluctuations, making them ideal for conservative investors.
+            <br /> <br />
+            Many banks also offer additional features such as premature
+            withdrawal options, though a penalty may apply. Some banks even
+            allow RDs to be used as collateral for loans, providing liquidity
+            when needed. Since interest earned on RDs is taxable, individuals
+            should consider their tax liability before investing. Overall,
+            Recurring Deposits serve as a safe and convenient way to build
+            savings over time while earning a fixed return on investment.
+          </motion.p>
         </div>
       </div>
     </div>

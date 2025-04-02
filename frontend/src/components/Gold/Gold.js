@@ -9,14 +9,10 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-import {
-  LineChart,
-  Line,
-} from "recharts";
+import { LineChart, Line } from "recharts";
 
 const GoldPage = () => {
   const historicalData = {
-
     "1Y": [
       { month: "2025-01", historical: 1800 },
       { month: "2025-02", historical: 1820 },
@@ -35,8 +31,8 @@ const GoldPage = () => {
     "3Y": [
       // Similar structure for 3 years
     ],
-  }
-  
+  };
+
   const [showGraph, setShowGraph] = useState(true);
   const [selectedPeriod, setSelectedPeriod] = useState("1Y");
 
@@ -84,7 +80,7 @@ const GoldPage = () => {
           alignItems: "left",
           fontSize: "2.5rem",
           color: "white",
-          paddingLeft: "9%",
+          paddingLeft: "10%",
           paddingBottom: "10px",
         }}
       >
@@ -218,9 +214,8 @@ const GoldPage = () => {
             >
               Submit
             </button>
-            
           </div>
-        </form> 
+        </form>
       </div>
 
       {showOptions && (
@@ -367,7 +362,6 @@ const GoldPage = () => {
 
 export default GoldPage;
 
-
 // {showGraph && (
 //   <div style={{ backgroundColor: "rgba(255, 255, 255, 0.3)", padding: "20px", borderRadius: "10px" }}>
 //     <h2>Gold Price Trends ({selectedPeriod})</h2>
@@ -387,4 +381,3 @@ export default GoldPage;
 //     </div>
 //   </div>
 // )}
-

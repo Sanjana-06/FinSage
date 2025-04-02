@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { motion } from "framer-motion";
-import { Lightbulb, RotateCcw } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
 import { useAuth } from "../Components/Authentication/AuthContext";
 
 const HomePage = () => {
-  const COLORS = ["#4BCD3E", "#FFB400", "#36A2EB", "#8B008B"];
+  const COLORS = ["#4BCD3E", "#FFB400", "#36A2EB", "#f54242"];
 
-  const { user, logout } = useAuth();
+  const { logout } = useAuth();
   const navigate = useNavigate();
   const [Income, setIncome] = useState(0);
   const [userName, setUserName] = useState("...");
@@ -57,16 +56,10 @@ const HomePage = () => {
   }, [logout]);
 
   const [investmentResult, setInvestmentResult] = useState(null);
-  const [showAI, setShowAI] = useState(true);
-  const [showTooltip, setShowTooltip] = useState(false);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
-  };
-
-  const handleAIRecommendation = () => {
-    setShowAI(!showAI);
   };
 
   const handleSubmit = async (event) => {
@@ -91,29 +84,6 @@ const HomePage = () => {
       console.error("Error fetching investment recommendation:", error);
     }
   };
-  // const [storedInvestmentResult, setStoredInvestmentResult] = useState(null);
-  // const [storedIncome, setStoredIncome] = useState(null);
-  // const finalInvestmentResult = investmentResult || storedInvestmentResult;
-  // const finalIncome = Income || storedIncome;
-
-  // const handleInvestmentClick = (investment) => {
-  //   const path = investmentRoutes[investment];
-  //   if (path) {
-  //       // localStorage.setItem("investmentResult", JSON.stringify(investmentResult));
-  //       // localStorage.setItem("Income",JSON.stringify(Income));
-  //       navigate(path, { state: { investmentResult, Income } });
-  //   } else {
-  //       console.error(`No route found for investment: ${investment}`);
-  //   }
-  // };
-  // useEffect(() => {
-  //   const savedResult = localStorage.getItem("investmentResult");
-  //   const savedIncome = localStorage.getItem("Income");
-  //   if (savedResult && savedIncome) {
-  //       setStoredInvestmentResult(JSON.parse(savedResult));
-  //       setStoredIncome(JSON.parse(savedIncome));
-  //   }
-  // }, []);
 
   const handleInvestmentClick = (asset) => {
     const normalizedAsset = asset.trim().toLowerCase();
@@ -136,7 +106,7 @@ const HomePage = () => {
       console.log("No route defined for", asset);
     }
   };
-  const InvestmentComponent = ({ showAI, investmentResult, Income }) => {
+  const InvestmentComponent = ({ investmentResult }) => {
     if (!investmentResult || Object.keys(investmentResult).length === 0) {
       return <p style={{ color: "white" }}>No data available for chart</p>;
     }
@@ -149,18 +119,18 @@ const HomePage = () => {
     : [];
   return (
     <div
-    style={{
-      margin: "auto",
-      textAlign: "center",
-      paddingTop: "5px", // Reduced from 20px
-      fontFamily: "Arial, sans-serif",
-      display: "flex",
-      flexDirection: "column",
-      minHeight: "100vh",
-      backgroundColor: "rgba(10, 25, 50)",
-      position: "relative",
-      paddingBottom: "150px",
-    }}
+      style={{
+        margin: "auto",
+        textAlign: "center",
+        paddingTop: "5px", // Reduced from 20px
+        fontFamily: "Arial, sans-serif",
+        display: "flex",
+        flexDirection: "column",
+        minHeight: "100vh",
+        backgroundColor: "rgba(10, 25, 50)",
+        position: "relative",
+        paddingBottom: "150px",
+      }}
     >
       {/* Greeting */}
       <h1
@@ -170,7 +140,7 @@ const HomePage = () => {
           alignItems: "left",
           fontSize: "2rem",
           color: "white",
-          paddingLeft: "9%",
+          paddingLeft: "10%",
           marginTop: "30px",
           marginBottom: "30px",
         }}
@@ -363,44 +333,10 @@ const HomePage = () => {
                 right: "10px",
                 cursor: "pointer",
               }}
-              onClick={handleAIRecommendation}
-              onMouseEnter={() => setShowTooltip(true)}
-              onMouseLeave={() => setShowTooltip(false)}
-            >
-              {/* {showAI ? (
-                <Lightbulb size={26} color="#FFA500" />
-              ) : (
-                <RotateCcw size={26} color="black" />
-              )} */}
-
-              {/* Tooltip Appears Above */}
-
-              {/* {showTooltip && (
-                <div
-                  style={{
-                    position: "absolute",
-                    bottom: "35px",
-                    right: "-10px",
-                    backgroundColor: "#222",
-                    color: "#fff",
-                    padding: "8px 12px",
-                    borderRadius: "8px",
-                    fontSize: "12px",
-                    fontWeight: "bold",
-                    whiteSpace: "nowrap",
-                    boxShadow: "0px 3px 8px rgba(0, 0, 0, 0.2)",
-                    transition: "opacity 0.3s ease-in-out",
-                    opacity: showTooltip ? 1 : 0,
-                    pointerEvents: "none",
-                  }}
-                >
-                  {showAI ? "🔄 Reset to Normal" : "⚡ AI Recommendation"}
-                </div>
-              )} */}
-            </div>
+            ></div>
 
             {/* Options List - Toggle AI/Normal */}
-            {showAI ? (
+            {
               <div>
                 {/* Header Card */}
                 <div
@@ -481,11 +417,7 @@ const HomePage = () => {
                       })}
                 </ul>
               </div>
-            ) : (
-              <p style={{ color: "white", textAlign: "center" }}>
-                Enable AI to see investment recommendations.
-              </p>
-            )}
+            }
           </div>
 
           {/* Right Side - Blank Box */}
@@ -502,9 +434,7 @@ const HomePage = () => {
               minHeight: "200px",
             }}
           >
-            {showAI &&
-            investmentResult &&
-            Object.keys(investmentResult).length > 0 ? (
+            {investmentResult && Object.keys(investmentResult).length > 0 ? (
               <PieChart width={400} height={400}>
                 <text
                   x="50%"

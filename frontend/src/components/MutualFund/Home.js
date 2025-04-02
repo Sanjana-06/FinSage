@@ -21,9 +21,7 @@ const MutualFundPage = () => {
       style={{
         color: "white",
         backgroundColor: "rgba(10, 25, 50)",
-        padding: "20px",
-        paddingLeft: "45px",
-        paddingRight: "70px",
+        padding: "20px 45px 20px 70px",
         height: "100vh",
       }}
     >
@@ -64,7 +62,6 @@ const MutualFundPage = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             style={{
-              paddingLeft: "10px",
               marginTop: "40px",
               marginBottom: "20px",
               fontFamily: "Arial, sans-serif",
@@ -88,7 +85,6 @@ const MutualFundPage = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.5 }}
             style={{
-              paddingLeft: "10px",
               marginTop: "20px",
               marginBottom: "20px",
               fontFamily: "Arial, sans-serif",
