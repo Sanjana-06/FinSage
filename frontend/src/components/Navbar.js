@@ -8,6 +8,7 @@ import {
   Newspaper,
   Bot,
   TrendingUp,
+  Home,
 } from "lucide-react";
 
 const Navbar = () => {
@@ -86,7 +87,9 @@ const Navbar = () => {
               </div>
             )}
           </div>
-
+          <Link to="/home" style={styles.navItem}>
+            <Home size={18} /> Home
+          </Link>
           <div
             style={styles.navItem}
             onMouseEnter={() => setIsUserOpen(true)}
