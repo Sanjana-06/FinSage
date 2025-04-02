@@ -7,7 +7,8 @@ import { PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
 import { useAuth } from "../Components/Authentication/AuthContext";
 
 const HomePage = () => {
-  const COLORS = ["#007BFF", "#FF5733", "#28A745", "#FFC107", "#6F42C1"];
+  const COLORS = ["#4BCD3E", "#FFB400", "#36A2EB", "#8B008B"];
+
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const [Income, setIncome] = useState(0);
@@ -17,6 +18,12 @@ const HomePage = () => {
     riskLevel: "Select risk level",
     returnPeriod: "",
   });
+  const getGreeting = () => {
+    const hour = new Date().getHours();
+    if (hour < 12) return "Good Morning";
+    if (hour < 18) return "Good Afternoon";
+    return "Good Evening";
+  };
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
@@ -50,7 +57,7 @@ const HomePage = () => {
   }, [logout]);
 
   const [investmentResult, setInvestmentResult] = useState(null);
-  const [showAI, setShowAI] = useState(false);
+  const [showAI, setShowAI] = useState(true);
   const [showTooltip, setShowTooltip] = useState(false);
 
   const handleInputChange = (event) => {
@@ -142,14 +149,18 @@ const HomePage = () => {
     : [];
   return (
     <div
-      style={{
-        margin: "auto",
-        textAlign: "center",
-        paddingTop: "20px",
-        fontFamily: "Arial, sans-serif",
-        height: "100vh",
-        backgroundColor: "rgba(10, 25, 50)",
-      }}
+    style={{
+      margin: "auto",
+      textAlign: "center",
+      paddingTop: "5px", // Reduced from 20px
+      fontFamily: "Arial, sans-serif",
+      display: "flex",
+      flexDirection: "column",
+      minHeight: "100vh",
+      backgroundColor: "rgba(10, 25, 50)",
+      position: "relative",
+      paddingBottom: "150px",
+    }}
     >
       {/* Greeting */}
       <h1
@@ -160,9 +171,11 @@ const HomePage = () => {
           fontSize: "2rem",
           color: "white",
           paddingLeft: "9%",
+          marginTop: "30px",
+          marginBottom: "30px",
         }}
       >
-        {`Hello ${userName} ...`.split("").map((char, index) => (
+        {`${getGreeting()} ${userName} ...`.split("").map((char, index) => (
           <motion.span
             key={index}
             initial={{ opacity: 0, y: 10 }}
@@ -176,14 +189,16 @@ const HomePage = () => {
       </h1>
       <div
         style={{
-          padding: "20px",
-          backgroundColor: "rgba(255, 255, 255, 0.3)", // White with 30% opacity
+          position: "relative",
+          padding: "20px", // Reduce padding
+          paddingLeft: "14px",
+          backgroundColor: "rgba(255, 255, 255, 0.3)",
           borderRadius: "20px",
           boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
           width: "80%",
-          margin: "auto",
+          margin: "0 auto", // Ensure proper centering
           maxWidth: "1000px",
-          backdropFilter: "blur(10px)", // Glass effect for better readability
+          backdropFilter: "blur(10px)",
         }}
       >
         <form onSubmit={handleSubmit}>
@@ -313,12 +328,11 @@ const HomePage = () => {
           style={{
             display: "flex",
             justifyContent: "space-between",
-            marginTop: "30px",
+            marginTop: "50px",
             width: "80%",
             marginLeft: "auto",
             marginRight: "auto",
             gap: "20px",
-            marginBottom: "50px", // Add this line to create space between the cards and the footer
           }}
         >
           <InvestmentComponent investmentResult={investmentResult} />
@@ -335,9 +349,10 @@ const HomePage = () => {
           >
             {/* Heading Changes Dynamically */}
             <h3 style={{ color: "white" }}>
-              {showAI
+              {/* {showAI
                 ? "Investment Recommendation with AI"
-                : "Investment Recommendation"}
+                : "Investment Recommendation"} */}
+              Investment Recommendation with AI
             </h3>
 
             {/* Icon for AI or Reset */}
@@ -352,15 +367,15 @@ const HomePage = () => {
               onMouseEnter={() => setShowTooltip(true)}
               onMouseLeave={() => setShowTooltip(false)}
             >
-              {showAI ? (
+              {/* {showAI ? (
                 <Lightbulb size={26} color="#FFA500" />
               ) : (
                 <RotateCcw size={26} color="black" />
-              )}
+              )} */}
 
               {/* Tooltip Appears Above */}
 
-              {showTooltip && (
+              {/* {showTooltip && (
                 <div
                   style={{
                     position: "absolute",
@@ -381,7 +396,7 @@ const HomePage = () => {
                 >
                   {showAI ? "🔄 Reset to Normal" : "⚡ AI Recommendation"}
                 </div>
-              )}
+              )} */}
             </div>
 
             {/* Options List - Toggle AI/Normal */}

@@ -20,7 +20,7 @@ bcrypt = Bcrypt(app)
 app.config["JWT_SECRET_KEY"] = "Innovate48"
 jwt = JWTManager(app)
 # Set JWT expiration to 30 minutes
-app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(minutes=5)
+app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(minutes=30)
 
 # Use a local SQLite database
 LOCAL_DB_PATH = "sqlite:///innovate.db"
