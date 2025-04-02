@@ -1,4 +1,5 @@
 import os
+from datetime import timedelta
 from flask import Flask, request, jsonify
 from sqlalchemy import Column, Integer, String, create_engine
 from sqlalchemy.orm import declarative_base, sessionmaker
@@ -18,6 +19,8 @@ CORS(app)
 bcrypt = Bcrypt(app)
 app.config["JWT_SECRET_KEY"] = "Innovate48"
 jwt = JWTManager(app)
+# Set JWT expiration to 30 minutes
+app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(minutes=5)
 
 # Use a local SQLite database
 LOCAL_DB_PATH = "sqlite:///innovate.db"
@@ -60,7 +63,7 @@ def signup():
     session.commit()
     session.close()
 
-    return jsonify({"message": "User registered successfully", "token": access_token, "redirect": "http://localhost:3000/home"}), 201
+    return jsonify({"message": "User registered successfully", "token": access_token}), 201
 
 # User Login Route
 @app.route("/api/user/login", methods=["POST"])
@@ -74,7 +77,7 @@ def login():
 
     if user and bcrypt.check_password_hash(user.password, password):
         access_token = create_access_token(identity=user.email)
-        return jsonify({"message": "Login successful", "token": access_token, "redirect": "http://localhost:3000/home"})
+        return jsonify({"message": "Login successful", "token": access_token})
 
     return jsonify({"message": "Invalid email or password"}), 401
 
@@ -111,8 +114,9 @@ def investment_recommendation_route():
 
     # Get investment allocation
     result = investment_recommendation.investment_allocation(income, risk_level, return_period)
-    
+
     return jsonify(result)
+    
 
 # FD Analysis Route
 @app.route("/api/fd-analysis", methods=["POST"])

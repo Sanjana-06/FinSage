@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import axios from "axios";
 import { Eye, EyeOff } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "./AuthContext";
 
 const SignUp = ({ setIsLogin }) => {
+  const { login } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [name, setName] = useState("");
@@ -14,7 +16,8 @@ const SignUp = ({ setIsLogin }) => {
   const navigate = useNavigate();
 
   const togglePasswordVisibility = () => setShowPassword(!showPassword);
-  const toggleConfirmPasswordVisibility = () => setShowConfirmPassword(!showConfirmPassword);
+  const toggleConfirmPasswordVisibility = () =>
+    setShowConfirmPassword(!showConfirmPassword);
 
   const submitHandler = async () => {
     if (!name || !email || !password || !confirmPassword) {
@@ -35,7 +38,7 @@ const SignUp = ({ setIsLogin }) => {
       );
 
       setIsLogin(true);
-      localStorage.setItem("token", data.token);
+      login(data.token); // Store token using AuthContext
       navigate("/home");
     } catch (error) {
       setMessage("Signup failed. Try again.");
@@ -56,10 +59,14 @@ const SignUp = ({ setIsLogin }) => {
         textAlign: "center",
       }}
     >
-      <h2 style={{ fontSize: "28px", fontWeight: "bold", color: "white" }}>Sign Up</h2>
+      <h2 style={{ fontSize: "28px", fontWeight: "bold", color: "white" }}>
+        Sign Up
+      </h2>
       {message && <p style={{ color: "red" }}>{message}</p>}
 
-      <div style={{ textAlign: "left", marginBottom: "10px", color: "#D3D3D3" }}>
+      <div
+        style={{ textAlign: "left", marginBottom: "10px", color: "#D3D3D3" }}
+      >
         <label>Name</label>
         <input
           type="text"
@@ -67,11 +74,20 @@ const SignUp = ({ setIsLogin }) => {
           value={name}
           onChange={(e) => setName(e.target.value)}
           required
-          style={{ width: "95%", padding: "10px", marginTop: "5px", marginBottom: "5px", borderRadius: "5px", border: "1px solid #ccc" }}
+          style={{
+            width: "95%",
+            padding: "10px",
+            marginTop: "5px",
+            marginBottom: "5px",
+            borderRadius: "5px",
+            border: "1px solid #ccc",
+          }}
         />
       </div>
 
-      <div style={{ textAlign: "left", marginBottom: "10px", color: "#D3D3D3" }}>
+      <div
+        style={{ textAlign: "left", marginBottom: "10px", color: "#D3D3D3" }}
+      >
         <label>Email</label>
         <input
           type="email"
@@ -79,13 +95,42 @@ const SignUp = ({ setIsLogin }) => {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
-          style={{ width: "95%", padding: "10px", marginTop: "5px", marginBottom: "5px", borderRadius: "5px", border: "1px solid #ccc" }}
+          style={{
+            width: "95%",
+            padding: "10px",
+            marginTop: "5px",
+            marginBottom: "5px",
+            borderRadius: "5px",
+            border: "1px solid #ccc",
+          }}
         />
       </div>
 
-      {[{ label: "Password", value: password, setValue: setPassword, show: showPassword, toggle: togglePasswordVisibility },
-        { label: "Confirm Password", value: confirmPassword, setValue: setConfirmPassword, show: showConfirmPassword, toggle: toggleConfirmPasswordVisibility }].map((field, index) => (
-        <div key={index} style={{ textAlign: "left", marginBottom: "10px", color: "#D3D3D3", position: "relative" }}>
+      {[
+        {
+          label: "Password",
+          value: password,
+          setValue: setPassword,
+          show: showPassword,
+          toggle: togglePasswordVisibility,
+        },
+        {
+          label: "Confirm Password",
+          value: confirmPassword,
+          setValue: setConfirmPassword,
+          show: showConfirmPassword,
+          toggle: toggleConfirmPasswordVisibility,
+        },
+      ].map((field, index) => (
+        <div
+          key={index}
+          style={{
+            textAlign: "left",
+            marginBottom: "10px",
+            color: "#D3D3D3",
+            position: "relative",
+          }}
+        >
           <label>{field.label}</label>
           <input
             type={field.show ? "text" : "password"}
@@ -105,13 +150,27 @@ const SignUp = ({ setIsLogin }) => {
           {field.show ? (
             <EyeOff
               size={20}
-              style={{ position: "absolute", right: "10px", top: "60%", transform: "translateY(-50%)", cursor: "pointer", color: "black" }}
+              style={{
+                position: "absolute",
+                right: "10px",
+                top: "60%",
+                transform: "translateY(-50%)",
+                cursor: "pointer",
+                color: "black",
+              }}
               onClick={field.toggle}
             />
           ) : (
             <Eye
               size={20}
-              style={{ position: "absolute", right: "10px", top: "60%", transform: "translateY(-50%)", cursor: "pointer", color: "black" }}
+              style={{
+                position: "absolute",
+                right: "10px",
+                top: "60%",
+                transform: "translateY(-50%)",
+                cursor: "pointer",
+                color: "black",
+              }}
               onClick={field.toggle}
             />
           )}
@@ -137,10 +196,15 @@ const SignUp = ({ setIsLogin }) => {
       </button>
 
       <p style={{ marginTop: "15px", fontSize: "14px", color: "#D3D3D3" }}>
-        Already have an account? {" "}
+        Already have an account?{" "}
         <span
           onClick={() => setIsLogin(true)}
-          style={{ color: "#007bff", cursor: "pointer", textDecoration: "underline", fontWeight: "bold" }}
+          style={{
+            color: "#007bff",
+            cursor: "pointer",
+            textDecoration: "underline",
+            fontWeight: "bold",
+          }}
         >
           Login here
         </span>

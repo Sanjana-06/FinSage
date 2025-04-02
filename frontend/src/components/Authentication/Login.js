@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import axios from "axios";
 import { Eye, EyeOff } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "./AuthContext";
 
 const Login = ({ setIsLogin }) => {
+  const { login } = useAuth();
   const [show, setShow] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -27,9 +29,10 @@ const Login = ({ setIsLogin }) => {
         { headers: { "Content-Type": "application/json" } }
       );
 
-      localStorage.setItem("token", data.token);
+      login(data.token); // Store token using AuthContext
       navigate("/home");
     } catch (error) {
+      console.log(error);
       setMessage("Invalid Credentials!");
     }
   };
@@ -48,10 +51,14 @@ const Login = ({ setIsLogin }) => {
         textAlign: "center",
       }}
     >
-      <h2 style={{ fontSize: "28px", fontWeight: "bold", color: "white" }}>Login</h2>
+      <h2 style={{ fontSize: "28px", fontWeight: "bold", color: "white" }}>
+        Login
+      </h2>
       {message && <p style={{ color: "red" }}>{message}</p>}
 
-      <div style={{ textAlign: "left", marginBottom: "10px", color: "#D3D3D3" }}>
+      <div
+        style={{ textAlign: "left", marginBottom: "10px", color: "#D3D3D3" }}
+      >
         <label>Email</label>
         <input
           type="email"
@@ -70,7 +77,14 @@ const Login = ({ setIsLogin }) => {
         />
       </div>
 
-      <div style={{ textAlign: "left", marginBottom: "10px", color: "#D3D3D3", position: "relative" }}>
+      <div
+        style={{
+          textAlign: "left",
+          marginBottom: "10px",
+          color: "#D3D3D3",
+          position: "relative",
+        }}
+      >
         <label>Password</label>
         <div style={{ position: "relative" }}>
           <input
