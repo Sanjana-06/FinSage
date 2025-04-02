@@ -4,10 +4,11 @@ import { motion } from "framer-motion";
 import { Lightbulb, RotateCcw } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
+import { useAuth } from "../Components/Authentication/AuthContext";
 
 const HomePage = () => {
-  
-  const COLORS = ["#007BFF", "#FF5733", "#28A745", "#FFC107", "#6F42C1"]; 
+  const COLORS = ["#007BFF", "#FF5733", "#28A745", "#FFC107", "#6F42C1"];
+  const { user, logout } = useAuth();
   const navigate = useNavigate();
   const [Income, setIncome] = useState(0);
   const [userName, setUserName] = useState("...");
@@ -22,6 +23,7 @@ const HomePage = () => {
         const token = localStorage.getItem("token");
         if (!token) {
           console.error("No token found");
+          logout(); // Force logout if no token found
           return;
         }
 
@@ -40,11 +42,12 @@ const HomePage = () => {
           "Error fetching user profile:",
           error.response ? error.response.data : error.message
         );
+        logout();
       }
     };
 
     fetchUserProfile();
-  }, []);
+  }, [logout]);
 
   const [investmentResult, setInvestmentResult] = useState(null);
   const [showAI, setShowAI] = useState(false);
@@ -75,7 +78,7 @@ const HomePage = () => {
       const data = await response.json();
       const { Income, ...filteredData } = data;
       setIncome(Income);
-      console.log(filteredData)
+      console.log(filteredData);
       setInvestmentResult(filteredData);
     } catch (error) {
       console.error("Error fetching investment recommendation:", error);
@@ -85,7 +88,7 @@ const HomePage = () => {
   // const [storedIncome, setStoredIncome] = useState(null);
   // const finalInvestmentResult = investmentResult || storedInvestmentResult;
   // const finalIncome = Income || storedIncome;
-  
+
   // const handleInvestmentClick = (investment) => {
   //   const path = investmentRoutes[investment];
   //   if (path) {
@@ -96,40 +99,47 @@ const HomePage = () => {
   //       console.error(`No route found for investment: ${investment}`);
   //   }
   // };
-    // useEffect(() => {
-    //   const savedResult = localStorage.getItem("investmentResult");
-    //   const savedIncome = localStorage.getItem("Income");
-    //   if (savedResult && savedIncome) {
-    //       setStoredInvestmentResult(JSON.parse(savedResult));
-    //       setStoredIncome(JSON.parse(savedIncome));
-    //   }
-    // }, []);
+  // useEffect(() => {
+  //   const savedResult = localStorage.getItem("investmentResult");
+  //   const savedIncome = localStorage.getItem("Income");
+  //   if (savedResult && savedIncome) {
+  //       setStoredInvestmentResult(JSON.parse(savedResult));
+  //       setStoredIncome(JSON.parse(savedIncome));
+  //   }
+  // }, []);
 
-    const handleInvestmentClick = (asset) => {
-      const normalizedAsset = asset.trim().toLowerCase();
-      console.log("Clicked Asset:", normalizedAsset); // Debugging
-      if (normalizedAsset === "recurring deposits") {
-        navigate("/recurringDeposit");
-      } else if (normalizedAsset === "gold") {
-        navigate("/gold");
-      } else if (normalizedAsset === "fixed deposits" || normalizedAsset === "fixed deposit") {
-        navigate("/fixedDeposit");
-      } else if (normalizedAsset === "mutual fund" || normalizedAsset === "mutual funds") {
-        navigate("/mutualFund");
-      } else {
-        console.log("No route defined for", asset);
-      }
-    };
-    const InvestmentComponent = ({ showAI, investmentResult, Income }) => {
-      if (!investmentResult || Object.keys(investmentResult).length === 0) {
-        return <p style={{ color: "white" }}>No data available for chart</p>;
-      }
+  const handleInvestmentClick = (asset) => {
+    const normalizedAsset = asset.trim().toLowerCase();
+    console.log("Clicked Asset:", normalizedAsset); // Debugging
+    if (normalizedAsset === "recurring deposits") {
+      navigate("/recurringDeposit");
+    } else if (normalizedAsset === "gold") {
+      navigate("/gold");
+    } else if (
+      normalizedAsset === "fixed deposits" ||
+      normalizedAsset === "fixed deposit"
+    ) {
+      navigate("/fixedDeposit");
+    } else if (
+      normalizedAsset === "mutual fund" ||
+      normalizedAsset === "mutual funds"
+    ) {
+      navigate("/mutualFund");
+    } else {
+      console.log("No route defined for", asset);
     }
-    const chartData = investmentResult? Object.entries(investmentResult).map(([asset, percent]) => ({
-      name: asset,
-      value: percent * 100, // Convert decimal to percentage
-    }))
-  : [];
+  };
+  const InvestmentComponent = ({ showAI, investmentResult, Income }) => {
+    if (!investmentResult || Object.keys(investmentResult).length === 0) {
+      return <p style={{ color: "white" }}>No data available for chart</p>;
+    }
+  };
+  const chartData = investmentResult
+    ? Object.entries(investmentResult).map(([asset, percent]) => ({
+        name: asset,
+        value: percent * 100, // Convert decimal to percentage
+      }))
+    : [];
   return (
     <div
       style={{
@@ -311,7 +321,7 @@ const HomePage = () => {
             marginBottom: "50px", // Add this line to create space between the cards and the footer
           }}
         >
-           <InvestmentComponent investmentResult={investmentResult} />
+          <InvestmentComponent investmentResult={investmentResult} />
           {/* Left Side - Options */}
           <div
             style={{
@@ -343,14 +353,13 @@ const HomePage = () => {
               onMouseLeave={() => setShowTooltip(false)}
             >
               {showAI ? (
-                <Lightbulb size={26} color="#FFA500" /> 
-                 
+                <Lightbulb size={26} color="#FFA500" />
               ) : (
                 <RotateCcw size={26} color="black" />
               )}
 
               {/* Tooltip Appears Above */}
-              
+
               {showTooltip && (
                 <div
                   style={{
@@ -377,69 +386,91 @@ const HomePage = () => {
 
             {/* Options List - Toggle AI/Normal */}
             {showAI ? (
-            <div>
-              {/* Header Card */}
-              <div
-                style={{
-                  marginBottom: "10px",
-                  padding: "20px 20px",
-                  background: "#4bcd3e",
-                  borderRadius: "8px",
-                  boxShadow: "0px 2px 4px rgba(0,0,0,0.1)",
-                }}
-              >
-                <div style={{ display: "flex", fontWeight: "bold" }}>
-                  <div style={{ flex: 1, textAlign: "left" }}>Investment</div>
-                  <div style={{ flex: 1, textAlign: "center" }}>Amount</div>
-                  <div style={{ flex: 1, textAlign: "right" }}>Percentage</div>
+              <div>
+                {/* Header Card */}
+                <div
+                  style={{
+                    marginBottom: "10px",
+                    padding: "20px 20px",
+                    background: "#4bcd3e",
+                    borderRadius: "8px",
+                    boxShadow: "0px 2px 4px rgba(0,0,0,0.1)",
+                  }}
+                >
+                  <div style={{ display: "flex", fontWeight: "bold" }}>
+                    <div style={{ flex: 1, textAlign: "left" }}>Investment</div>
+                    <div style={{ flex: 1, textAlign: "center" }}>Amount</div>
+                    <div style={{ flex: 1, textAlign: "right" }}>
+                      Percentage
+                    </div>
+                  </div>
                 </div>
-              </div>
 
-              {/* Investment Result List */}
-              <ul style={{ listStyleType: "none", padding: "0" }}>
-                {investmentResult &&
-                  Object.entries(investmentResult)
-                    .sort(([, a], [, b]) => b - a)
-                    .map(([asset, percent], index) => {
-                      const amount = (Income * percent).toFixed(0);
-                      console.log(asset)
-                      return (
-                        <li
-                          key={index}
-                          style={{
-                            marginBottom: "10px",
-                            padding: "15px",
-                            background: "#ffffff",
-                            borderRadius: "8px",
-                            boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
-                            transition: "all 0.3s ease-in-out",
-                            cursor: "pointer",
-                            fontSize:"14px"
-                          }}
-                          
-                          onClick={() => handleInvestmentClick(asset)}
-                        >
-                          <div style={{ display: "flex" }}>
-                            <div style={{ flex: 1, textAlign: "left", fontWeight: "bold", color: "#007BFF" }}>
-                              {asset}
+                {/* Investment Result List */}
+                <ul style={{ listStyleType: "none", padding: "0" }}>
+                  {investmentResult &&
+                    Object.entries(investmentResult)
+                      .sort(([, a], [, b]) => b - a)
+                      .map(([asset, percent], index) => {
+                        const amount = (Income * percent).toFixed(0);
+                        console.log(asset);
+                        return (
+                          <li
+                            key={index}
+                            style={{
+                              marginBottom: "10px",
+                              padding: "15px",
+                              background: "#ffffff",
+                              borderRadius: "8px",
+                              boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
+                              transition: "all 0.3s ease-in-out",
+                              cursor: "pointer",
+                              fontSize: "14px",
+                            }}
+                            onClick={() => handleInvestmentClick(asset)}
+                          >
+                            <div style={{ display: "flex" }}>
+                              <div
+                                style={{
+                                  flex: 1,
+                                  textAlign: "left",
+                                  fontWeight: "bold",
+                                  color: "#007BFF",
+                                }}
+                              >
+                                {asset}
+                              </div>
+                              <div
+                                style={{
+                                  flex: 1,
+                                  textAlign: "center",
+                                  fontWeight: "bold",
+                                  color: "#007BFF",
+                                }}
+                              >
+                                {amount}
+                              </div>
+                              <div
+                                style={{
+                                  flex: 1,
+                                  textAlign: "right",
+                                  fontWeight: "bold",
+                                  color: "#007BFF",
+                                }}
+                              >
+                                {percent * 100}%
+                              </div>
                             </div>
-                            <div style={{ flex: 1, textAlign: "center", fontWeight: "bold", color: "#007BFF" }}>
-                              {amount}
-                            </div>
-                            <div style={{ flex: 1, textAlign: "right", fontWeight: "bold", color: "#007BFF" }}>
-                              {(percent * 100)}%
-                            </div>
-                          </div>
-                        </li>
-                      );
-                    })}
-              </ul>
-            </div>
-          ) : (
-            <p style={{ color: "white", textAlign: "center" }}>
-              Enable AI to see investment recommendations.
-            </p>
-          )}
+                          </li>
+                        );
+                      })}
+                </ul>
+              </div>
+            ) : (
+              <p style={{ color: "white", textAlign: "center" }}>
+                Enable AI to see investment recommendations.
+              </p>
+            )}
           </div>
 
           {/* Right Side - Blank Box */}
@@ -456,11 +487,21 @@ const HomePage = () => {
               minHeight: "200px",
             }}
           >
-            {showAI && investmentResult && Object.keys(investmentResult).length > 0 ? (
-                <PieChart width={400} height={400}>
-                   <text x="50%" y="10%" textAnchor="middle" dominantBaseline="middle" fontSize={18} fontWeight="bold" fill="white">
-                    Investment Analysis with AI
-                  </text>
+            {showAI &&
+            investmentResult &&
+            Object.keys(investmentResult).length > 0 ? (
+              <PieChart width={400} height={400}>
+                <text
+                  x="50%"
+                  y="10%"
+                  textAnchor="middle"
+                  dominantBaseline="middle"
+                  fontSize={18}
+                  fontWeight="bold"
+                  fill="white"
+                >
+                  Investment Analysis with AI
+                </text>
                 <Pie
                   data={chartData}
                   cx="50%"
@@ -472,15 +513,20 @@ const HomePage = () => {
                   label
                 >
                   {chartData.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                    <Cell
+                      key={`cell-${index}`}
+                      fill={COLORS[index % COLORS.length]}
+                    />
                   ))}
                 </Pie>
                 <Tooltip />
                 <Legend />
               </PieChart>
             ) : (
-          <p style={{ color: "white", textAlign: "center" }}>No Data Available</p>
-        )}
+              <p style={{ color: "white", textAlign: "center" }}>
+                No Data Available
+              </p>
+            )}
           </div>
         </div>
       )}
