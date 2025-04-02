@@ -82,7 +82,8 @@ def investment_allocation(user_income, risk_capacity, investment_duration):
         "Mutual Funds": round(pulp.value(x_mutual), 2),
         "Gold": round(pulp.value(x_gold), 2),
         "Fixed Deposits": round(pulp.value(x_fd), 2),
-        "Recurring Deposits": round(pulp.value(x_rd), 2)
+        "Recurring Deposits": round(pulp.value(x_rd), 2),
+        "Income": user_income
     }
     
     return allocation
