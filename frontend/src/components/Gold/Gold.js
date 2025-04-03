@@ -360,6 +360,7 @@ const GoldPage = () => {
       <h2 style={{ fontSize: "34px", color: "#4bcd3e" }}>Related Links</h2>
           <ul 
             style={{ 
+              color:"white",
               paddingLeft: "20px",  // Keep indentation for bullets
               marginLeft: 0, 
               display: "flex", 
