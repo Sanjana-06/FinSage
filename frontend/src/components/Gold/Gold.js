@@ -94,7 +94,7 @@ const GoldPage = () => {
           borderRadius: "20px",
           boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
           width: "80%",
-          margin: "auto",
+          margin: "0% 10%",
           maxWidth: "1000px",
           backdropFilter: "blur(10px)",
         }}
@@ -110,7 +110,7 @@ const GoldPage = () => {
               color: "white",
             }}
           >
-            {/* Income Input */}
+            {/* Investment Input */}
             <div style={{ textAlign: "left", flex: "1" }}>
               <label
                 style={{
@@ -118,17 +118,17 @@ const GoldPage = () => {
                   marginBottom: "5px",
                   fontWeight: "bold",
                 }}
-                htmlFor="income"
+                htmlFor="Investment"
               >
-                Income
+                Investment Amount
               </label>
               <input
                 type="number"
-                id="income"
-                name="income"
-                value={formData.income}
+                id="Investment"
+                name="Investment"
+                value={formData.investment}
                 onChange={handleInputChange}
-                placeholder="Enter income"
+                placeholder="Enter Investment Amount"
                 style={{
                   width: "90%",
                   padding: "10px",
@@ -358,48 +358,53 @@ const GoldPage = () => {
         </motion.p>
       </div>
       <h2 style={{ fontSize: "34px", color: "#4bcd3e" }}>Related Links</h2>
-          <ul 
-            style={{ 
-              color:"white",
-              paddingLeft: "20px",  // Keep indentation for bullets
-              marginLeft: 0, 
-              display: "flex", 
-              gap: "30px",
-              textAlign:"center",
-              justifyContent:"center"  // Adds space between items
+      <ul
+        style={{
+          color: "white",
+          paddingLeft: "20px", // Keep indentation for bullets
+          marginLeft: 0,
+          display: "flex",
+          gap: "30px",
+          textAlign: "center",
+          justifyContent: "center", // Adds space between items
+        }}
+      >
+        <li>
+          <a
+            href="https://groww.in/p/gold-investment"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              fontSize: "22px",
+              color: "white",
+              textDecoration: "none",
+              textAlign: "center",
             }}
           >
-            <li>
-              <a 
-                href="https://groww.in/p/gold-investment" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                style={{ fontSize: "22px", color: "white", textDecoration: "none",textAlign:"center" }}
-              >
-                Groww.com
-              </a>
-            </li>
-            <li>
-              <a 
-                href="https://www.bankbazaar.com/gold-rate/gold-schemes-by-jewellers-and-banks.html" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                style={{ fontSize: "22px", color: "white", textDecoration: "none" }}
-              >
-                BankBazaar.com
-              </a>
-            </li>
-            <li>
-              <a 
-                href="https://cleartax.in/s/gold-investment" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                style={{ fontSize: "22px", color: "white", textDecoration: "none" }}
-              >
-                ClearTax.com
-              </a>
-            </li>
-          </ul>
+            Groww.com
+          </a>
+        </li>
+        <li>
+          <a
+            href="https://www.bankbazaar.com/gold-rate/gold-schemes-by-jewellers-and-banks.html"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ fontSize: "22px", color: "white", textDecoration: "none" }}
+          >
+            BankBazaar.com
+          </a>
+        </li>
+        <li>
+          <a
+            href="https://cleartax.in/s/gold-investment"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ fontSize: "22px", color: "white", textDecoration: "none" }}
+          >
+            ClearTax.com
+          </a>
+        </li>
+      </ul>
     </div>
   );
 };

@@ -15,7 +15,7 @@ import investment_recommendation
 load_dotenv()
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})
 bcrypt = Bcrypt(app)
 app.config["JWT_SECRET_KEY"] = "Innovate48"
 jwt = JWTManager(app)
