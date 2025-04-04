@@ -98,7 +98,6 @@ const RDPage = () => {
           backgroundColor: "rgba(255, 255, 255, 0.3)",
           borderRadius: "20px",
           boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-          width: "80%",
           margin: "0% 10%",
           maxWidth: "1000px",
           backdropFilter: "blur(10px)",
@@ -356,7 +355,7 @@ const RDPage = () => {
           alignItems: "center",
         }}
       >
-        <h1 style={{ color: "#4bcd3e", fontSize: "42px", textAlign: "center" }}>
+        <h1 style={{ color: "#4bcd3e", fontSize: "30px", textAlign: "center" }}>
           What is Recurring Deposit?
         </h1>
         <div
@@ -373,7 +372,7 @@ const RDPage = () => {
             transition={{ duration: 1, delay: 0.4 }}
             style={{
               textAlign: "justify",
-              fontSize: "20px",
+              fontSize: "16px",
               lineHeight: "1.6",
               width: "100%", // Ensures visibility
             }}
@@ -405,7 +404,11 @@ const RDPage = () => {
             savings over time while earning a fixed return on investment.
           </motion.p>
         </div>
-        <h2 style={{ fontSize: "34px", color: "#4bcd3e" }}>Related Links</h2>
+        <h2
+          style={{ fontSize: "30px", color: "#4bcd3e", marginBottom: "10px" }}
+        >
+          Related Links
+        </h2>
         <ul
           style={{
             paddingLeft: "20px", // Keep indentation for bullets
@@ -420,7 +423,7 @@ const RDPage = () => {
               target="_blank"
               rel="noopener noreferrer"
               style={{
-                fontSize: "22px",
+                fontSize: "18px",
                 color: "white",
                 textDecoration: "none",
               }}
@@ -434,7 +437,7 @@ const RDPage = () => {
               target="_blank"
               rel="noopener noreferrer"
               style={{
-                fontSize: "22px",
+                fontSize: "18px",
                 color: "white",
                 textDecoration: "none",
               }}
@@ -448,7 +451,7 @@ const RDPage = () => {
               target="_blank"
               rel="noopener noreferrer"
               style={{
-                fontSize: "22px",
+                fontSize: "18px",
                 color: "white",
                 textDecoration: "none",
               }}

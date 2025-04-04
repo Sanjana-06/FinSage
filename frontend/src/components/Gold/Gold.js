@@ -103,7 +103,6 @@ const GoldPage = () => {
           backgroundColor: "rgba(255, 255, 255, 0.3)",
           borderRadius: "20px",
           boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-          width: "80%",
           margin: "0% 10%",
           maxWidth: "1000px",
           backdropFilter: "blur(10px)",
@@ -330,7 +329,7 @@ const GoldPage = () => {
           alignItems: "center",
         }}
       >
-        <h1 style={{ color: "gold", fontSize: "42px", textAlign: "center" }}>
+        <h1 style={{ color: "gold", fontSize: "30px", textAlign: "center" }}>
           What is Gold Investment?
         </h1>
 
@@ -348,7 +347,7 @@ const GoldPage = () => {
             transition={{ duration: 1, delay: 0.4 }}
             style={{
               textAlign: "justify",
-              fontSize: "20px",
+              fontSize: "16px",
               lineHeight: "1.6",
               width: "60%",
             }}
@@ -360,6 +359,15 @@ const GoldPage = () => {
             hedge against inflation, currency devaluation, and geopolitical
             instability. Its scarcity and global demand make it a reliable
             option for wealth preservation and long-term security.
+            <br /> <br />
+            One of the key advantages of gold investment is its ability to
+            diversify a portfolio. Since gold has a low correlation with stocks
+            and bonds, it acts as a financial cushion during market downturns.
+            Many investors buy gold in different forms, including physical gold
+            (bars, coins, and jewelry), exchange-traded funds (ETFs), and gold
+            mining stocks. Each option provides varying levels of liquidity,
+            accessibility, and risk management, catering to different investment
+            strategies.
           </motion.p>
 
           <div style={{ width: "35%", height: "300px" }}>
@@ -387,25 +395,15 @@ const GoldPage = () => {
             </ResponsiveContainer>
           </div>
         </div>
-        <motion.p
-          initial={{ opacity: 0, x: -50 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 1, delay: 0.7 }}
+
+        <div
           style={{
-            textAlign: "justify",
-            fontSize: "20px",
-            lineHeight: "1.6",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            width: "100%",
           }}
-        >
-          One of the key advantages of gold investment is its ability to
-          diversify a portfolio. Since gold has a low correlation with stocks
-          and bonds, it acts as a financial cushion during market downturns.
-          Many investors buy gold in different forms, including physical gold
-          (bars, coins, and jewelry), exchange-traded funds (ETFs), and gold
-          mining stocks. Each option provides varying levels of liquidity,
-          accessibility, and risk management, catering to different investment
-          strategies.
-        </motion.p>
+        ></div>
 
         <motion.p
           initial={{ opacity: 0, scale: 0.8 }}
@@ -413,7 +411,7 @@ const GoldPage = () => {
           transition={{ duration: 1, delay: 0.9 }}
           style={{
             textAlign: "justify",
-            fontSize: "20px",
+            fontSize: "16px",
             lineHeight: "1.6",
           }}
         >
@@ -427,7 +425,9 @@ const GoldPage = () => {
           wealth-preserving qualities.
         </motion.p>
       </div>
-      <h2 style={{ fontSize: "34px", color: "#4bcd3e" }}>Related Links</h2>
+      <h2 style={{ fontSize: "30px", color: "#4bcd3e", marginBottom: "10px" }}>
+        Related Links
+      </h2>
       <ul
         style={{
           color: "white",
@@ -445,7 +445,7 @@ const GoldPage = () => {
             target="_blank"
             rel="noopener noreferrer"
             style={{
-              fontSize: "22px",
+              fontSize: "18px",
               color: "white",
               textDecoration: "none",
               textAlign: "center",
@@ -459,7 +459,7 @@ const GoldPage = () => {
             href="https://www.bankbazaar.com/gold-rate/gold-schemes-by-jewellers-and-banks.html"
             target="_blank"
             rel="noopener noreferrer"
-            style={{ fontSize: "22px", color: "white", textDecoration: "none" }}
+            style={{ fontSize: "18px", color: "white", textDecoration: "none" }}
           >
             BankBazaar.com
           </a>
@@ -469,7 +469,7 @@ const GoldPage = () => {
             href="https://cleartax.in/s/gold-investment"
             target="_blank"
             rel="noopener noreferrer"
-            style={{ fontSize: "22px", color: "white", textDecoration: "none" }}
+            style={{ fontSize: "18px", color: "white", textDecoration: "none" }}
           >
             ClearTax.com
           </a>

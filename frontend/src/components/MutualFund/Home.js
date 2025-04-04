@@ -29,7 +29,7 @@ const MutualFundPage = () => {
         style={{
           textAlign: "left",
           fontFamily: "Arial, sans-serif",
-          fontSize: "62px",
+          fontSize: "40px",
           marginBottom: "0px",
           marginTop: "0px",
           paddingLeft: "4%",
@@ -62,13 +62,12 @@ const MutualFundPage = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             style={{
-              marginTop: "40px",
               marginBottom: "20px",
               fontFamily: "Arial, sans-serif",
-              fontSize: "18px",
+              fontSize: "16px",
               textAlign: "justify",
               lineHeight: "1.6",
-              paddingLeft: "5%",
+              paddingLeft: "6%",
               paddingRight: "2%",
             }}
           >
@@ -77,7 +76,10 @@ const MutualFundPage = () => {
             professional fund managers, they aim for capital appreciation or
             income generation. They offer benefits like diversification,
             liquidity, and professional management, making them popular for both
-            individual and institutional investors.
+            individual and institutional investors. Investors can choose from
+            equity, bond, or balanced funds based on their risk tolerance and
+            goals. It's crucial to research and select funds that align with
+            your financial strategy and objectives.
           </motion.p>
 
           <motion.p
@@ -88,18 +90,23 @@ const MutualFundPage = () => {
               marginTop: "20px",
               marginBottom: "20px",
               fontFamily: "Arial, sans-serif",
-              fontSize: "18px",
+              fontSize: "16px",
               textAlign: "justify",
               lineHeight: "1.6",
-              paddingLeft: "5%",
+              paddingLeft: "6%",
               paddingRight: "2%",
             }}
           >
-            By spreading investments across various assets, mutual funds help
-            mitigate risk and enhance potential returns. Investors can choose
-            from equity, bond, or balanced funds based on their risk tolerance
-            and goals. It's crucial to research and select funds that align with
-            your financial strategy and objectives.
+            Mutual funds are also available in various forms, such as actively
+            managed funds and index funds, catering to different investment
+            preferences. Actively managed funds rely on fund managers' expertise
+            to outperform the market, while index funds track a specific index,
+            offering a cost-effective option for investors. Tax benefits on
+            certain mutual fund investments, like Equity Linked Savings Schemes
+            (ELSS), make them appealing for tax-conscious investors. Moreover,
+            mutual funds provide systematic investment plans (SIPs) that enable
+            individuals to invest small amounts regularly, making it accessible
+            to those with limited capital.
           </motion.p>
         </div>
 
@@ -129,7 +136,7 @@ const MutualFundPage = () => {
             Asset Allocation
           </div>
 
-          <PieChart width={290} height={290}>
+          <PieChart width={290} height={310}>
             <Pie
               data={data}
               cx="50%"
@@ -146,12 +153,7 @@ const MutualFundPage = () => {
                 />
               ))}
             </Pie>
-            <Tooltip
-              contentStyle={{
-                backgroundColor: "rgba(20, 40, 70, 0.9)",
-                color: "white",
-              }}
-            />
+            <Tooltip />
             <Legend wrapperStyle={{ color: "white" }} />
           </PieChart>
         </div>
@@ -192,48 +194,57 @@ const MutualFundPage = () => {
           About Fund
         </button>
       </div>
-      <h2 style={{ fontSize: "34px", color: "#4bcd3e",textAlign:"center" }}>Related Links</h2>
-          <ul 
-            style={{ 
-              paddingLeft: "20px",  // Keep indentation for bullets
-              marginLeft: 0, 
-              display: "flex", 
-              gap: "30px",
-              justifyContent:"center",
-              textAlign:"center" // Adds space between items
-            }}
+      <h2
+        style={{
+          fontSize: "30px",
+          color: "#4bcd3e",
+          textAlign: "center",
+          marginBottom: "10px",
+        }}
+      >
+        Related Links
+      </h2>
+      <ul
+        style={{
+          paddingLeft: "20px", // Keep indentation for bullets
+          marginLeft: 0,
+          display: "flex",
+          gap: "30px",
+          justifyContent: "center",
+          textAlign: "center", // Adds space between items
+        }}
+      >
+        <li>
+          <a
+            href="https://groww.in/p/beginners-guide-mutual-funds"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ fontSize: "18px", color: "white", textDecoration: "none" }}
           >
-            <li>
-              <a 
-                href="https://groww.in/p/beginners-guide-mutual-funds" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                style={{ fontSize: "22px", color: "white", textDecoration: "none" }}
-              >
-                Groww.com
-              </a>
-            </li>
-            <li>
-              <a 
-                href="https://www.bankbazaar.com/mutual-fund.html" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                style={{ fontSize: "22px", color: "white", textDecoration: "none" }}
-              >
-                BankBazaar.com
-              </a>
-            </li>
-            <li>
-              <a 
-                href="https://cleartax.in/glossary/mutual-funds" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                style={{ fontSize: "22px", color: "white", textDecoration: "none" }}
-              >
-                ClearTax.com
-              </a>
-            </li>
-          </ul>
+            Groww.com
+          </a>
+        </li>
+        <li>
+          <a
+            href="https://www.bankbazaar.com/mutual-fund.html"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ fontSize: "18px", color: "white", textDecoration: "none" }}
+          >
+            BankBazaar.com
+          </a>
+        </li>
+        <li>
+          <a
+            href="https://cleartax.in/glossary/mutual-funds"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ fontSize: "18px", color: "white", textDecoration: "none" }}
+          >
+            ClearTax.com
+          </a>
+        </li>
+      </ul>
     </div>
   );
 };

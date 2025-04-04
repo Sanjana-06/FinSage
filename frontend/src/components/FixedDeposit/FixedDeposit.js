@@ -98,7 +98,6 @@ const FDPage = () => {
           backgroundColor: "rgba(255, 255, 255, 0.3)",
           borderRadius: "20px",
           boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-          width: "80%",
           margin: "0% 10%",
           maxWidth: "1000px",
           backdropFilter: "blur(10px)",
@@ -356,7 +355,7 @@ const FDPage = () => {
           alignItems: "center",
         }}
       >
-        <h1 style={{ color: "#4bcd3e", fontSize: "42px", textAlign: "center" }}>
+        <h1 style={{ color: "#4bcd3e", fontSize: "30px", textAlign: "center" }}>
           What is Fixed Deposit?
         </h1>
 
@@ -374,7 +373,7 @@ const FDPage = () => {
             transition={{ duration: 1, delay: 0.4 }}
             style={{
               textAlign: "justify",
-              fontSize: "20px",
+              fontSize: "16px",
               lineHeight: "1.6",
               width: "100%", // Ensures visibility
             }}
@@ -386,41 +385,38 @@ const FDPage = () => {
             them a popular choice for risk-averse investors looking for stable
             and guaranteed returns. These deposits are straightforward to open
             and come with minimal administrative requirements, which appeals to
-            a broad range of investors. Many banks offer schemes that cater to
-            specific demographics, such as senior citizens, providing them with
-            even better returns. FDs are also insulated from market volatility,
-            ensuring a safe and predictable growth of savings.
+            a broad range of investors. FDs are also insulated from market
+            volatility, ensuring a safe and predictable growth of savings.
             <br /> <br />
             The key advantage of a Fixed Deposit is the guaranteed return on
             investment, as the interest rate remains fixed for the entire
             duration of the deposit. This makes it an ideal option for
             individuals who prioritize security over high-risk investments. The
             fixed rate shields investors from fluctuations in interest rates,
-            providing them peace of mind throughout the deposit tenure. Many
-            banks also offer flexible tenure options ranging from a few months
-            to several years, allowing customers to tailor their deposits to
-            their financial goals. Additionally, the predictable nature of
-            returns makes FDs an excellent tool for planning future expenses,
-            such as education, travel, or home renovations.
+            providing them peace of mind throughout the deposit tenure.
+            Additionally, the predictable nature of returns makes FDs an
+            excellent tool for planning future expenses, such as education,
+            travel, or home renovations.
             <br /> <br />
-            Additionally, some banks allow premature withdrawals, though they
-            may come with penalty charges. While penalties may slightly reduce
-            returns, the ability to access funds during emergencies adds a layer
-            of liquidity to the investment. Fixed Deposits can also be used as
-            collateral for loans, offering financial flexibility to investors
-            without having to break their deposits. By using FDs as security,
-            borrowers can avail of loans at lower interest rates compared to
-            unsecured personal loans. Furthermore, certain banks provide
-            nomination facilities, ensuring the smooth transfer of funds to
-            beneficiaries in unforeseen circumstances. These features make FDs
-            versatile and efficient savings instruments for a variety of needs
+            Some banks allow premature withdrawals, though they may come with
+            penalty charges. While penalties may slightly reduce returns, the
+            ability to access funds during emergencies adds a layer of liquidity
+            to the investment. Fixed Deposits can also be used as collateral for
+            loans, offering financial flexibility to investors without having to
+            break their deposits. Furthermore, certain banks provide nomination
+            facilities, ensuring the smooth transfer of funds to beneficiaries
+            in unforeseen circumstances. These features make FDs versatile and
+            efficient savings instruments for a variety of needs
           </motion.p>
         </div>
-        <h2 style={{ fontSize: "34px", color: "#4bcd3e" }}>Related Links</h2>
+        <h2
+          style={{ fontSize: "30px", color: "#4bcd3e", marginBottom: "10px" }}
+        >
+          Related Links
+        </h2>
         <ul
           style={{
             paddingLeft: "20px", // Keep indentation for bullets
-            marginLeft: 0,
             display: "flex",
             gap: "30px", // Adds space between items
           }}
@@ -431,7 +427,7 @@ const FDPage = () => {
               target="_blank"
               rel="noopener noreferrer"
               style={{
-                fontSize: "22px",
+                fontSize: "18px",
                 color: "white",
                 textDecoration: "none",
               }}
@@ -445,7 +441,7 @@ const FDPage = () => {
               target="_blank"
               rel="noopener noreferrer"
               style={{
-                fontSize: "22px",
+                fontSize: "18px",
                 color: "white",
                 textDecoration: "none",
               }}
@@ -459,7 +455,7 @@ const FDPage = () => {
               target="_blank"
               rel="noopener noreferrer"
               style={{
-                fontSize: "22px",
+                fontSize: "18px",
                 color: "white",
                 textDecoration: "none",
               }}
