@@ -29,7 +29,17 @@ const GoldPage = () => {
       { month: "2025-12", predicted: 8656 },
     ],
     "3Y": [
+      { month: "2022", historical: 1700, predicted: 1800 },
       // Similar structure for 3 years
+      { month: "2023", historical: 1750, predicted: 1850 },
+      { month: "2024", historical: 1800, predicted: 1900 },
+    ],
+    "5Y": [
+      { month: "2019", historical: 1500, predicted: 1600 },
+      { month: "2020", historical: 1600, predicted: 1700 },
+      { month: "2021", historical: 1650, predicted: 1750 },
+      { month: "2022", historical: 1700, predicted: 1800 },
+      { month: "2023", historical: 1750, predicted: 1850 },
     ],
   };
 
@@ -181,21 +191,29 @@ const GoldPage = () => {
               >
                 Return Period
               </label>
-              <input
-                type="number"
-                id="returnPeriod"
-                name="returnPeriod"
-                value={formData.returnPeriod}
+              <select
+                id="term"
+                name="term"
+                value={formData.term}
                 onChange={handleInputChange}
-                placeholder="Years"
+                required
                 style={{
-                  width: "90%",
+                  width: "95%",
                   padding: "10px",
                   border: "1px solid #ccc",
                   borderRadius: "5px",
+                  backgroundColor: "white",
+                  color: "#333",
+                  cursor: "pointer",
+                  appearance: "none",
                 }}
-                required
-              />
+              >
+                <option value="">---Select a Period---</option>
+                <option value="1">1 Month</option>
+                <option value="3">3 Months</option>
+                <option value="6">6 Months</option>
+                <option value="12">1 Year</option>
+              </select>
             </div>
 
             {/* Submit Button */}
@@ -237,12 +255,64 @@ const GoldPage = () => {
               backgroundColor: "rgba(255, 255, 255, 0.3)",
               borderRadius: "10px",
               boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.3)",
-              display: "flex",
               alignItems: "center",
               justifyContent: "center",
               minHeight: "200px",
             }}
-          ></div>
+          >
+            {showGraph && (
+              <div
+                style={{
+                  backgroundColor: "white",
+                  padding: "20px",
+                  borderRadius: "10px",
+                }}
+              >
+                <h2>Gold Price Trends ({selectedPeriod})</h2>
+                <ResponsiveContainer width="90%" height={300}>
+                  <LineChart data={historicalData[selectedPeriod]}>
+                    <XAxis dataKey="month" />
+                    <YAxis />
+                    <Tooltip />
+                    <Line
+                      type="monotone"
+                      dataKey="historical"
+                      stroke="blue"
+                      strokeWidth={2}
+                      name="Historical"
+                    />
+                    <Line
+                      type="monotone"
+                      dataKey="predicted"
+                      stroke="red"
+                      strokeWidth={2}
+                      name="Predicted"
+                    />
+                  </LineChart>
+                </ResponsiveContainer>
+                <div style={{ marginTop: "20px" }}>
+                  <button
+                    onClick={() => setSelectedPeriod("1Y")}
+                    style={{ margin: "5px" }}
+                  >
+                    1Y
+                  </button>
+                  <button
+                    onClick={() => setSelectedPeriod("3Y")}
+                    style={{ margin: "5px" }}
+                  >
+                    3Y
+                  </button>
+                  <button
+                    onClick={() => setSelectedPeriod("5Y")}
+                    style={{ margin: "5px" }}
+                  >
+                    5Y
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       )}
 
@@ -410,23 +480,3 @@ const GoldPage = () => {
 };
 
 export default GoldPage;
-
-// {showGraph && (
-//   <div style={{ backgroundColor: "rgba(255, 255, 255, 0.3)", padding: "20px", borderRadius: "10px" }}>
-//     <h2>Gold Price Trends ({selectedPeriod})</h2>
-//     <ResponsiveContainer width="90%" height={300}>
-//       <LineChart data={historicalData}>
-//         <XAxis dataKey="month" />
-//         <YAxis />
-//         <Tooltip />
-//         <Line type="monotone" dataKey="historical" stroke="blue" strokeWidth={2} name="Historical" />
-//         <Line type="monotone" dataKey="predicted" stroke="red" strokeWidth={2} name="Predicted" />
-//       </LineChart>
-//     </ResponsiveContainer>
-//     <div style={{ marginTop: "20px" }}>
-//       <button onClick={() => setSelectedPeriod("1Y")} style={{ margin: "5px" }}>1Y</button>
-//       <button onClick={() => setSelectedPeriod("3Y")} style={{ margin: "5px" }}>3Y</button>
-//       <button onClick={() => setSelectedPeriod("5Y")} style={{ margin: "5px" }}>5Y</button>
-//     </div>
-//   </div>
-// )}
