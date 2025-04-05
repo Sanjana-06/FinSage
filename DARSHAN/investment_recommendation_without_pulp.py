@@ -53,10 +53,10 @@ def investment_allocation(user_income, risk_capacity, investment_duration):
         raise ValueError("Optimization failed: " + result.message)
 
     allocation = {
-        "Mutual Funds": round(result.x[0], 2),
-        "Gold": round(result.x[1], 2),
-        "Fixed Deposits": round(result.x[2], 2),
-        "Recurring Deposits": round(result.x[3], 2),
+        "Mutual Funds": round(float(result.x[0]), 2),#convert numpy float to regular float
+        "Gold": round(float(result.x[1]), 2),
+        "Fixed Deposits": round(float(result.x[2]), 2),
+        "Recurring Deposits": round(float(result.x[3]), 2),
         "Income": user_income
     }
 
