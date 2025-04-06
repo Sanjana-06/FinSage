@@ -1,4 +1,7 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
+import axios from 'axios';
+import {Line} from 'react-chartjs-2';
+import dayjs from 'dayjs';
 import { motion } from "framer-motion";
 import {
   BarChart,
@@ -9,40 +12,54 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-import { LineChart, Line } from "recharts";
+import { LineChart } from "recharts";
+
+const RANGE_OPTIONS = ['1M', '3M', '6M', '1Y', '3Y', '5Y'];
+
 
 const GoldPage = () => {
-  const historicalData = {
-    "1Y": [
-      { month: "2025-01", historical: 1800 },
-      { month: "2025-02", historical: 1820 },
-      { month: "2025-03", historical: 1900 },
-      { month: "2025-04", historical: 1920 },
-      { month: "2025-05", historical: 1950 },
-      { month: "2025-06", historical: 1970 },
 
-      { month: "2025-07", predicted: 2222 },
-      { month: "2025-08", predicted: 4532 },
-      { month: "2025-09", predicted: 5436 },
-      { month: "2025-10", predicted: 6546 },
-      { month: "2025-11", predicted: 7446 },
-      { month: "2025-12", predicted: 8656 },
-    ],
-    "3Y": [
-      { month: "2022", historical: 1700, predicted: 1800 },
-      // Similar structure for 3 years
-      { month: "2023", historical: 1750, predicted: 1850 },
-      { month: "2024", historical: 1800, predicted: 1900 },
-    ],
-    "5Y": [
-      { month: "2019", historical: 1500, predicted: 1600 },
-      { month: "2020", historical: 1600, predicted: 1700 },
-      { month: "2021", historical: 1650, predicted: 1750 },
-      { month: "2022", historical: 1700, predicted: 1800 },
-      { month: "2023", historical: 1750, predicted: 1850 },
-    ],
-  };
+  const [range, setRange] = useState('1M');
+  const [chartData, setChartData] = useState({ labels: [], datasets: [] });
 
+  useEffect(() => {
+    axios.get(`http://localhost:5000/api/chart-data?range=${range}`)
+      .then(res => {
+        const { historical, predicted } = res.data;
+
+        const allData = [
+          ...historical.map(d => ({ ...d, type: 'Historical' })),
+          ...predicted.map(d => ({ ...d, type: 'Predicted' })),
+        ];
+
+        const sorted = allData.sort((a, b) => new Date(a.date) - new Date(b.date));
+        const labels = sorted.map(d => dayjs(d.date).format('DD MMM'));
+
+        const historicalPrices = sorted.map(d => d.type === 'Historical' ? d.price : null);
+        const predictedPrices = sorted.map(d => d.type === 'Predicted' ? d.price : null);
+
+        setChartData({
+          labels,
+          datasets: [
+            {
+              label: 'Historical',
+              data: historicalPrices,
+              borderColor: 'blue',
+              fill: false,
+            },
+            {
+              label: 'Predicted',
+              data: predictedPrices,
+              borderColor: 'orange',
+              borderDash: [5, 5],
+              fill: false,
+            }
+          ]
+        });
+      });
+  }, [range]);
+
+  
   const [showGraph, setShowGraph] = useState(true);
   const [selectedPeriod, setSelectedPeriod] = useState("1Y");
 
@@ -260,55 +277,20 @@ const GoldPage = () => {
             }}
           >
             {showGraph && (
-              <div
-                style={{
-                  backgroundColor: "white",
-                  padding: "20px",
-                  borderRadius: "10px",
-                }}
-              >
-                <h2>Gold Price Trends ({selectedPeriod})</h2>
-                <ResponsiveContainer width="90%" height={300}>
-                  <LineChart data={historicalData[selectedPeriod]}>
-                    <XAxis dataKey="month" />
-                    <YAxis />
-                    <Tooltip />
-                    <Line
-                      type="monotone"
-                      dataKey="historical"
-                      stroke="blue"
-                      strokeWidth={2}
-                      name="Historical"
-                    />
-                    <Line
-                      type="monotone"
-                      dataKey="predicted"
-                      stroke="red"
-                      strokeWidth={2}
-                      name="Predicted"
-                    />
-                  </LineChart>
-                </ResponsiveContainer>
-                <div style={{ marginTop: "20px" }}>
-                  <button
-                    onClick={() => setSelectedPeriod("1Y")}
-                    style={{ margin: "5px" }}
-                  >
-                    1Y
-                  </button>
-                  <button
-                    onClick={() => setSelectedPeriod("3Y")}
-                    style={{ margin: "5px" }}
-                  >
-                    3Y
-                  </button>
-                  <button
-                    onClick={() => setSelectedPeriod("5Y")}
-                    style={{ margin: "5px" }}
-                  >
-                    5Y
-                  </button>
+              <div className="p-6 max-w-4xl mx-auto">
+                <h2 className="text-xl font-bold mb-4">Price Chart</h2>
+                <div className="mb-4 space-x-2">
+                  {RANGE_OPTIONS.map(option => (
+                    <button
+                      key={option}
+                      onClick={() => setRange(option)}
+                      className={`px-4 py-2 rounded ${range === option ? 'bg-blue-600 text-white' : 'bg-gray-200'}`}
+                    >
+                      {option}
+                    </button>
+                  ))}
                 </div>
+                <Line data={chartData} />
               </div>
             )}
           </div>

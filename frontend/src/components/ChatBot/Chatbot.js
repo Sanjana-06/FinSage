@@ -79,16 +79,17 @@ export default function ChatUI() {
               style={{
                 display: "flex",
                 justifyContent:
-                  msg.sender === "user" ? "flex-start" : "flex-end",
+                  msg.sender === "user" ? "flex-end" : "flex-start",
                 marginBottom: "12px",
               }}
             >
               <div
                 style={{
                   display: "flex",
-                  flexDirection: msg.sender === "user" ? "row" : "row-reverse",
+                  flexDirection: msg.sender === "user" ? "row-reverse" : "row",
                   alignItems: "flex-start",
                   maxWidth: "80%",
+                  padding:"4px"
                 }}
               >
                 <div
@@ -107,12 +108,12 @@ export default function ChatUI() {
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    marginRight: msg.sender === "user" ? "10px" : "0",
-                    marginLeft: msg.sender === "bot" ? "10px" : "0",
+                    marginLeft: msg.sender === "user" ? "10px" : "0",
+                    marginRight: msg.sender === "bot" ? "10px" : "0",
                     fontSize: "16px",
                   }}
                 >
-                  {msg.sender === "user" ? "👤" : "🤖"}
+                  {msg.sender === "user" ?  "👤":"🤖"}
                 </div>
 
                 <div
