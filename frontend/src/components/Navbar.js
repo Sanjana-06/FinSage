@@ -59,7 +59,7 @@ const Navbar = () => {
             )}
           </div>
 
-          <Link to="/expense-tracker" style={styles.navItem}>
+          <Link to="/expensetracker" style={styles.navItem}>
             <BarChart3 size={18} /> Expense Tracker
           </Link>
           <div
@@ -67,25 +67,10 @@ const Navbar = () => {
             onMouseEnter={() => setIsNewsOpen(true)}
             onMouseLeave={() => setIsNewsOpen(false)}
           >
-            <button style={styles.navBtn}>
-              <Newspaper size={18} /> News <ChevronDown size={16} />
-            </button>
-            {isNewsOpen && (
-              <div style={styles.dropdown}>
-                <Link to="/news/trending" style={styles.dropdownItem}>
-                  Trending
-                </Link>
-                <Link to="/news/gold" style={styles.dropdownItem}>
-                  Gold{" "}
-                </Link>
-                {/* <Link to="/news/stocks" style={styles.dropdownItem}>
-                  Stock
-                </Link> */}
-                <Link to="/news/mutualfund" style={styles.dropdownItem}>
-                  MutualFund
-                </Link>
-              </div>
-            )}
+            <Link to="/news" style={styles.navItem}>
+              <Newspaper size={18} /> News          
+            </Link>
+
           </div>
           <Link to="/home" style={styles.navItem}>
             <Home size={18} /> Home

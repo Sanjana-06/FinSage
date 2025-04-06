@@ -15,6 +15,7 @@ import GoldNews from "../Components/News/Gold";
 import MfNews from "../Components/News/MfNews";
 import StockNews from "../Components/News/Stocks";
 import ChatUI from "../Components/ChatBot/Chatbot";
+import ETPage from "../Components/ExpenseTracker/ExpenseTracker";
 
 const AppRoutes = () => {
   return (
@@ -30,11 +31,9 @@ const AppRoutes = () => {
           <Route path="/gold" element={<GoldPage />} />
           <Route path="/fixedDeposit" element={<FDPage/>}/>
           <Route path="/RecurringDeposit" element={<RDPage/>}/>
-          <Route path="/news/trending" element={<Trending/>}/>
-          <Route path="/news/mutualfund" element={<MfNews/>}/>
-          <Route path="/news/gold" element={<GoldNews/>}/>
-          <Route path="/news/stocks" element={<StockNews/>}/>
+          <Route path="/news" element={<Trending/>}/>
           <Route path="/chatbot" element={<ChatUI/>}/>
+          <Route path="/expensetracker" element={<ETPage/>}/>
         </Route>
       </Route>
     </Routes>
