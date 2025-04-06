@@ -250,7 +250,8 @@ const FDPage = () => {
           >
             <p style={{ flex: 1, textAlign: "left" }}>Bank Name</p>
             <p style={{ flex: 1, textAlign: "center" }}>Interest Rate (%)</p>
-            <p style={{ flex: 1, textAlign: "right" }}>Maturity Amount</p>
+            <p style={{ flex: 1, textAlign: "right" }}>Maturity Amount (₹)</p>
+            <p style={{ flex: 1, textAlign: "right" }}>Real Amount (₹)</p>
           </div>
 
           {/* Dynamic Data in Cards */}
@@ -259,22 +260,33 @@ const FDPage = () => {
               key={index}
               style={{
                 display: "flex",
-                justifyContent: "space-between",
-                padding: "10px",
+                alignItems: "center",
+                padding: "12px 16px",
                 borderRadius: "10px",
                 backgroundColor: "white",
                 fontWeight: "bold",
                 fontSize: "16px",
                 color: "black",
                 marginBottom: "10px",
+                boxShadow: "0 2px 8px rgba(0,0,0,0.05)", // Optional nice shadow
               }}
             >
-              <p style={{ flex: 1, textAlign: "left" }}>{plan.Bank}</p>
-              <p style={{ flex: 1, textAlign: "center" }}>
+              {/* Bank Name - Left aligned, wider */}
+              <p style={{ flex: 2, textAlign: "left" }}>{plan.Bank}</p>
+
+              {/* Interest Rate - Center aligned */}
+              <p style={{ flex: 2, textAlign: "center" }}>
                 {plan["Interest Rate (%)"]}%
               </p>
-              <p style={{ flex: 1, textAlign: "right" }}>
-                ₹{plan["Maturity Amount"]}
+
+              {/* Maturity Amount - Right aligned */}
+              <p style={{ flex: 2, textAlign: "right" }}>
+                ₹{plan["Maturity Amount (₹)"]}
+              </p>
+
+              {/* Real Maturity Amount - Right aligned */}
+              <p style={{ flex: 2, textAlign: "right", marginLeft: "12px" }}>
+                ₹{plan["Real Maturity Amount (₹)"]}
               </p>
             </div>
           ))}

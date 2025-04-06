@@ -1,4 +1,5 @@
 import sqlite3
+from inflation_rate import get_inflation_rate  # Import the inflation rate function
 
 def calculate_rd_maturity(monthly_deposit, rate, years):
     """
@@ -24,8 +25,8 @@ def calculate_rd_maturity(monthly_deposit, rate, years):
 
 def get_top_banks(amount, term, db_path):
     # Connect to SQLite database
-    conn = sqlite3.connect(db_path)  # Path to the SQLite database (e.g., innovate.db)
-    cursor = conn.cursor()  # Create a cursor to execute SQL commands
+    conn = sqlite3.connect(db_path)
+    cursor = conn.cursor()
 
     # Define the column for the selected term
     term_map = {
@@ -43,24 +44,31 @@ def get_top_banks(amount, term, db_path):
     # Fetch all rows from the result
     results = cursor.fetchall()
 
+    # Get the inflation rate for the given term
+    inflation_rate = get_inflation_rate(term)
+
     # Process the rows to compute maturity amounts
     response_data = []
     for row in results:
         bank = row[0]
         interest_rate = row[1]
 
-        # Calculate maturity amount
+        # Calculate maturity amount (nominal)
         maturity_amount = calculate_rd_maturity(amount, interest_rate, term)
+
+        # Calculate real maturity amount (inflation adjusted)
+        rd_real_amt = round(maturity_amount / ((1 + inflation_rate / 100) ** term), 2)
 
         # Append the processed data
         response_data.append({
             "Bank": bank,
             "Interest Rate (%)": interest_rate,
-            "Maturity Amount": maturity_amount
+            "Maturity Amount (₹)": maturity_amount,
+            "Real Maturity Amount (₹)": rd_real_amt
         })
 
-    # Sort data by Maturity Amount in descending order
-    response_data = sorted(response_data, key=lambda x: x["Maturity Amount"], reverse=True)
+    # Sort data by Nominal Maturity Amount in descending order
+    response_data = sorted(response_data, key=lambda x: x["Maturity Amount (₹)"], reverse=True)
 
     # Close the database connection
     conn.close()

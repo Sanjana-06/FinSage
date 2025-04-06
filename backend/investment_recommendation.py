@@ -1,89 +1,64 @@
-import pulp
+from scipy.optimize import minimize
 
 def investment_allocation(user_income, risk_capacity, investment_duration):
     """
     Generate an investment allocation recommendation using linear programming with Recurring Deposits.
+    Uses scipy.optimize instead of pulp.
     
     Parameters:
-    - user_income: Annual income of the user (not directly used in LP, but can help tailor future recommendations)
-    - risk_capacity: A string value ("low", "medium", or "high") representing the user's risk tolerance.
-    - investment_duration: Investment horizon in years.
+    - user_income: Annual income of the user
+    - risk_capacity: "low", "medium", or "high"
+    - investment_duration: Investment horizon in years
     
     Returns:
-    - A dictionary with recommended allocation percentages for Mutual Funds, Gold, Fixed Deposits, and Recurring Deposits.
+    - A dictionary with allocation percentages.
     """
     
-    # Define expected annual returns for each asset class based on risk capacity.
+    # Set expected returns based on risk capacity
     if risk_capacity.lower() == 'low':
-        r_mutual = 0.06
-        r_gold   = 0.04
-        r_fd     = 0.05
-        r_rd     = 0.055
+        returns = [0.06, 0.04, 0.05, 0.055]  # Mutual, Gold, FD, RD
+        bounds = [(0, 0.2), (0.3, 1), (0.2, 1), (0.3, 1)]
     elif risk_capacity.lower() == 'medium':
-        r_mutual = 0.08
-        r_gold   = 0.05
-        r_fd     = 0.04
-        r_rd     = 0.06
-    else:  # high risk
-        r_mutual = 0.10
-        r_gold   = 0.06
-        r_fd     = 0.03
-        r_rd     = 0.065
+        returns = [0.08, 0.05, 0.04, 0.06]
+        bounds = [(0, 0.5), (0.2, 1), (0.1, 1), (0.2, 1)]
+    else:  # high
+        returns = [0.10, 0.06, 0.03, 0.065]
+        bounds = [(0, 0.7), (0.1, 1), (0.1, 1), (0.1, 1)]
 
-    # Create the linear programming problem (maximize expected return)
-    prob = pulp.LpProblem("Investment_Allocation", pulp.LpMaximize)
+    # Duration-based minimums adjustment (affects Gold and FD)
+    if 1 <= investment_duration < 5:
+        bounds[1] = (max(bounds[1][0], 0.15), bounds[1][1])  # Gold
+        bounds[2] = (max(bounds[2][0], 0.15), bounds[2][1])  # FD
+    elif 5 <= investment_duration < 10:
+        bounds[1] = (max(bounds[1][0], 0.2), bounds[1][1])   # Gold
+        bounds[2] = (max(bounds[2][0], 0.2), bounds[2][1])   # FD
+    elif investment_duration >= 10 and risk_capacity.lower() == "low":
+        bounds[1] = (max(bounds[1][0], 0.3), bounds[1][1])   # Gold
+        bounds[2] = (max(bounds[2][0], 0.25), bounds[2][1])  # FD
 
-    # Define decision variables for the allocation percentages (each between 0 and 1)
-    x_mutual = pulp.LpVariable('MutualFunds', lowBound=0, upBound=1)
-    x_gold   = pulp.LpVariable('Gold', lowBound=0, upBound=1)
-    x_fd     = pulp.LpVariable('FixedDeposits', lowBound=0, upBound=1)
-    x_rd     = pulp.LpVariable('RecurringDeposits', lowBound=0, upBound=1)
+    # Objective: minimize negative return => maximize return
+    def objective(x):
+        return -sum(x[i] * returns[i] for i in range(4))
 
-    # Objective Function: maximize the portfolio's expected return
-    prob += r_mutual * x_mutual + r_gold * x_gold + r_fd * x_fd + r_rd * x_rd, "TotalExpectedReturn"
+    # Constraint: Total allocation = 1
+    constraints = [{'type': 'eq', 'fun': lambda x: sum(x) - 1}]
 
-    # Constraint: Total allocation must sum to 100%
-    prob += x_mutual + x_gold + x_fd + x_rd == 1, "TotalAllocation"
+    # Initial guess
+    x0 = [0.25, 0.25, 0.25, 0.25]
 
-    # Risk constraint and diversification limits based on risk capacity
-    if risk_capacity.lower() == 'low':
-        prob += x_mutual <= 0.2, "LowRisk_MutualLimit"
-        prob += x_rd >= 0.3, "LowRisk_RecurringMin"
-        prob += x_gold >= 0.3, "LowRisk_GoldMin"
-        prob += x_fd >= 0.2, "LowRisk_FDMin"
-    elif risk_capacity.lower() == 'medium':
-        prob += x_mutual <= 0.5, "MediumRisk_MutualLimit"
-        prob += x_rd >= 0.2, "MediumRisk_RecurringMin"
-        prob += x_gold >= 0.2, "MediumRisk_GoldMin"
-        prob += x_fd >= 0.1, "MediumRisk_FDMin"
-    else:  # high risk
-        prob += x_mutual <= 0.7, "HighRisk_MutualLimit"
-        prob += x_rd >= 0.1, "HighRisk_RecurringMin"
-        prob += x_gold >= 0.1, "HighRisk_GoldMin"
-        prob += x_fd >= 0.1, "HighRisk_FDMin"
+    # Solve
+    result = minimize(objective, x0, bounds=bounds, constraints=constraints)
 
-    # Duration considerations: Diversify more for longer durations
-    if investment_duration >= 1 and investment_duration <5:
-        prob += x_gold >= 0.15, "LongTerm_GoldMin"
-        prob += x_fd >= 0.15, "LongTerm_FDMin"
-    elif investment_duration >=5 and investment_duration <10:
-        prob += x_gold >= 0.2, "LongTerm_GoldMin"
-        prob += x_fd >= 0.2, "LongTerm_FDMin"
-    elif investment_duration >=10 and risk_capacity.lower()=="low":
-        prob += x_gold >= 0.30, "LongTerm_GoldMin"
-        prob += x_fd >= 0.25, "LongTerm_FDMin"
-        
+    if not result.success:
+        raise ValueError("Optimization failed: " + result.message)
 
-    # Solve the LP problem
-    prob.solve()
-
-    # Extract the allocation results
     allocation = {
-        "Mutual Funds": round(pulp.value(x_mutual), 2),
-        "Gold": round(pulp.value(x_gold), 2),
-        "Fixed Deposits": round(pulp.value(x_fd), 2),
-        "Recurring Deposits": round(pulp.value(x_rd), 2),
+        "Mutual Funds": round(float(result.x[0]), 2),#convert numpy float to regular float
+        "Gold": round(float(result.x[1]), 2),
+        "Fixed Deposits": round(float(result.x[2]), 2),
+        "Recurring Deposits": round(float(result.x[3]), 2),
         "Income": user_income
     }
-    
+
     return allocation
+

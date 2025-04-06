@@ -11,6 +11,8 @@ import fd_analysis
 import rd_analysis
 import investment_recommendation
 
+#pip install flask flask-bcrypt flask-jwt-extended flask-cors python-dotenv sqlitecloud sqlalchemy-sqlitecloud
+
 # Load environment variables
 load_dotenv()
 
