@@ -45,40 +45,55 @@ plt.grid(True)
 plt.savefig('cpi_forecast.png')
 plt.close()  # Close the plot after saving
 
-# -----------------------------
-# Calculate Annual Inflation Rate
-# -----------------------------
-# Get CPI at current date and CPI after N years
-current_cpi = forecast[forecast['ds'] == df['ds'].iloc[-1]]['yhat'].values[0]
+def calculate_rd_maturity(monthly_deposit, rate, years):
+    """
+    Calculate the maturity amount for an RD using the formula:
+    A = P * [(1 + r/n)^(nt) - 1] / r * (1 + r)
+    Where:
+        A = Maturity Amount
+        P = Monthly Deposit
+        r = Annual Interest Rate (in decimal)
+        n = Compounded monthly (n=12)
+        t = Time in years
+    """
+    n = 12  # Monthly compounding
+    r = rate / 100 / n  # Monthly interest rate in decimal
+    t = years * n  # Total number of months
+
+    if r == 0:
+        maturity_amount = monthly_deposit * t  # No interest case
+    else:
+        maturity_amount = monthly_deposit * ((1 + r) ** t - 1) / r * (1 + r)
+
+    return round(maturity_amount, 2)
 
 # -----------------------------
 # Investment Return Calculator
 # -----------------------------
 # Get user inputs for investment details
-investment_amount = float(input("Enter the investment amount (₹): "))
+investment_amount_fd = float(input("Enter the investment amount for FD (₹): "))
+investment_amount_rd = float(input("Enter monthly investment amount for RD (₹): "))
 rd_return = float(input("Enter the RD interest rate (%): "))
 fd_return = float(input("Enter the FD interest rate (%): "))
 
 years_options = [1, 3, 5]
 for years in years_options:
-    # Calculate future CPI after N years
-    future_cpi = forecast[forecast['ds'] == df['ds'].iloc[-1] + pd.DateOffset(years=years)]['yhat'].values[0]
-    
-    # Compound Annual Growth Rate (Inflation Rate)
-    inflation_rate = ((future_cpi / current_cpi) ** (1 / years) - 1) * 100
+    # Get current CPI and previous CPI for each year iteration
+    current_cpi = forecast[forecast['ds'] == df['ds'].iloc[-1] + pd.DateOffset(years=years)]['yhat'].values[0]
+    previous_cpi = forecast[forecast['ds'] == df['ds'].iloc[-1] + pd.DateOffset(years=years-1)]['yhat'].values[0]
+
+    # Inflation Rate Calculation (for each year period)
+    inflation_rate = ((current_cpi - previous_cpi) / previous_cpi) * 100
     print(f"\n--- Investment Returns for {years} Years ---")
-    print(f"Estimated Annual Inflation Rate (CAGR over {years} years): {inflation_rate:.2f}%")
+    print(f"Estimated Annual Inflation Rate (based on CPI): {inflation_rate:.2f}%")
 
     # Nominal returns
-    rd_nominal = investment_amount * ((1 + rd_return / 100) ** years)
-    fd_nominal = investment_amount * ((1 + fd_return / 100) ** years)
+    rd_nominal = calculate_rd_maturity(investment_amount_rd, rd_return, years)
+    fd_nominal = investment_amount_fd * ((1 + fd_return / 100) ** years)
 
-    # Real return = (1 + nominal) / (1 + inflation) - 1
-    rd_real = ((1 + rd_return / 100) / (1 + inflation_rate / 100)) ** years - 1
-    fd_real = ((1 + fd_return / 100) / (1 + inflation_rate / 100)) ** years - 1
-
-    rd_real_amt = investment_amount * (1 + rd_real)
-    fd_real_amt = investment_amount * (1 + fd_real)
+    # Real return = Nominal Return / (1 + Inflation Rate) ^ Years
+    rd_real_amt = rd_nominal / ((1 + inflation_rate / 100) ** years)
+    fd_real_amt = fd_nominal / ((1 + inflation_rate / 100) ** years)
 
     # Final Output for each year group
     print(f"RD Nominal Return after {years} years: ₹{rd_nominal:,.2f}")
