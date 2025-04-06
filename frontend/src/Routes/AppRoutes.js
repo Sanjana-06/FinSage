@@ -11,9 +11,6 @@ import FDPage from "../Components/FixedDeposit/FixedDeposit"
 import RDPage from "../Components/RecurringDeposit/RecurringDeposit";
 import AccountPage from "../Components/Account/Account";
 import Trending from "../Components/News/Trending";
-import GoldNews from "../Components/News/Gold";
-import MfNews from "../Components/News/MfNews";
-import StockNews from "../Components/News/Stocks";
 import ChatUI from "../Components/ChatBot/Chatbot";
 import ETPage from "../Components/ExpenseTracker/ExpenseTracker";
 
