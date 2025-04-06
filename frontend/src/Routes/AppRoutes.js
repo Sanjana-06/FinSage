@@ -14,6 +14,7 @@ import Trending from "../Components/News/Trending";
 import GoldNews from "../Components/News/Gold";
 import MfNews from "../Components/News/MfNews";
 import StockNews from "../Components/News/Stocks";
+import ChatUI from "../Components/ChatBot/Chatbot";
 
 const AppRoutes = () => {
   return (
@@ -33,6 +34,7 @@ const AppRoutes = () => {
           <Route path="/news/mutualfund" element={<MfNews/>}/>
           <Route path="/news/gold" element={<GoldNews/>}/>
           <Route path="/news/stocks" element={<StockNews/>}/>
+          <Route path="/chatbot" element={<ChatUI/>}/>
         </Route>
       </Route>
     </Routes>
