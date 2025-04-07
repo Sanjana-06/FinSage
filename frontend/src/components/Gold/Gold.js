@@ -1,19 +1,10 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
+import { Line } from "react-chartjs-2";
 import { motion } from "framer-motion";
-import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  Tooltip,
-  ResponsiveContainer,
-} from "recharts";
-import GoldPriceChart from "./GoldChart";
+import GoldPriceChart from "Gold/GoldChart.js";
 
 const GoldPage = () => {
-
   
-
   const data = [
     { karat: "24K", purity: 99.9 },
     { karat: "22K", purity: 91.6 },
@@ -227,7 +218,7 @@ const GoldPage = () => {
               minHeight: "200px",
             }}
           >
-            <GoldPriceChart/>
+          <GoldPriceChart/>
           </div>
         </div>
       )}

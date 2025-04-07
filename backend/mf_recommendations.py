@@ -31,9 +31,7 @@ def get_mf_recommendations(year_column, risk_level):
         # Convert the sorted DataFrame to an array of JSON objects (one per fund)
         recommendations = sorted_funds.to_dict(orient='records')
 
-        # print(recommendations)
+        return recommendations
         
-        # Return the JSON data
-        return json.dumps(recommendations, indent=4)
     else:
         return json.dumps({"message": f"No funds found for risk level: {risk_level}"}, indent=4)
