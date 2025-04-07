@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import axios from "axios";
 
 const Recommend = () => {
+
+  
   const [formData, setFormData] = useState({
     investmentAmount: "",
     riskLevel: "Select risk level",
@@ -32,6 +34,13 @@ const Recommend = () => {
     }
   };
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const cardsPerPage = 4;
+  const indexOfLastCard = currentPage * cardsPerPage;
+  const indexOfFirstCard = indexOfLastCard - cardsPerPage;
+  const currentCards = recommendations.slice(indexOfFirstCard, indexOfLastCard);
+  const totalPages = Math.ceil(recommendations.length / cardsPerPage);
+  
   return (
     <div
       style={{
@@ -219,90 +228,97 @@ const Recommend = () => {
             }}
           >
             {recommendations.length > 0 ? (
-              recommendations.map((option, index) => (
-                <div
-                  key={index}
-                  style={{
-                    backgroundColor: "white",
-                    color: "black",
-                    padding: "20px",
-                    borderRadius: "12px",
-                    textAlign: "left",
-                    fontWeight: "normal",
-                    boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
-                    width: "80%",
-                    margin: "auto",
-                    lineHeight: "1.8",
-                  }}
-                >
-                  <a
-                    href={option.detail_info} // Assuming you have a link field
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{
-                      textDecoration: "none",
-                      color: "inherit",
-                    }}
-                  >
-                    <div
-                      style={{
-                        display: "grid",
-                        gridTemplateColumns: "1fr 1fr",
-                        columnGap: "70px",
-                        rowGap: "10px",
-                      }}
-                    >
-                      {/* Name takes full row (2 columns) */}
-                      <div
-                        style={{
-                          gridColumn: "span 2",
-                          whiteSpace: "nowrap",
-                        }}
-                      >
-                        <strong>Name:</strong> {option.name}
-                      </div>
+  <>
+    {currentCards.map((option, index) => (
+      <div
+        key={index}
+        style={{
+          backgroundColor: "white",
+          color: "black",
+          padding: "20px",
+          borderRadius: "12px",
+          textAlign: "left",
+          fontWeight: "normal",
+          boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
+          width: "80%",
+          margin: "auto",
+          lineHeight: "1.8",
+        }}
+      >
+        <a
+          href={option.detail_info}
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ textDecoration: "none", color: "inherit" }}
+        >
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr",
+              columnGap: "70px",
+              rowGap: "10px",
+            }}
+          >
+            <div style={{ gridColumn: "span 2", whiteSpace: "nowrap" }}>
+              <strong>Name:</strong> {option.name}
+            </div>
+            <div><strong>ISIN:</strong> {option.isin}</div>
+            <div><strong>1 Year Return:</strong> {option["1_year"]}%</div>
+            <div><strong>Category:</strong> {option.category}</div>
+            <div><strong>3 Year Return:</strong> {option["3_year"]}%</div>
+            <div><strong>SIP Available:</strong> {option.sip_available ? "Yes" : "No"}</div>
+            <div><strong>5 Year Return:</strong> {option["5_year"]}%</div>
+            <div><strong>Lump Sum Available:</strong> {option.lump_available ? "Yes" : "No"}</div>
+            <div><strong>Volatility:</strong> {option.volatility}</div>
+            <div><strong>Maturity Type:</strong> {option.maturity_type}</div>
+            <div><strong>Last NAV:</strong> ₹{option.last_nav}</div>
+          </div>
+        </a>
+      </div>
+    ))}
 
-                      {/* The rest of the fields in two-column layout */}
-                      <div>
-                        <strong>ISIN:</strong> {option.isin}
-                      </div>
-                      <div>
-                        <strong>1 Year Return:</strong> {option["1_year"]}%
-                      </div>
-                      <div>
-                        <strong>Category:</strong> {option.category}
-                      </div>
-                      
-                      
-                      <div>
-                        <strong>3 Year Return:</strong> {option["3_year"]}%
-                      </div>  
-                      <div>
-                        <strong>SIP Available:</strong> {option.sip_available ? "Yes" : "No"}
-                      </div>
-                      <div>
-                        <strong>5 Year Return:</strong> {option["5_year"]}%
-                      </div>
-                      <div>
-                        <strong>Lump Sum Available:</strong> {option.lump_available ? "Yes" : "No"}
-                      </div>
-                      <div>
-                        <strong>Volatility:</strong> {option.volatility}
-                      </div>
-                      <div>
-                        <strong>Maturity Type:</strong> {option.maturity_type}
-                      </div>
-                      <div>
-                        <strong>Last NAV:</strong> ₹{option.last_nav}
-                      </div>
-                    </div>
+    {/* Pagination Controls */}
+    <div style={{ display: "flex", justifyContent: "center", marginTop: "20px", gap: "10px" }}>
+      <button
+        disabled={currentPage === 1}
+        onClick={() => setCurrentPage(currentPage - 1)}
+        style={{
+          padding: "8px 16px",
+          borderRadius: "6px",
+          border: "none",
+          backgroundColor: "#4bcd3e",
+          color: "#0a1932",
+          fontWeight: "bold",
+          cursor: currentPage === 1 ? "not-allowed" : "pointer",
+        }}
+      >
+        Previous
+      </button>
 
-                  </a>
-                </div>
-              ))
-            ) : (
-              <p>No recommendations found.</p>
-            )}
+      <span style={{ alignSelf: "center", fontWeight: "bold" }}>
+        Page {currentPage} of {totalPages}
+      </span>
+
+      <button
+        disabled={currentPage === totalPages}
+        onClick={() => setCurrentPage(currentPage + 1)}
+        style={{
+          padding: "8px 16px",
+          borderRadius: "6px",
+          border: "none",
+          backgroundColor: "#4bcd3e",
+          color: "#0a1932",
+          fontWeight: "bold",
+          cursor: currentPage === totalPages ? "not-allowed" : "pointer",
+        }}
+      >
+        Next
+      </button>
+    </div>
+  </>
+) : (
+  <p>No recommendations found.</p>
+)}
           </div>
         </div>
       )}
