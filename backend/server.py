@@ -1,5 +1,5 @@
 import os
-from datetime import timedelta
+from datetime import datetime
 from flask import Flask, request, jsonify
 from sqlalchemy import Column, Integer, String, create_engine
 from sqlalchemy.orm import declarative_base, sessionmaker
@@ -10,8 +10,9 @@ from dotenv import load_dotenv
 import fd_analysis
 import rd_analysis
 import investment_recommendation
+import gold_data
 
-#pip install flask flask-bcrypt flask-jwt-extended flask-cors python-dotenv sqlitecloud sqlalchemy-sqlitecloud
+#pip install flask flask-bcrypt flask-jwt-extended flask-cors python-dotenv sqlitecloud sqlalchemy-sqlitecloud scipy
 
 # Load environment variables
 load_dotenv()
@@ -155,6 +156,20 @@ def rd_analysis_route():
     result = rd_analysis.get_top_banks(amount, term, db_path)
 
     return jsonify(result)
+
+#Gold Route
+@app.route('/api/gold', methods=['GET'])
+def get_gold_route():
+    db_path = "innovate.db"
+    range_option = request.args.get('range').upper()
+    result = gold_data.get_gold_data(range_option, db_path)
+
+    return jsonify(result)
+
+#News Route
+# @app.route('/api/news', methods=['GET'])
+# def get_news_route():
+#     return jsonify(result)
 
 if __name__ == "__main__":
     app.run(debug=True)
