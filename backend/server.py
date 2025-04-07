@@ -12,6 +12,7 @@ import rd_analysis
 import investment_recommendation
 import gold_data
 import mf_recommendations
+import about_mutualfund
 
 #pip install flask flask-bcrypt flask-jwt-extended flask-cors python-dotenv sqlitecloud sqlalchemy-sqlitecloud scipy
 
@@ -178,6 +179,13 @@ def get_mf_recommendation_route():
 
     return jsonify(result)
 
+@app.route('/api/mf/about', methods=['POST'])
+def get_about_mf_route():
+    data = request.json
+    isin = data.get("isin")
+    result = about_mutualfund.run_all(isin)
+
+    return jsonify(result)
 
 #News Route
 # @app.route('/api/news', methods=['GET'])
