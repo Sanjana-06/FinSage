@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 
 const Recommend = () => {
   const [formData, setFormData] = useState({
@@ -7,6 +8,7 @@ const Recommend = () => {
     returnPeriod: "",
   });
 
+  const [recommendations, setRecommendations] = useState([]);
   const [showOptions, setShowOptions] = useState(false);
 
   const handleInputChange = (event) => {
@@ -14,9 +16,20 @@ const Recommend = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    setShowOptions(true);
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/api/mf/recommendation",
+        formData
+      );
+      console.log(response.data);
+
+      setRecommendations(response.data); // Store backend response
+      setShowOptions(true); // Show recommendations
+    } catch (error) {
+      console.error("Error fetching recommendations:", error);
+    }
   };
 
   return (
@@ -27,15 +40,16 @@ const Recommend = () => {
         paddingTop: "20px",
         fontFamily: "Arial, sans-serif",
         backgroundColor: "rgba(10, 25, 50)",
-        height: "100vh",
+        minHeight: "100vh",
         color: "white",
       }}
     >
       <h1
-        style={{ textAlign: "left", paddingLeft: "9%", paddingBottom: "10px" }}
+        style={{ textAlign: "left", paddingLeft: "10%", paddingBottom: "10px" }}
       >
         Mutual Fund Recommendation
       </h1>
+
       {/* Form Container */}
       <div
         style={{
@@ -76,7 +90,7 @@ const Recommend = () => {
                 type="number"
                 id="investmentAmount"
                 name="investmentAmount"
-                value={formData.income}
+                value={formData.investmentAmount}
                 onChange={handleInputChange}
                 placeholder="Enter Investment Amount"
                 style={{
@@ -136,12 +150,10 @@ const Recommend = () => {
                 Return Period
               </label>
               <select
-                type="number"
                 id="returnPeriod"
                 name="returnPeriod"
                 value={formData.returnPeriod}
                 onChange={handleInputChange}
-                placeholder="Years"
                 style={{
                   width: "90%",
                   padding: "10px",
@@ -177,7 +189,7 @@ const Recommend = () => {
         </form>
       </div>
 
-      {/* New Div Below Form - Split into Two Sections */}
+      {/* New Div Below Form - Recommendations */}
       {showOptions && (
         <div
           style={{
@@ -193,47 +205,79 @@ const Recommend = () => {
             textAlign: "center",
           }}
         >
-          <h2 style={{ marginBottom: "20px" }}>Recommendation</h2>
+          <h2 style={{ marginBottom: "20px" }}>Recommendations</h2>
+
           <div
             style={{
               display: "flex",
               flexDirection: "column",
-              gap: "15px",
+              gap: "20px",
             }}
           >
-            {[
-              { name: "Option 1", link: "https://example.com/option1" },
-              { name: "Option 2", link: "https://example.com/option2" },
-              { name: "Option 3", link: "https://example.com/option3" },
-              { name: "Option 4", link: "https://example.com/option4" },
-            ].map((option, index) => (
-              <div
-                key={index}
-                style={{
-                  backgroundColor: "white",
-                  color: "black",
-                  padding: "15px",
-                  borderRadius: "8px",
-                  textAlign: "center",
-                  fontWeight: "bold",
-                  boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
-                  width: "60%",
-                  margin: "auto",
-                }}
-              >
-                <a
-                  href={option.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
+            {recommendations.length > 0 ? (
+              recommendations.map((option, index) => (
+                <div
+                  key={index}
                   style={{
-                    textDecoration: "none",
-                    color: "inherit",
+                    backgroundColor: "white",
+                    color: "black",
+                    padding: "20px",
+                    borderRadius: "12px",
+                    textAlign: "left",
+                    fontWeight: "normal",
+                    boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
+                    width: "80%",
+                    margin: "auto",
+                    lineHeight: "1.8",
                   }}
                 >
-                  {option.name}
-                </a>
-              </div>
-            ))}
+                  <a
+                    href={option.detail_info} // Assuming you have a link field
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{
+                      textDecoration: "none",
+                      color: "inherit",
+                    }}
+                  >
+                    <div>
+                      <strong>Name:</strong> {option.name}
+                    </div>
+                    <div>
+                      <strong>Category:</strong> {option.category}
+                    </div>
+                    <div>
+                      <strong>Last NAV:</strong> ₹{option.last_nav}
+                    </div>
+                    <div>
+                      <strong>1 Year Return:</strong> {option["1_year"]}%
+                    </div>
+                    <div>
+                      <strong>3 Year Return:</strong> {option["3_year"]}%
+                    </div>
+                    <div>
+                      <strong>5 Year Return:</strong> {option["5_year"]}%
+                    </div>
+                    <div>
+                      <strong>SIP Available:</strong>{" "}
+                      {option.sip_available ? "Yes" : "No"}
+                    </div>
+                    <div>
+                      <strong>Lump Sum Available:</strong>{" "}
+                      {option.lump_available ? "Yes" : "No"}
+                    </div>
+                    <div>
+                      <strong>Volatility:</strong> {option.volatility}
+                    </div>
+                    <div>
+                      <strong>Maturity Type:</strong> {option.maturity_type}
+                    </div>
+                  </a>
+                </div>
+              ))
+            ) : (
+              <p>No recommendations found.</p>
+            )}
           </div>
         </div>
       )}
