@@ -1,7 +1,4 @@
 import React, { useState,useEffect } from "react";
-import axios from 'axios';
-import {Line} from 'react-chartjs-2';
-import dayjs from 'dayjs';
 import { motion } from "framer-motion";
 import {
   BarChart,
@@ -11,57 +8,11 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-
-import { LineChart } from "recharts";
-
-const RANGE_OPTIONS = ['1M', '3M', '6M', '1Y', '3Y', '5Y'];
-
+import GoldPriceChart from "./GoldChart";
 
 const GoldPage = () => {
 
-  const [range, setRange] = useState('1M');
-  const [chartData, setChartData] = useState({ labels: [], datasets: [] });
-
-  useEffect(() => {
-    axios.get(`http://localhost:5000/api/chart-data?range=${range}`)
-      .then(res => {
-        const { historical, predicted } = res.data;
-
-        const allData = [
-          ...historical.map(d => ({ ...d, type: 'Historical' })),
-          ...predicted.map(d => ({ ...d, type: 'Predicted' })),
-        ];
-
-        const sorted = allData.sort((a, b) => new Date(a.date) - new Date(b.date));
-        const labels = sorted.map(d => dayjs(d.date).format('DD MMM'));
-
-        const historicalPrices = sorted.map(d => d.type === 'Historical' ? d.price : null);
-        const predictedPrices = sorted.map(d => d.type === 'Predicted' ? d.price : null);
-
-        setChartData({
-          labels,
-          datasets: [
-            {
-              label: 'Historical',
-              data: historicalPrices,
-              borderColor: 'blue',
-              fill: false,
-            },
-            {
-              label: 'Predicted',
-              data: predictedPrices,
-              borderColor: 'orange',
-              borderDash: [5, 5],
-              fill: false,
-            }
-          ]
-        });
-      });
-  }, [range]);
-
   
-  const [showGraph, setShowGraph] = useState(true);
-  const [selectedPeriod, setSelectedPeriod] = useState("1Y");
 
   const data = [
     { karat: "24K", purity: 99.9 },
@@ -276,23 +227,7 @@ const GoldPage = () => {
               minHeight: "200px",
             }}
           >
-            {showGraph && (
-              <div className="p-6 max-w-4xl mx-auto">
-                <h2 className="text-xl font-bold mb-4">Price Chart</h2>
-                <div className="mb-4 space-x-2">
-                  {RANGE_OPTIONS.map(option => (
-                    <button
-                      key={option}
-                      onClick={() => setRange(option)}
-                      className={`px-4 py-2 rounded ${range === option ? 'bg-blue-600 text-white' : 'bg-gray-200'}`}
-                    >
-                      {option}
-                    </button>
-                  ))}
-                </div>
-                <Line data={chartData} />
-              </div>
-            )}
+            <GoldPriceChart/>
           </div>
         </div>
       )}
