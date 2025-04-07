@@ -25,8 +25,8 @@ def get_mf_recommendations(year_column, risk_level):
     # Display the sorted funds as JSON
     if not sorted_funds.empty:
         
-        # Uncomment below line for top 5 recommendations
-        sorted_funds = sorted_funds.head()
+        # Uncomment below line for top 20 recommendations
+        sorted_funds = sorted_funds.head(20)
 
         # Convert the sorted DataFrame to an array of JSON objects (one per fund)
         recommendations = sorted_funds.to_dict(orient='records')

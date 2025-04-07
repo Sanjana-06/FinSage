@@ -1,7 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { Line } from "react-chartjs-2";
 import { motion } from "framer-motion";
-import GoldPriceChart from "Gold/GoldChart.js";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer,
+} from "recharts";
+import GoldPriceChart from "./GoldChart";
 
 const GoldPage = () => {
   
@@ -209,9 +216,9 @@ const GoldPage = () => {
           <div
             style={{
               width: "70%",
-              padding: "20px",
+              padding: "40px",
               backgroundColor: "rgba(255, 255, 255, 0.3)",
-              borderRadius: "10px",
+              borderRadius: "20px",
               boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.3)",
               alignItems: "center",
               justifyContent: "center",

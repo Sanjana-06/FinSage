@@ -398,7 +398,7 @@ const HomePage = () => {
                                   color: "#007BFF",
                                 }}
                               >
-                                {amount}
+                                ₹{amount}
                               </div>
                               <div
                                 style={{

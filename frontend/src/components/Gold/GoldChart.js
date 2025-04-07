@@ -70,7 +70,7 @@ const GoldPriceChart = () => {
     svg.append("path")
       .datum(predicted)
       .attr("fill", "none")
-      .attr("stroke", "orange")
+      .attr("stroke", "blue")
       .attr("stroke-width", 2)
       .attr("stroke-dasharray", "4")
       .attr("d", line);
@@ -158,7 +158,7 @@ const GoldPriceChart = () => {
       });
   };
   return (
-    <div>
+    <div style={{backgroundColor:"white",borderRadius:"20px"}}>
       <div style={{ marginBottom: "10px", textAlign: "center" }}>
         {["1M", "3M", "6M", "1Y", "3Y", "5Y"].map((opt) => (
           <button

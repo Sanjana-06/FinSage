@@ -37,11 +37,15 @@ const Recommend = () => {
       style={{
         margin: "auto",
         textAlign: "center",
-        paddingTop: "20px",
+        paddingTop: "5px",
         fontFamily: "Arial, sans-serif",
         backgroundColor: "rgba(10, 25, 50)",
+        display: "flex",
+        flexDirection: "column",
         minHeight: "100vh",
+        position: "relative",
         color: "white",
+        paddingBottom: "150px",
       }}
     >
       <h1
@@ -53,15 +57,15 @@ const Recommend = () => {
       {/* Form Container */}
       <div
         style={{
-          padding: "20px",
+          position: "relative",
+          padding: "20px", // Reduce padding
+          paddingLeft: "14px",
           backgroundColor: "rgba(255, 255, 255, 0.3)",
           borderRadius: "20px",
           boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-          width: "80%",
-          margin: "auto",
+          margin: "0 10%", // Ensure proper centering
           maxWidth: "1000px",
           backdropFilter: "blur(10px)",
-          marginBottom: "15px",
         }}
       >
         <form onSubmit={handleSubmit}>
@@ -198,14 +202,14 @@ const Recommend = () => {
             margin: "auto",
             padding: "20px",
             backgroundColor: "rgba(255, 255, 255, 0.3)",
-            borderRadius: "10px",
+            borderRadius: "20px",
             backdropFilter: "blur(10px)",
             boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.3)",
             marginTop: "30px",
             textAlign: "center",
           }}
         >
-          <h2 style={{ marginBottom: "20px" }}>Recommendations</h2>
+          <h2 style={{ marginBottom: "24px",color:"#4bcd3e" }}>Recommendations</h2>
 
           <div
             style={{
@@ -240,38 +244,59 @@ const Recommend = () => {
                       color: "inherit",
                     }}
                   >
-                    <div>
-                      <strong>Name:</strong> {option.name}
+                    <div
+                      style={{
+                        display: "grid",
+                        gridTemplateColumns: "1fr 1fr",
+                        columnGap: "70px",
+                        rowGap: "10px",
+                      }}
+                    >
+                      {/* Name takes full row (2 columns) */}
+                      <div
+                        style={{
+                          gridColumn: "span 2",
+                          whiteSpace: "nowrap",
+                        }}
+                      >
+                        <strong>Name:</strong> {option.name}
+                      </div>
+
+                      {/* The rest of the fields in two-column layout */}
+                      <div>
+                        <strong>ISIN:</strong> {option.isin}
+                      </div>
+                      <div>
+                        <strong>1 Year Return:</strong> {option["1_year"]}%
+                      </div>
+                      <div>
+                        <strong>Category:</strong> {option.category}
+                      </div>
+                      
+                      
+                      <div>
+                        <strong>3 Year Return:</strong> {option["3_year"]}%
+                      </div>  
+                      <div>
+                        <strong>SIP Available:</strong> {option.sip_available ? "Yes" : "No"}
+                      </div>
+                      <div>
+                        <strong>5 Year Return:</strong> {option["5_year"]}%
+                      </div>
+                      <div>
+                        <strong>Lump Sum Available:</strong> {option.lump_available ? "Yes" : "No"}
+                      </div>
+                      <div>
+                        <strong>Volatility:</strong> {option.volatility}
+                      </div>
+                      <div>
+                        <strong>Maturity Type:</strong> {option.maturity_type}
+                      </div>
+                      <div>
+                        <strong>Last NAV:</strong> ₹{option.last_nav}
+                      </div>
                     </div>
-                    <div>
-                      <strong>Category:</strong> {option.category}
-                    </div>
-                    <div>
-                      <strong>Last NAV:</strong> ₹{option.last_nav}
-                    </div>
-                    <div>
-                      <strong>1 Year Return:</strong> {option["1_year"]}%
-                    </div>
-                    <div>
-                      <strong>3 Year Return:</strong> {option["3_year"]}%
-                    </div>
-                    <div>
-                      <strong>5 Year Return:</strong> {option["5_year"]}%
-                    </div>
-                    <div>
-                      <strong>SIP Available:</strong>{" "}
-                      {option.sip_available ? "Yes" : "No"}
-                    </div>
-                    <div>
-                      <strong>Lump Sum Available:</strong>{" "}
-                      {option.lump_available ? "Yes" : "No"}
-                    </div>
-                    <div>
-                      <strong>Volatility:</strong> {option.volatility}
-                    </div>
-                    <div>
-                      <strong>Maturity Type:</strong> {option.maturity_type}
-                    </div>
+
                   </a>
                 </div>
               ))
