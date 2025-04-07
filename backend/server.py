@@ -1,5 +1,5 @@
 import os
-from datetime import datetime
+from datetime import datetime, timedelta
 from flask import Flask, request, jsonify
 from sqlalchemy import Column, Integer, String, create_engine
 from sqlalchemy.orm import declarative_base, sessionmaker
@@ -11,6 +11,7 @@ import fd_analysis
 import rd_analysis
 import investment_recommendation
 import gold_data
+import mf_recommendations
 
 #pip install flask flask-bcrypt flask-jwt-extended flask-cors python-dotenv sqlitecloud sqlalchemy-sqlitecloud scipy
 
@@ -165,6 +166,18 @@ def get_gold_route():
     result = gold_data.get_gold_data(range_option, db_path)
 
     return jsonify(result)
+
+#Mutualfund Recommendation Route
+@app.route('/api/mf/recommendation', methods=['POST'])
+def get_mf_recommendation_route():
+    data = request.json
+    amount = data.get("investmentAmount")
+    year = data.get("returnPeriod")
+    risk = data.get("riskLevel")
+    result = mf_recommendations.get_mf_recommendations(year, risk)
+
+    return jsonify(result)
+
 
 #News Route
 # @app.route('/api/news', methods=['GET'])

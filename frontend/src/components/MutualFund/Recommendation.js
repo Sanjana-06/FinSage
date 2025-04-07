@@ -1,8 +1,8 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 
 const Recommend = () => {
   const [formData, setFormData] = useState({
-    income: "",
+    investmentAmount: "",
     riskLevel: "Select risk level",
     returnPeriod: "",
   });
@@ -19,9 +19,7 @@ const Recommend = () => {
     setShowOptions(true);
   };
 
-  
   return (
-
     <div
       style={{
         margin: "auto",
@@ -30,11 +28,14 @@ const Recommend = () => {
         fontFamily: "Arial, sans-serif",
         backgroundColor: "rgba(10, 25, 50)",
         height: "100vh",
-        color:"white",
-        
+        color: "white",
       }}
     >
-      <h1 style={{ textAlign: "left",paddingLeft:"9%",paddingBottom:"10px", }}>Mutual Fund Recommendation</h1>
+      <h1
+        style={{ textAlign: "left", paddingLeft: "9%", paddingBottom: "10px" }}
+      >
+        Mutual Fund Recommendation
+      </h1>
       {/* Form Container */}
       <div
         style={{
@@ -46,7 +47,7 @@ const Recommend = () => {
           margin: "auto",
           maxWidth: "1000px",
           backdropFilter: "blur(10px)",
-          marginBottom:"15px",
+          marginBottom: "15px",
         }}
       >
         <form onSubmit={handleSubmit}>
@@ -59,7 +60,7 @@ const Recommend = () => {
               marginBottom: "15px",
             }}
           >
-            {/* Income Input */}
+            {/* Investment Amount Input */}
             <div style={{ textAlign: "left", flex: "1" }}>
               <label
                 style={{
@@ -67,17 +68,17 @@ const Recommend = () => {
                   marginBottom: "5px",
                   fontWeight: "bold",
                 }}
-                htmlFor="income"
+                htmlFor="investmentAmount"
               >
-                Income
+                Investment Amount
               </label>
               <input
                 type="number"
-                id="income"
-                name="income"
+                id="investmentAmount"
+                name="investmentAmount"
                 value={formData.income}
                 onChange={handleInputChange}
-                placeholder="Enter income"
+                placeholder="Enter Investment Amount"
                 style={{
                   width: "90%",
                   padding: "10px",
@@ -113,9 +114,12 @@ const Recommend = () => {
                 }}
               >
                 <option value="Select risk level">---Select---</option>
-                <option value="low">Low</option>
-                <option value="medium">Medium</option>
-                <option value="high">High</option>
+                <option value="Low Risk">Low</option>
+                <option value="Low to Moderate Risk">Low to Moderate</option>
+                <option value="Moderate Risk">Moderate</option>
+                <option value="Moderately High Risk">Moderately High</option>
+                <option value="High Risk">High</option>
+                <option value="Very High Risk">Very High</option>
               </select>
             </div>
 
@@ -131,7 +135,7 @@ const Recommend = () => {
               >
                 Return Period
               </label>
-              <input
+              <select
                 type="number"
                 id="returnPeriod"
                 name="returnPeriod"
@@ -144,8 +148,12 @@ const Recommend = () => {
                   border: "1px solid #ccc",
                   borderRadius: "5px",
                 }}
-                required
-              />
+              >
+                <option value="">---Select a Period---</option>
+                <option value="1_year">1 Year</option>
+                <option value="3_year">3 Year</option>
+                <option value="5_year">5 Year</option>
+              </select>
             </div>
 
             {/* Submit Button */}
@@ -154,7 +162,7 @@ const Recommend = () => {
               style={{
                 padding: "10px",
                 background: "#4bcd3e",
-                color:"rgba(10, 25, 50)",
+                color: "rgba(10, 25, 50)",
                 border: "none",
                 cursor: "pointer",
                 fontSize: "16px",
