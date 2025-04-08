@@ -59,7 +59,7 @@ const Navbar = () => {
             )}
           </div>
 
-          <Link to="/expensetracker" style={styles.navItem}>
+          <Link to="http://localhost:5173" style={styles.navItem}>
             <BarChart3 size={18} /> Expense Tracker
           </Link>
           <div
