@@ -239,10 +239,29 @@ def get_about_mf_route():
     return jsonify(result)
 
 #News Route
-@app.route('/api/news', methods=['GET'])
-def get_news_route():
+#News Route
+@app.route('/api/news/<category>', methods=['GET'])
+def get_news_by_category(category):
     news_data = get_news_links.fetch_financial_news()
-    return jsonify(news_data)
+
+    # Normalize category string to match the title keys in your dictionary
+    category_map = {
+        "mutualfund": "Mutual Funds",
+        "recurringdeposit": "Recurring Deposits (RD)",
+        "fixeddeposit": "Fixed Deposits (FD)",
+        "gold": "Gold Prices",
+        "financialnews":"Financial News"
+    }
+
+    title = category_map.get(category.lower())
+    if not title:
+        return jsonify({"error": "Invalid category"}), 404
+
+    for news in news_data:
+        if news['topic'] == title:
+            return jsonify(news['articles'])
+
+    return jsonify({"error": "News not found"}), 404
 
 if __name__ == "__main__":
     app.run(debug=True)

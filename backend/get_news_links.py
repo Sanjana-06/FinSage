@@ -35,7 +35,8 @@ def fetch_financial_news():
         "Mutual Funds": "mutual+fund+India",
         "Recurring Deposits (RD)": "recurring+deposit+India",
         "Fixed Deposits (FD)": "fixed+deposit+India",
-        "Gold Prices": "gold+price+India"
+        "Gold Prices": "gold+price+India",
+        "Financial News": "Financial+news+India"
     }
 
     # Collect all news
