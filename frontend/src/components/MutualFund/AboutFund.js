@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Search } from 'lucide-react';
+import GoldPriceChart from '../Gold/GoldChart';
 
 const AboutFund = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -26,7 +27,7 @@ const AboutFund = () => {
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
   };
-
+  const [showOptions, setShowOptions] = useState(false);
   const handleFundClick = (fund) => {
     fetch('http://localhost:5000/api/mf/about', {
       method: 'POST',
@@ -89,7 +90,37 @@ const AboutFund = () => {
           ))}
         </div>
       )}
+      
       {selectedFund && (
+
+          <>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              marginTop: "30px",
+              width: "100%",
+              marginBottom: "50px",
+            }}
+          >
+            <div
+              style={{
+                
+                width: "70%",
+                padding: "40px",
+                backgroundColor: "rgba(255, 255, 255, 0.3)",
+                borderRadius: "20px",
+                boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.3)",
+                alignItems: "center",
+                justifyContent: "center",
+                minHeight: "200px",
+              }}
+            >
+              <GoldPriceChart />
+            </div>
+          </div>
+
         <div style={{width:"900px", marginTop: '20px', padding: '20px', backgroundColor: 'white', borderRadius: '10px', color: 'black',marginLeft:"9%" }}>
           <h2>{selectedFund.fund_name}</h2>
           {/* <p><strong>ISIN:</strong> {selectedFund.isin}</p> */}
@@ -132,6 +163,7 @@ const AboutFund = () => {
           </ul>
           <p><strong>More Info:</strong> <a href={selectedFund.details.more_info_url} target="_blank" rel="noopener noreferrer">Click here</a></p>
         </div>
+      </>
       )}
     </div>
   );
