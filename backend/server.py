@@ -14,6 +14,7 @@ import gold_data
 import mf_recommendations
 import about_mutualfund
 import get_news_links
+import get_mf_nav
 
 #pip install flask flask-bcrypt flask-jwt-extended flask-cors python-dotenv sqlitecloud sqlalchemy-sqlitecloud scipy
 
@@ -240,6 +241,7 @@ def get_mf_recommendation_route():
 
     return jsonify(result)
 
+#About Mutualfund Route
 @app.route('/api/mf/about', methods=['POST'])
 def get_about_mf_route():
     data = request.json
@@ -248,7 +250,15 @@ def get_about_mf_route():
 
     return jsonify(result)
 
-#News Route
+#Mutualfund Chart Route
+@app.route('/api/mf/graph', methods=['GET'])
+def get_mf_graph_route():
+    isin = request.args.get("isin")
+    range = request.args.get("range")
+    result = get_mf_nav.fetch_mf_nav(isin, range)
+
+    return jsonify(result)
+
 #News Route
 @app.route('/api/news/<category>', methods=['GET'])
 def get_news_by_category(category):
