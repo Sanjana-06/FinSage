@@ -11,7 +11,26 @@ async function sendMessage(message) {
   const data = await response.json();
   return data.reply;
 }
+const simulateTypingEffect = (text, setMessages) => {
+  let index = 0;
 
+  const typingInterval = setInterval(() => {
+    // Update the last bot message progressively
+    setMessages((prev) => {
+      const lastMessage = prev[prev.length - 1];
+      const updatedMessage = {
+        ...lastMessage,
+        text: text.slice(0, index + 1),
+      };
+      return [...prev.slice(0, -1), updatedMessage];
+    });
+
+    index++;
+    if (index >= text.length) {
+      clearInterval(typingInterval);
+    }
+  }, 20); // Adjust speed (milliseconds) for the typing effect
+};
 export default function ChatUI() {
   const [inputText, setInputText] = useState("");
   const [messages, setMessages] = useState([]);
@@ -19,25 +38,35 @@ export default function ChatUI() {
 
   const handleKeyDown = async (e) => {
     if (e.key === "Enter" && inputText.trim()) {
+      if (inputText.length > 200) {
+        alert("You have exceeded the maximum word limit of 200 characters.");
+        return;
+      }
+  
       const userMessage = { text: inputText, sender: "user" };
       setMessages((prev) => [...prev, userMessage]);
       setIsSubmitted(true);
-
+  
       try {
-        const botmessage = await sendMessage(inputText);
-        setMessages((prev) => [...prev, { text: botmessage, sender: "bot" }]);
+        const botmessage = await sendMessage(inputText); // Backend API call
+        setMessages((prev) => [
+          ...prev,
+          { text: "", sender: "bot" }, // Add an empty bot message initially
+        ]);
+        simulateTypingEffect(botmessage, setMessages); // Call the typing effect function
       } catch (error) {
-        console.error("Error calling OpenAI API:", error);
+        console.error("Error calling API:", error);
         setMessages((prev) => [
           ...prev,
           { text: "Something went wrong. Please try again.", sender: "bot" },
         ]);
       }
-
+  
       setInputText("");
       setTimeout(() => setIsSubmitted(false), 500);
     }
   };
+  
 
   return (
     <div
@@ -120,6 +149,8 @@ export default function ChatUI() {
                     boxShadow: "0 2px 6px rgba(0, 0, 0, 0.2)",
                     fontSize: "14px",
                     whiteSpace: "pre-wrap",
+                    maxWidth: "700px", 
+                    wordBreak: "break-word", 
                   }}
                 >
                   {msg.text}
@@ -146,8 +177,10 @@ export default function ChatUI() {
               value={inputText}
               onChange={(e) => setInputText(e.target.value)}
               onKeyDown={handleKeyDown}
+              maxLength={200} 
               style={{
                 width: "100%",
+                height:"50px",
                 padding: "10px 48px 10px 12px",
                 paddingRight: "1px",
                 borderRadius: "8px",
