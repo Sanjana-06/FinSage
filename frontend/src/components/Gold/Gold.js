@@ -262,6 +262,7 @@ const GoldPage = () => {
                 boxShadow: "0px 4px 8px rgba(0,0,0,0.2)",
                 fontFamily: "Arial, sans-serif",
                 lineHeight: "1.8",
+                
               }}
             >
               <h2 style={{ marginBottom: "20px", color: "#1e2a38" }}>
@@ -273,6 +274,7 @@ const GoldPage = () => {
                   display: "flex",
                   flexWrap: "wrap", // allow wrapping if needed
                   gap: "20px", // space between columns
+                  paddingLeft:"100px"
                 }}
               >
                 <div style={{ flex: "1 1 45%", textAlign: "left" }}>
