@@ -92,35 +92,6 @@ const Recommend = () => {
               marginBottom: "15px",
             }}
           >
-            {/* Investment Amount Input */}
-            <div style={{ textAlign: "left", flex: "1" }}>
-              <label
-                style={{
-                  display: "block",
-                  marginBottom: "5px",
-                  fontWeight: "bold",
-                }}
-                htmlFor="investmentAmount"
-              >
-                Investment Amount
-              </label>
-              <input
-                type="number"
-                id="investmentAmount"
-                name="investmentAmount"
-                value={formData.investmentAmount}
-                onChange={handleInputChange}
-                placeholder="Enter Investment Amount"
-                style={{
-                  width: "90%",
-                  padding: "10px",
-                  border: "1px solid #ccc",
-                  borderRadius: "5px",
-                }}
-                required
-              />
-            </div>
-
             {/* Risk Level Input */}
             <div style={{ textAlign: "left", flex: "1" }}>
               <label

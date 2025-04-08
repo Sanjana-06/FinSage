@@ -153,21 +153,21 @@ def reset_password():
 @app.route("/api/investment-recommendation", methods=["POST"])
 def investment_recommendation_route():
     data = request.json
-    income = data.get("income")
+    investment_amount = data.get("income")
     risk_level = data.get("riskLevel")
     return_period = data.get("returnPeriod")
 
-    if not income or not risk_level or not return_period:
+    if not investment_amount or not risk_level or not return_period:
         return jsonify({"error": "Missing required parameters"}), 400
 
     try:
-        income = float(income)
+        investment_amount = float(investment_amount)
         return_period = int(return_period)
     except ValueError:
         return jsonify({"error": "Invalid data format"}), 400
 
     # Get investment allocation
-    result = investment_recommendation.investment_allocation(income, risk_level, return_period)
+    result = investment_recommendation.investment_allocation(investment_amount, risk_level, return_period)
 
     return jsonify(result)
     
@@ -212,7 +212,7 @@ def rd_analysis_route():
 @app.route('/api/gold', methods=['GET'])
 def get_gold_route():
     db_path = "innovate.db"
-    range_option = request.args.get('range').upper()
+    range_option = request.args.get('range')
     karat_option = request.args.get('karat') 
     result = gold_data.get_gold_data(karat_option,range_option, db_path)
 

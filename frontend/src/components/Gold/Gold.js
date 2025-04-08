@@ -31,13 +31,8 @@ const GoldPage = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const [submittedData, setSubmittedData] = useState(null);
   const handleSubmit = (event) => {
     event.preventDefault();
-    setSubmittedData({
-      karat: formData.karat,
-      range: formData.returnPeriod || "1M", // default or from input
-    });
     setShowOptions(true);
   };
 
@@ -229,12 +224,7 @@ const GoldPage = () => {
               minHeight: "200px",
             }}
           >
-             {/* other content */}
-            {submittedData ? (
-              <GoldPriceChart karat={submittedData.karat} term={submittedData.range} />
-            ) : (
-              <GoldPriceChart karat={formData.karat} term={formData.range} />
-            )}
+            <GoldPriceChart karat={formData.karat} term={formData.term} />
           </div>
         </div>
       )}

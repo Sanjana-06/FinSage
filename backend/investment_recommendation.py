@@ -1,6 +1,6 @@
 from scipy.optimize import minimize
 
-def investment_allocation(user_income, risk_capacity, investment_duration):
+def investment_allocation(investment_amount, risk_capacity, investment_duration):
     """
     Generate an investment allocation recommendation using linear programming with Recurring Deposits.
     Uses scipy.optimize instead of pulp.
@@ -57,7 +57,7 @@ def investment_allocation(user_income, risk_capacity, investment_duration):
         "Gold": round(float(result.x[1]), 2),
         "Fixed Deposits": round(float(result.x[2]), 2),
         "Recurring Deposits": round(float(result.x[3]), 2),
-        "Income": user_income
+        "Income": investment_amount
     }
 
     return allocation

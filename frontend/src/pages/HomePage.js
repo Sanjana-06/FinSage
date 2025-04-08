@@ -191,7 +191,7 @@ const HomePage = () => {
                 }}
                 htmlFor="income"
               >
-                Income
+                Investment Amount
               </label>
               <input
                 type="number"
@@ -199,7 +199,7 @@ const HomePage = () => {
                 name="income"
                 value={formData.income}
                 onChange={handleInputChange}
-                placeholder="Enter income"
+                placeholder="Enter Investment Amount"
                 style={{
                   width: "90%",
                   padding: "10px",
