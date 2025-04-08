@@ -164,7 +164,8 @@ def rd_analysis_route():
 def get_gold_route():
     db_path = "innovate.db"
     range_option = request.args.get('range').upper()
-    result = gold_data.get_gold_data(range_option, db_path)
+    karat_option = request.args.get('karat') 
+    result = gold_data.get_gold_data(karat_option,range_option, db_path)
 
     return jsonify(result)
 

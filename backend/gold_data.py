@@ -1,7 +1,7 @@
 import sqlite3
 from datetime import datetime, timedelta
 
-def get_gold_data(range_option, db_path):
+def get_gold_data(karat_option,range_option, db_path):
     # Step 1: Connect to SQLite Database
     conn = sqlite3.connect(db_path)  # Your database
     cursor = conn.cursor()
@@ -46,11 +46,17 @@ def get_gold_data(range_option, db_path):
     # Step 4: Close Database Connection
     conn.close()
 
+    if karat_option==24:
     # Step 5: Format and Return JSON Data
+        return {
+            'historical': [{'date': d, 'price': p} for d, p in historical_data],
+            'predicted': [{'date': d, 'price': p} for d, p in predicted_data],
+        }
     return {
-        'historical': [{'date': d, 'price': p} for d, p in historical_data],
-        'predicted': [{'date': d, 'price': p} for d, p in predicted_data],
-    }
+            'historical': [{'date': d, 'price': round(p*0.9167,2)} for d, p in historical_data],
+            'predicted': [{'date': d, 'price': round(p*0.9167,2)} for d, p in predicted_data],
+        }
+    
 
 # if __name__ == "__main__":
 #     db_path = "innovate.db"
