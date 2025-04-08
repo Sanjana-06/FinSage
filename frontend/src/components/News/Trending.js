@@ -4,7 +4,6 @@ import axios from "axios";
 const options = [
   "Gold",
   "Mutual Fund",
-  "Stocks",
   "Fixed Deposit",
   "Recurring Deposit",
 ];
@@ -81,6 +80,12 @@ const Trending = () => {
             >
               {item.title || `Top ${activeOption} News ${index + 1}`}
             </a>
+            <span style={{ fontSize: "0.85rem", color: "#555" }}>
+              {item.source ? `Source: ${item.source}` : "Source: Unknown"}
+            </span>
+            <span style={{ fontSize: "0.75rem", color: "#777" }}>
+              {item.published ? `Published: ${new Date(item.published).toLocaleString()}` : ""}
+          </span>
           </div>
         ))}
       </div>
