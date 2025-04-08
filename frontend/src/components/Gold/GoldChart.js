@@ -1,22 +1,25 @@
 import React, { useEffect, useRef, useState } from "react";
 import * as d3 from "d3";
 
-const GoldPriceChart = ({ karat, term }) => {
+const GoldPriceChart = ({ karat, term,investmentAmount }) => {
   const ref = useRef();
   const [range, setRange] = useState(term);
 
   useEffect(() => {
-    if (!range || !karat) return;
+    if (!range || !karat ||!investmentAmount) return;
 
-    fetch(`http://localhost:5000/api/gold?range=${range}&karat=${karat}`)
+    fetch(`http://localhost:5000/api/gold?range=${range}&karat=${karat}&investmentAmount=${investmentAmount}`)
       .then((res) => res.json())
       .then((data) => {
         drawChart(data);
-        console.log(data);
+        console.log(data)
       })
       .catch((err) => console.error("Error fetching gold data:", err));
-  }, [range, karat]);
+  }, [range, karat, investmentAmount]);
   console.log(karat);
+  console.log("Range:", range);
+  console.log(investmentAmount)
+
 
   const drawChart = (data) => {
     const svg = d3.select(ref.current);

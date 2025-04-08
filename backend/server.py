@@ -209,12 +209,13 @@ def rd_analysis_route():
 
     return jsonify(result)
 
-#Gold Route@app.route('/api/gold', methods=['GET'])
+#Gold Route
+@app.route('/api/gold', methods=['GET'])
 def get_gold_route():
     db_path = "innovate.db"
     range_option = request.args.get('range')
     karat_option = request.args.get('karat')
-    investment_amount = request.args.get('investment')  # New investment amount
+    investment_amount = request.args.get('investmentAmount')  # New investment amount
 
     # Convert types safely
     try:

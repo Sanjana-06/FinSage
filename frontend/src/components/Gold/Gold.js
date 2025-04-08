@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import axios from "axios";
 import {
   BarChart,
   Bar,
@@ -19,9 +20,9 @@ const GoldPage = () => {
     { karat: "10K", purity: 41.7 },
   ];
   const [formData, setFormData] = useState({
-    income: "",
+    investmentAmount: "",
     karat: "Select Karat",
-    returnPeriod: "",
+    term: "",
   });
 
   const [showOptions, setShowOptions] = useState(false);
@@ -34,7 +35,27 @@ const GoldPage = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     setShowOptions(true);
+    fetchInvestmentSummary();
   };
+
+
+  const [investmentSummary, setInvestmentSummary] = useState(null);
+  const fetchInvestmentSummary = async () => {
+    try {
+      const response = await axios.get("http://localhost:5000/api/gold", {
+        params: {
+          karat: formData.karat,
+          term: formData.term,
+          investmentAmount: formData.investmentAmount,
+        },
+      });
+      setInvestmentSummary(response.data.investment_summary);
+      console.log(response)
+    } catch (error) {
+      console.error("Error fetching investment summary:", error);
+    }
+  };
+
 
   return (
     <div
@@ -92,15 +113,15 @@ const GoldPage = () => {
                   marginBottom: "5px",
                   fontWeight: "bold",
                 }}
-                htmlFor="Investment"
+                htmlFor="investmentAmount"
               >
                 Investment Amount
               </label>
               <input
                 type="number"
-                id="Investment"
-                name="Investment"
-                value={formData.investment}
+                id="investmentAmount"
+                name="investmentAmount"
+                value={formData.investmentAmount}
                 onChange={handleInputChange}
                 placeholder="Enter Investment Amount"
                 style={{
@@ -151,7 +172,7 @@ const GoldPage = () => {
                   marginBottom: "5px",
                   fontWeight: "bold",
                 }}
-                htmlFor="returnPeriod"
+                htmlFor="term"
               >
                 Return Period
               </label>
@@ -205,6 +226,7 @@ const GoldPage = () => {
         <div
           style={{
             display: "flex",
+            flexDirection: "column", // Stack children vertically
             justifyContent: "center",
             alignItems: "center",
             marginTop: "30px",
@@ -224,10 +246,55 @@ const GoldPage = () => {
               minHeight: "200px",
             }}
           >
-            <GoldPriceChart karat={formData.karat} term={formData.term} />
+            <GoldPriceChart
+              karat={formData.karat}
+              term={formData.term}
+              investmentAmount={formData.investmentAmount}
+            />
           </div>
+
+          {investmentSummary && (
+            <div
+              style={{
+                marginTop: "30px", // Add some spacing between chart and summary
+                width: "70%",
+                padding: "30px",
+                backgroundColor: "white",
+                borderRadius: "20px",
+                boxShadow: "0px 4px 8px rgba(0,0,0,0.2)",
+                fontFamily: "Arial, sans-serif",
+                lineHeight: "1.8",
+              }}
+            >
+              <h2 style={{ marginBottom: "20px", color: "#1e2a38" }}>
+                Investment Summary
+              </h2>
+              <p>
+                <strong>Investment Amount:</strong> ₹{investmentSummary.investment_amount}
+              </p>
+              <p>
+                <strong>Gold Purchased:</strong> {investmentSummary.gold_grams} grams
+              </p>
+              <p>
+                <strong>Future Value:</strong> ₹{investmentSummary.future_value}
+              </p>
+              <p>
+                <strong>Predicted Profit:</strong> ₹{investmentSummary.predicted_profit}
+              </p>
+              <p>
+                <strong>Term End Date:</strong> {investmentSummary.term_end_date}
+              </p>
+              <p>
+                <strong>Today's Gold Price:</strong> ₹{investmentSummary.today_price}
+              </p>
+              <p>
+                <strong>Predicted Price at Term End:</strong> ₹{investmentSummary.predicted_price_at_end}
+              </p>
+            </div>
+          )}
         </div>
       )}
+
 
       {/* Gold Investment Description */}
       <div
