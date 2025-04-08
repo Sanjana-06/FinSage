@@ -13,6 +13,7 @@ import investment_recommendation
 import gold_data
 import mf_recommendations
 import about_mutualfund
+import get_news_links
 
 #pip install flask flask-bcrypt flask-jwt-extended flask-cors python-dotenv sqlitecloud sqlalchemy-sqlitecloud scipy
 
@@ -238,9 +239,10 @@ def get_about_mf_route():
     return jsonify(result)
 
 #News Route
-# @app.route('/api/news', methods=['GET'])
-# def get_news_route():
-#     return jsonify(result)
+@app.route('/api/news', methods=['GET'])
+def get_news_route():
+    news_data = get_news_links.fetch_financial_news()
+    return jsonify(news_data)
 
 if __name__ == "__main__":
     app.run(debug=True)
