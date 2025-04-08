@@ -76,7 +76,6 @@ def get_gold_data(karat_option, range_option, investment_amount, db_path):
             'gold_grams': round(gold_grams, 2),
             'future_value': round(future_value, 2),
             'predicted_profit': round(profit, 2),
-            'term_end_date': predicted_prices[-1]['date'] if predicted_prices else None,
             'today_price': today_price,
             'predicted_price_at_end': final_predicted_price
         }

@@ -38,7 +38,6 @@ const GoldPage = () => {
     fetchInvestmentSummary();
   };
 
-
   const [investmentSummary, setInvestmentSummary] = useState(null);
   const fetchInvestmentSummary = async () => {
     try {
@@ -50,12 +49,11 @@ const GoldPage = () => {
         },
       });
       setInvestmentSummary(response.data.investment_summary);
-      console.log(response)
+      console.log(response);
     } catch (error) {
       console.error("Error fetching investment summary:", error);
     }
   };
-
 
   return (
     <div
@@ -256,7 +254,7 @@ const GoldPage = () => {
           {investmentSummary && (
             <div
               style={{
-                marginTop: "30px", // Add some spacing between chart and summary
+                marginTop: "30px",
                 width: "70%",
                 padding: "30px",
                 backgroundColor: "white",
@@ -269,32 +267,48 @@ const GoldPage = () => {
               <h2 style={{ marginBottom: "20px", color: "#1e2a38" }}>
                 Investment Summary
               </h2>
-              <p>
-                <strong>Investment Amount:</strong> ₹{investmentSummary.investment_amount}
-              </p>
-              <p>
-                <strong>Gold Purchased:</strong> {investmentSummary.gold_grams} grams
-              </p>
-              <p>
-                <strong>Future Value:</strong> ₹{investmentSummary.future_value}
-              </p>
-              <p>
-                <strong>Predicted Profit:</strong> ₹{investmentSummary.predicted_profit}
-              </p>
-              <p>
-                <strong>Term End Date:</strong> {investmentSummary.term_end_date}
-              </p>
-              <p>
-                <strong>Today's Gold Price:</strong> ₹{investmentSummary.today_price}
-              </p>
-              <p>
-                <strong>Predicted Price at Term End:</strong> ₹{investmentSummary.predicted_price_at_end}
-              </p>
+
+              <div
+                style={{
+                  display: "flex",
+                  flexWrap: "wrap", // allow wrapping if needed
+                  gap: "20px", // space between columns
+                }}
+              >
+                <div style={{ flex: "1 1 45%", textAlign: "left" }}>
+                  <p>
+                    <strong>Investment Amount:</strong> ₹
+                    {investmentSummary.investment_amount}
+                  </p>
+                  <p>
+                    <strong>Future Value:</strong> ₹
+                    {investmentSummary.future_value}
+                  </p>
+                  <p>
+                    <strong>Predicted Profit:</strong> ₹
+                    {investmentSummary.predicted_profit}
+                  </p>
+                </div>
+
+                <div style={{ flex: "1 1 45%", textAlign: "left" }}>
+                  <p>
+                    <strong>Gold Purchased:</strong>{" "}
+                    {investmentSummary.gold_grams} grams
+                  </p>
+                  <p>
+                    <strong>Today's Gold Price:</strong> ₹
+                    {investmentSummary.today_price}
+                  </p>
+                  <p>
+                    <strong>Predicted Price at Term End:</strong> ₹
+                    {investmentSummary.predicted_price_at_end}
+                  </p>
+                </div>
+              </div>
             </div>
           )}
         </div>
       )}
-
 
       {/* Gold Investment Description */}
       <div

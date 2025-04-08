@@ -3,14 +3,16 @@ import * as d3 from "d3";
 
 const MFPriceChart = ({ isin }) => {
   const ref = useRef();
-  const [range, setRange] = useState("1Y"); // Default range
+  const [range, setRange] = useState("1Y");
 
   useEffect(() => {
     fetch(`http://localhost:5000/api/mf/graph?range=${range}&isin=${isin}`)
       .then((res) => res.json())
       .then((data) => {
-        drawChart(data);
-        console.log(data);
+        if (data?.historical?.length || data?.predictions?.length) {
+          console.log(data);
+          drawChart(data);
+        }
       })
       .catch((err) => console.error("Error fetching Mutualfund data:", err));
   }, [range, isin]);
@@ -20,25 +22,35 @@ const MFPriceChart = ({ isin }) => {
     svg.selectAll("*").remove();
     const width = 800;
     const height = 400;
-    const margin = { top: 20, right: 30, bottom: 70, left: 80 }; // Increased bottom and left margins for axis labels
+    const margin = { top: 20, right: 30, bottom: 70, left: 80 };
 
-    const today = new Date();
     const parseDate = d3.timeParse("%Y-%m-%d");
     const historical = data.historical;
     const predicted = data.predictions;
 
-    // Check and parse the data 🔥
-    const parsedHistorical = historical.map((d) => ({
-      date: new Date(d.date), // Parse date
-      price: +d.price, // Ensure price is a number
-    }));
+    const parsedHistorical = historical
+      .filter((d) => d.Date && d.Price != null)
+      .map((d) => ({
+        date: new Date(d.Date),
+        price: +d.Price,
+      }));
 
-    const parsedPredicted = predicted.map((d) => ({
-      date: new Date(d.date),
-      price: +d.price, // Assuming API gives "price"
-    }));
+    const parsedPredicted = predicted
+      .filter((d) => d.Date && d.Price != null)
+      .map((d) => ({
+        date: new Date(d.Date),
+        price: +d.Price,
+      }));
+
+    console.log(parsedHistorical);
+    console.log(parsedPredicted);
 
     const allData = [...parsedHistorical, ...parsedPredicted];
+
+    if (allData.length === 0) {
+      console.warn("No valid data available to draw.");
+      return;
+    }
 
     const xScale = d3
       .scaleTime()
@@ -58,34 +70,30 @@ const MFPriceChart = ({ isin }) => {
 
     svg.attr("width", width).attr("height", height);
 
-    // Draw x-axis
     svg
       .append("g")
       .attr("transform", `translate(0, ${height - margin.bottom})`)
       .call(xAxis);
 
-    // Add x-axis label
     svg
       .append("text")
       .attr("x", width / 2)
-      .attr("y", height - margin.bottom + 40) // Position below the x-axis
+      .attr("y", height - margin.bottom + 40)
       .attr("text-anchor", "middle")
       .style("font-size", "14px")
       .text("Time Period");
 
-    // Draw y-axis
     svg
       .append("g")
       .attr("transform", `translate(${margin.left}, 0)`)
       .call(yAxis);
 
-    // Add y-axis label
     svg
       .append("text")
       .attr("x", -height / 2)
-      .attr("y", margin.left - 50) // Position to the left of the y-axis
+      .attr("y", margin.left - 50)
       .attr("text-anchor", "middle")
-      .attr("transform", "rotate(-90)") // Rotate text for vertical alignment
+      .attr("transform", "rotate(-90)")
       .style("font-size", "14px")
       .text("Gold Price (in ₹) for 10g");
 
@@ -94,7 +102,6 @@ const MFPriceChart = ({ isin }) => {
       .x((d) => xScale(d.date))
       .y((d) => yScale(d.price));
 
-    // Historical data line
     svg
       .append("path")
       .datum(parsedHistorical)
@@ -103,7 +110,6 @@ const MFPriceChart = ({ isin }) => {
       .attr("stroke-width", 2)
       .attr("d", line);
 
-    // Predicted data line
     svg
       .append("path")
       .datum(parsedPredicted)
@@ -113,32 +119,34 @@ const MFPriceChart = ({ isin }) => {
       .attr("stroke-dasharray", "4")
       .attr("d", line);
 
-    // "Today" marker
-    svg
-      .append("line")
-      .attr("x1", xScale(today))
-      .attr("x2", xScale(today))
-      .attr("y1", margin.top)
-      .attr("y2", height - margin.bottom)
-      .attr("stroke", "red")
-      .attr("stroke-width", 2)
-      .attr("stroke-dasharray", "4")
-      .lower();
+    // Today line: Only draw if today within xScale domain
+    const today = new Date();
+    const xDomain = xScale.domain();
+    if (today >= xDomain[0] && today <= xDomain[1]) {
+      svg
+        .append("line")
+        .attr("x1", xScale(today))
+        .attr("x2", xScale(today))
+        .attr("y1", margin.top)
+        .attr("y2", height - margin.bottom)
+        .attr("stroke", "red")
+        .attr("stroke-width", 2)
+        .attr("stroke-dasharray", "4");
 
-    svg
-      .append("text")
-      .attr("x", xScale(today))
-      .attr("y", margin.top - 5)
-      .attr("fill", "red")
-      .attr("text-anchor", "middle")
-      .style("font-size", "12px")
-      .text("Today");
+      svg
+        .append("text")
+        .attr("x", xScale(today))
+        .attr("y", margin.top - 5)
+        .attr("fill", "red")
+        .attr("text-anchor", "middle")
+        .style("font-size", "12px")
+        .text("Today");
+    }
 
-    // Tooltip setup
+    // Tooltip
     const tooltip = d3
       .select("body")
       .append("div")
-      // .attr("class", "gold-tooltip")  // for cleanup
       .style("position", "absolute")
       .style("background", "#fff")
       .style("padding", "6px")
@@ -161,7 +169,6 @@ const MFPriceChart = ({ isin }) => {
       .attr("stroke-dasharray", "3")
       .style("display", "none");
 
-    // Mouse interaction
     const bisectDate = d3.bisector((d) => d.date).left;
 
     svg

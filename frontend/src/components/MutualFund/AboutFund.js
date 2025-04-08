@@ -8,34 +8,60 @@ const AboutFund = () => {
   const [isin, setIsin] = useState(null);
 
   const funds = [
-    { isin: "INF00XX01283", name: "Testing" },
-    { isin: "INF204K01K15", name: "Nippon India Small Cap Growth Direct Plan" },
+    { isin: "INF00XX01283", name: "ITI Liquid Growth Direct Plan" },
     {
-      isin: "INF205K01RY9",
-      name: "Invesco India Money Market Growth Direct Plan",
+      isin: "INF00XX01333",
+      name: "ITI Liquid Annually IDCW Reinvest Direct Plan",
     },
     {
-      isin: "INF209KB1Y49",
-      name: "Aditya Birla Sun Life Multi Cap Growth Direct Plan",
+      isin: "INF00XX01366",
+      name: "ITI Liquid Annually IDCW Payout Direct Plan",
     },
     {
-      isin: "INF247L01CE3",
-      name: "Motilal Oswal Large Cap Growth Direct Plan",
+      isin: "INF00XX01440",
+      name: "ITI Arbitrage Growth Direct Plan",
     },
-    { isin: "INF277K01QH5", name: "Tata Equity Saving Growth Direct Plan" },
-    { isin: "INF666M01JD9", name: "Groww Multicap Growth Direct Plan" },
-    { isin: "INF767K01RK7", name: "LIC MF Multi Cap Growth Direct Plan" },
     {
-      isin: "INF843K01KC8",
-      name: "Edelweiss Equity Saving Growth Direct Plan",
+      isin: "INF00XX01457",
+      name: "ITI Arbitrage IDCW Payout Direct Plan",
     },
-    { isin: "INF843K01KK1", name: "Edelweiss Flexi Cap Growth Direct Plan" },
-    { isin: "INF846K01DS2", name: "Axis Gold Growth Direct Plan" },
-    { isin: "INF846K01VJ3", name: "Axis Equity Saving Growth Direct Plan" },
-    { isin: "INF879O01027", name: "Parag Parikh Flexi Cap Growth Direct Plan" },
-    { isin: "INF917K01FZ1", name: "HSBC Midcap Growth Direct Plan" },
-    { isin: "INF959L01DT9", name: "Navi Flexi Cap Growth Direct Plan" },
-    { isin: "INF966L01689", name: "Quant Small Cap Growth Direct Plan" },
+    { isin: "INF00XX01465", name: "ITI Arbitrage IDCW Reinvest Direct Plan" },
+    { isin: "INF00XX01564", name: "ITI Overnight Growth Direct Plan" },
+    {
+      isin: "INF03VN01043",
+      name: "Whiteoak Capital Liquid Growth Direct Plan",
+    },
+    {
+      isin: "INF03VN01209",
+      name: "Whiteoak Capital Ultra Short Duration Growth Direct Plan",
+    },
+    { isin: "INF044D01BV7", name: "Taurus Flexi Cap IDCW Payout Direct Plan" },
+    { isin: "INF044D01BX3", name: "Taurus Largecap Equity Growth Direct Plan" },
+    {
+      isin: "INF044D01BY1",
+      name: "Taurus Largecap Equity IDCW Payout Direct Plan",
+    },
+    { isin: "INF044D01CA9", name: "Taurus Discovery Growth Direct Plan" },
+    {
+      isin: "INF082J01168",
+      name: "Quantum Multi Asset FoF Growth Direct Plan",
+    },
+    {
+      isin: "INF082J01176",
+      name: "Quantum Dynamic Bond Growth Direct Plan",
+    },
+    {
+      isin: "INF082J01184",
+      name: "Quantum Dynamic Bond Monthly IDCW Payout Direct Plan",
+    },
+    {
+      isin: "INF082J01192",
+      name: "Quantum Dynamic Bond Monthly IDCW Reinvest Direct Plan",
+    },
+    {
+      isin: "INF090I01FE6",
+      name: "Franklin India Technology Growth Direct Plan",
+    },
   ];
 
   const handleSearchChange = (event) => {
