@@ -27,7 +27,7 @@ def get_gold_data(range_option, db_path):
 
     # Step 2: Query Historical Data
     historical_query = """
-        SELECT date, price FROM future_gold
+        SELECT date, price FROM historical_gold
         WHERE date BETWEEN ? AND ?
         ORDER BY date
     """

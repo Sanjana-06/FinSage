@@ -1,5 +1,16 @@
 import React, { useState } from "react";
-import axios from "axios";
+async function sendMessage(message) {
+  const response = await fetch("http://localhost:5001/chat", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ message }),
+  });
+
+  const data = await response.json();
+  return data.reply;
+}
 
 export default function ChatUI() {
   const [inputText, setInputText] = useState("");
@@ -13,25 +24,8 @@ export default function ChatUI() {
       setIsSubmitted(true);
 
       try {
-        const response = await axios.post(
-          "https://api.openai.com/v1/chat/completions",
-          {
-            model: "gpt-3.5-turbo",
-            messages: [{ role: "user", content: inputText }],
-          },
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer YOUR_OPENAI_API_KEY`,
-            },
-          }
-        );
-
-        const botMessage = {
-          text: response.data.choices[0].message.content.trim(),
-          sender: "bot",
-        };
-        setMessages((prev) => [...prev, botMessage]);
+        const botmessage = await sendMessage(inputText);
+        setMessages((prev) => [...prev, { text: botmessage, sender: "bot" }]);
       } catch (error) {
         console.error("Error calling OpenAI API:", error);
         setMessages((prev) => [
@@ -89,7 +83,7 @@ export default function ChatUI() {
                   flexDirection: msg.sender === "user" ? "row-reverse" : "row",
                   alignItems: "flex-start",
                   maxWidth: "80%",
-                  padding:"4px"
+                  padding: "4px",
                 }}
               >
                 <div
@@ -102,9 +96,7 @@ export default function ChatUI() {
                         ? "rgba(10, 25, 50)"
                         : "rgba(255, 255, 255, 0.8)",
                     color:
-                      msg.sender === "user"
-                        ? "white"
-                        : "rgba(10, 25, 50, 0.8)",
+                      msg.sender === "user" ? "white" : "rgba(10, 25, 50, 0.8)",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
@@ -113,13 +105,15 @@ export default function ChatUI() {
                     fontSize: "16px",
                   }}
                 >
-                  {msg.sender === "user" ?  "👤":"🤖"}
+                  {msg.sender === "user" ? "👤" : "🤖"}
                 </div>
 
                 <div
                   style={{
                     backgroundColor:
-                      msg.sender === "user" ? "white" : "rgba(255, 255, 255, 0.85)",
+                      msg.sender === "user"
+                        ? "white"
+                        : "rgba(255, 255, 255, 0.85)",
                     color: "rgba(10, 25, 50)",
                     borderRadius: "8px",
                     padding: "10px 14px",
@@ -143,7 +137,9 @@ export default function ChatUI() {
             width: "100%",
           }}
         >
-          <div style={{ position: "relative", width: "80%", maxWidth: "800px" }}>
+          <div
+            style={{ position: "relative", width: "80%", maxWidth: "800px" }}
+          >
             <input
               type="text"
               placeholder="Type your message..."
@@ -153,7 +149,7 @@ export default function ChatUI() {
               style={{
                 width: "100%",
                 padding: "10px 48px 10px 12px",
-                paddingRight:"1px",
+                paddingRight: "1px",
                 borderRadius: "8px",
                 border: "none",
                 outline: "none",

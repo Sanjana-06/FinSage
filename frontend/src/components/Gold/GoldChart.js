@@ -9,73 +9,108 @@ const GoldPriceChart = () => {
     if (!range) return;
 
     fetch(`http://localhost:5000/api/gold?range=${range}`)
-      .then(res => res.json())
-      .then(data => {
+      .then((res) => res.json())
+      .then((data) => {
         drawChart(data);
       })
-      .catch(err => console.error("Error fetching gold data:", err));
+      .catch((err) => console.error("Error fetching gold data:", err));
   }, [range]);
 
   const drawChart = (data) => {
     const svg = d3.select(ref.current);
     svg.selectAll("*").remove();
-  
+
     const width = 800;
     const height = 400;
-    const margin = { top: 20, right: 30, bottom: 50, left: 60 };
-  
+    const margin = { top: 20, right: 30, bottom: 70, left: 80 }; // Increased bottom and left margins for axis labels
+
     const today = new Date();
     const parseDate = d3.timeParse("%Y-%m-%d");
-  
-    const allData = [...data.historical, ...data.predicted].map(d => ({
+
+    const allData = [...data.historical, ...data.predicted].map((d) => ({
       date: parseDate(d.date),
-      price: d.price
+      price: d.price,
     }));
-  
-    const historical = allData.filter(d => d.date < today);
-    const predicted = allData.filter(d => d.date >= today);
-  
-    const xScale = d3.scaleTime()
-      .domain(d3.extent(allData, d => d.date))
+
+    const historical = allData.filter((d) => d.date < today);
+    const predicted = allData.filter((d) => d.date >= today);
+
+    const xScale = d3
+      .scaleTime()
+      .domain(d3.extent(allData, (d) => d.date))
       .range([margin.left, width - margin.right]);
-  
-    const yScale = d3.scaleLinear()
-      .domain([d3.min(allData, d => d.price) * 0.95, d3.max(allData, d => d.price) * 1.05])
+
+    const yScale = d3
+      .scaleLinear()
+      .domain([
+        d3.min(allData, (d) => d.price) * 0.95,
+        d3.max(allData, (d) => d.price) * 1.05,
+      ])
       .range([height - margin.bottom, margin.top]);
-  
+
     const xAxis = d3.axisBottom(xScale);
     const yAxis = d3.axisLeft(yScale);
-  
+
     svg.attr("width", width).attr("height", height);
-  
-    svg.append("g")
+
+    // Draw x-axis
+    svg
+      .append("g")
       .attr("transform", `translate(0, ${height - margin.bottom})`)
       .call(xAxis);
-  
-    svg.append("g")
+
+    // Add x-axis label
+    svg
+      .append("text")
+      .attr("x", width / 2)
+      .attr("y", height - margin.bottom + 40) // Position below the x-axis
+      .attr("text-anchor", "middle")
+      .style("font-size", "14px")
+      .text("Time Period");
+
+    // Draw y-axis
+    svg
+      .append("g")
       .attr("transform", `translate(${margin.left}, 0)`)
       .call(yAxis);
-  
-    const line = d3.line()
-      .x(d => xScale(d.date))
-      .y(d => yScale(d.price));
-  
-    svg.append("path")
+
+    // Add y-axis label
+    svg
+      .append("text")
+      .attr("x", -height / 2)
+      .attr("y", margin.left - 50) // Position to the left of the y-axis
+      .attr("text-anchor", "middle")
+      .attr("transform", "rotate(-90)") // Rotate text for vertical alignment
+      .style("font-size", "14px")
+      .text("Gold Price (in ₹) for 10g");
+
+    const line = d3
+      .line()
+      .x((d) => xScale(d.date))
+      .y((d) => yScale(d.price));
+
+    // Historical data line
+    svg
+      .append("path")
       .datum(historical)
       .attr("fill", "none")
       .attr("stroke", "green")
       .attr("stroke-width", 2)
       .attr("d", line);
-  
-    svg.append("path")
+
+    // Predicted data line
+    svg
+      .append("path")
       .datum(predicted)
       .attr("fill", "none")
       .attr("stroke", "blue")
       .attr("stroke-width", 2)
       .attr("stroke-dasharray", "4")
       .attr("d", line);
-  
-    svg.append("line")
+
+    // "Today" marker
+    svg
+      .append("line")
       .attr("x1", xScale(today))
       .attr("x2", xScale(today))
       .attr("y1", margin.top)
@@ -84,17 +119,19 @@ const GoldPriceChart = () => {
       .attr("stroke-width", 2)
       .attr("stroke-dasharray", "4")
       .lower();
-  
-    svg.append("text")
+
+    svg
+      .append("text")
       .attr("x", xScale(today))
       .attr("y", margin.top - 5)
       .attr("fill", "red")
       .attr("text-anchor", "middle")
       .style("font-size", "12px")
       .text("Today");
-  
+
     // Tooltip setup
-    const tooltip = d3.select("body")
+    const tooltip = d3
+      .select("body")
       .append("div")
       .style("position", "absolute")
       .style("background", "#fff")
@@ -104,22 +141,25 @@ const GoldPriceChart = () => {
       .style("pointer-events", "none")
       .style("display", "none")
       .style("font-size", "12px");
-  
-    const focusDot = svg.append("circle")
+
+    const focusDot = svg
+      .append("circle")
       .style("fill", "black")
       .attr("r", 4)
       .style("display", "none");
-  
-    const focusLine = svg.append("line")
+
+    const focusLine = svg
+      .append("line")
       .attr("stroke", "gray")
       .attr("stroke-width", 1)
       .attr("stroke-dasharray", "3")
       .style("display", "none");
-  
+
     // Mouse interaction
-    const bisectDate = d3.bisector(d => d.date).left;
-  
-    svg.append("rect")
+    const bisectDate = d3.bisector((d) => d.date).left;
+
+    svg
+      .append("rect")
       .attr("width", width - margin.left - margin.right)
       .attr("height", height - margin.top - margin.bottom)
       .attr("transform", `translate(${margin.left},${margin.top})`)
@@ -131,20 +171,20 @@ const GoldPriceChart = () => {
         const i = bisectDate(allData, x0, 1);
         const d0 = allData[i - 1];
         const d1 = allData[i];
-        const d = !d1 ? d0 : (x0 - d0.date > d1.date - x0 ? d1 : d0);
-  
+        const d = !d1 ? d0 : x0 - d0.date > d1.date - x0 ? d1 : d0;
+
         focusDot
           .attr("cx", xScale(d.date))
           .attr("cy", yScale(d.price))
           .style("display", "block");
-  
+
         focusLine
           .attr("x1", xScale(d.date))
           .attr("x2", xScale(d.date))
           .attr("y1", margin.top)
           .attr("y2", height - margin.bottom)
           .style("display", "block");
-  
+
         tooltip
           .style("left", `${event.pageX + 10}px`)
           .style("top", `${event.pageY - 20}px`)
@@ -157,8 +197,9 @@ const GoldPriceChart = () => {
         focusLine.style("display", "none");
       });
   };
+
   return (
-    <div style={{backgroundColor:"white",borderRadius:"20px"}}>
+    <div style={{ backgroundColor: "white", borderRadius: "20px" }}>
       <div style={{ marginBottom: "10px", textAlign: "center" }}>
         {["1M", "3M", "6M", "1Y", "3Y", "5Y"].map((opt) => (
           <button
@@ -171,7 +212,7 @@ const GoldPriceChart = () => {
               color: range === opt ? "#fff" : "#000",
               border: "none",
               borderRadius: "4px",
-              cursor: "pointer"
+              cursor: "pointer",
             }}
           >
             {opt}

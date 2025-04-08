@@ -11,7 +11,6 @@ import {
 import GoldPriceChart from "./GoldChart";
 
 const GoldPage = () => {
-  
   const data = [
     { karat: "24K", purity: 99.9 },
     { karat: "22K", purity: 91.6 },
@@ -225,7 +224,7 @@ const GoldPage = () => {
               minHeight: "200px",
             }}
           >
-          <GoldPriceChart/>
+            <GoldPriceChart />
           </div>
         </div>
       )}
