@@ -100,6 +100,55 @@ def profile():
 
     return jsonify({"name": user.name, "email": user.email})
 
+@app.route("/api/user/profile/update-name", methods=["PUT"])
+@jwt_required()
+def update_user_name():
+    session = SessionLocal()
+    user_email = get_jwt_identity()
+    user = session.query(User).filter_by(email=user_email).first()
+
+    if not user:
+        session.close()
+        return jsonify({"message": "User not found"}), 404
+
+    data = request.json
+    new_name = data.get("name")
+    if not new_name:
+        session.close()
+        return jsonify({"message": "Name is required"}), 400
+
+    user.name = new_name
+    session.commit()
+    session.close()
+
+    return jsonify({"message": "Name updated successfully"}), 200
+
+@app.route("/api/user/reset-password", methods=["PUT"])
+@jwt_required()
+def reset_password():
+    session = SessionLocal()
+    user_email = get_jwt_identity()
+    user = session.query(User).filter_by(email=user_email).first()
+
+    if not user:
+        session.close()
+        return jsonify({"message": "User not found"}), 404
+
+    data = request.json
+    new_password = data.get("newPassword")
+
+    if not new_password:
+        session.close()
+        return jsonify({"message": "New password is required"}), 400
+
+    hashed_password = bcrypt.generate_password_hash(new_password).decode("utf-8")
+    user.password = hashed_password
+
+    session.commit()
+    session.close()
+
+    return jsonify({"message": "Password updated successfully"}), 200
+
 # Investment Recommendation Route
 @app.route("/api/investment-recommendation", methods=["POST"])
 def investment_recommendation_route():

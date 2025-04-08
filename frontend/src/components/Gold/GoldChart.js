@@ -6,6 +6,7 @@ const GoldPriceChart = ({ karat, term }) => {
   const [range, setRange] = useState(term);
 
   useEffect(() => {
+    
     if (!range || !karat) return;
 
     fetch(`http://localhost:5000/api/gold?range=${range}&karat=${karat}`)
@@ -17,10 +18,12 @@ const GoldPriceChart = ({ karat, term }) => {
       .catch((err) => console.error("Error fetching gold data:", err));
   }, [range,karat]);
   console.log(karat)
+  
 
   const drawChart = (data) => {
     const svg = d3.select(ref.current);
     svg.selectAll("*").remove();
+    d3.select("body").selectAll(".gold-tooltip").remove();
 
     const width = 800;
     const height = 400;
@@ -133,16 +136,17 @@ const GoldPriceChart = ({ karat, term }) => {
 
     // Tooltip setup
     const tooltip = d3
-      .select("body")
-      .append("div")
-      .style("position", "absolute")
-      .style("background", "#fff")
-      .style("padding", "6px")
-      .style("border", "1px solid #ccc")
-      .style("border-radius", "4px")
-      .style("pointer-events", "none")
-      .style("display", "none")
-      .style("font-size", "12px");
+  .select("body")
+  .append("div")
+  .attr("class", "gold-tooltip")  // for cleanup
+  .style("position", "absolute")
+  .style("background", "#fff")
+  .style("padding", "6px")
+  .style("border", "1px solid #ccc")
+  .style("border-radius", "4px")
+  .style("pointer-events", "none")
+  .style("display", "none")
+  .style("font-size", "12px");
 
     const focusDot = svg
       .append("circle")
