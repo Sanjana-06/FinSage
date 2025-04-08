@@ -209,15 +209,24 @@ def rd_analysis_route():
 
     return jsonify(result)
 
-#Gold Route
-@app.route('/api/gold', methods=['GET'])
+#Gold Route@app.route('/api/gold', methods=['GET'])
 def get_gold_route():
     db_path = "innovate.db"
     range_option = request.args.get('range')
-    karat_option = request.args.get('karat') 
-    result = gold_data.get_gold_data(karat_option,range_option, db_path)
+    karat_option = request.args.get('karat')
+    investment_amount = request.args.get('investment')  # New investment amount
+
+    # Convert types safely
+    try:
+        karat_option = int(karat_option)
+        investment_amount = float(investment_amount)
+    except (ValueError, TypeError):
+        return jsonify({'error': 'Invalid input parameters'}), 400
+
+    result = gold_data.get_gold_data(karat_option, range_option, investment_amount, db_path)
 
     return jsonify(result)
+
 
 #Mutualfund Recommendation Route
 @app.route('/api/mf/recommendation', methods=['POST'])
