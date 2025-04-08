@@ -15,7 +15,7 @@ def get_gold_data(karat_option,range_option, db_path):
         '3Y': 365 * 3,
         '5Y': 365 * 5,
     }
-    days = ranges.get(range_option)
+    days = ranges.get(range_option, 30)
 
     # Calculate start and end dates
     today = datetime.today()
