@@ -20,7 +20,7 @@ const GoldPage = () => {
   ];
   const [formData, setFormData] = useState({
     income: "",
-    Karat: "Select Karat",
+    karat: "Select Karat",
     returnPeriod: "",
   });
 
@@ -173,10 +173,10 @@ const GoldPage = () => {
                 }}
               >
                 <option value="">---Select a Period---</option>
-                <option value="1">1 Month</option>
-                <option value="3">3 Months</option>
-                <option value="6">6 Months</option>
-                <option value="12">1 Year</option>
+                <option value="1M">1 Month</option>
+                <option value="3M">3 Months</option>
+                <option value="6M">6 Months</option>
+                <option value="1Y">1 Year</option>
               </select>
             </div>
 
@@ -224,7 +224,7 @@ const GoldPage = () => {
               minHeight: "200px",
             }}
           >
-            <GoldPriceChart />
+            <GoldPriceChart karat={formData.karat} term={formData.term} />
           </div>
         </div>
       )}
