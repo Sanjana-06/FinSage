@@ -2,8 +2,6 @@
 
 Welcome to **FinSage**, your intelligent financial assistant – a one-stop solution for beginners and employees who are eager to invest wisely without getting lost in complicated jargon or shady brokers.
 
-Built with ❤️ by **Team 4 Interns** for the **FIS Innovate48 Hackathon**.
-
 ---
 
 ## 🌟 Tagline
@@ -17,7 +15,7 @@ Built with ❤️ by **Team 4 Interns** for the **FIS Innovate48 Hackathon**.
 ---
 
 ## 💡 Why We Built This
-We built FinSage for the **FIS Innovate Hackathon**, aiming to present a real-world, scalable, and beginner-friendly solution. We're excited to share our prototype and receive valuable feedback from fintech experts to evolve the application into a powerful employee investment tool.
+We built FinSage aiming to present a real-world, scalable, and beginner-friendly solution. We're excited to share our prototype and receive valuable feedback from fintech experts to evolve the application into a powerful employee investment tool.
 
 ---
 
@@ -87,5 +85,4 @@ FinSage is for **salaried employees**, **young professionals**, and **first-time
 
 ---
 
-### 🧑‍💼 Team: 4 Interns  
 Thank you for exploring FinSage!
