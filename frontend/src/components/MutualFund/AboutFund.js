@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { Search } from "lucide-react";
 import MFPriceChart from "./MutualFundChart";
@@ -69,7 +70,7 @@ const AboutFund = () => {
   };
   const [showOptions, setShowOptions] = useState(false);
   const handleFundClick = (fund) => {
-    fetch("http://localhost:5000/api/mf/about", {
+    fetch("https://finsage.onrender.com/api/mf/about", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
